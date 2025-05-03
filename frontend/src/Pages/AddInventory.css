@@ -1,0 +1,146 @@
+/* Container for addinventory */
+
+/* dashboard container styling */
+.dashboard-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* heading */
+h2 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* add inventory button */
+.add-item-btn {
+    background-color: #2c89d9;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px auto;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+/* hover */
+.add-item-btn:hover {
+    background-color: #1b5e20;
+}
+
+/* search input */
+.search-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+/* stock status */
+.stock-status-filter {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+}
+
+.stock-status-filter:hover {
+    border-color: #2c89d9;
+}
+
+.stock-status-filter:focus {
+    outline: none;
+    border-color: #2c89d9;
+}
+
+.materials-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-around;
+}
+
+.material-card {
+    width: calc(33.33% - 20px);
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 20px;
+}
+
+.material-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.material-card h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.material-card p {
+    font-size: 1rem;
+    color: #666;
+    margin: 5px 0;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.update-btn,
+.delete-btn {
+    background-color: #d99c2c;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.update-btn:hover,
+.delete-btn:hover {
+    background-color: #be9e34;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Media Query for Responsiveness */
+@media (max-width: 768px) {
+    .material-card {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .material-card {
+        width: 100%;
+    }
+}

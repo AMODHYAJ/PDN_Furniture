@@ -1,0 +1,16 @@
+.cancellation-timer {
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    background: #fff8e1;
+    border-left: 3px solid #ffc107;
+    border-radius: 4px;
+  }
+  
+  .cancellation-timer p {
+    margin: 0;
+    color: #856404;
+  }
+  
+  .cancellation-timer strong {
+    font-weight: bold;
+  }

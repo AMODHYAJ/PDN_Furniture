@@ -1,0 +1,41 @@
+.admin-product-view {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+    text-align: center;
+}
+
+.admin-product-view img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.admin-product-view .discount-info {
+    color: red;
+    font-weight: bold;
+}
+
+.admin-product-view .available {
+    color: green;
+    font-weight: bold;
+}
+
+.admin-product-view .not-available {
+    color: gray;
+    font-weight: bold;
+}
+
+.admin-product-view .back-button {
+    margin-top: 20px;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}

@@ -1,0 +1,210 @@
+
+.dashboard-container {
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1, h2 {
+    color: #333;
+    font-weight: bold;
+  }
+  
+  /* Buttons */
+  .button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .export-button, .add-discount-button.generateReportBtn {
+    background-color: #007bff;
+    color: white;
+    width: 220px;
+    margin: 10px;
+  }
+  
+  .export-button:hover, .add-discount-button:hover,generateReportBtn {
+    background-color: #0056b3;
+  }
+  
+  /* Upload file container */
+  .upload-container {
+    margin: 20px auto;
+    padding: 15px;
+    border: 2px dashed #007bff;
+    border-radius: 8px;
+    text-align: center;
+    background-color: #eef4ff;
+    width: 350px;
+  }
+  
+  .upload-container label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  .upload-container input {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  .upload-status {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .upload-status.success {
+    color: #28a745;
+  }
+  
+  .upload-status.error {
+    color: #dc3545;
+  }
+  
+  /* Search and filter */
+  .search-filter-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .search-input, .filter-dropdown {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Product list styles */
+  .product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .product-card {
+    width: 250px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+    text-decoration: none; 
+  }
+  
+  .product-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .product-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .product-details {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  /* Display product name and category */
+  .product-details h3, .product-details p {
+    margin: 5px 0;
+    font-weight: bold;
+  }
+  
+  /* Availability button */
+  .availability-button {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .availability-button.available {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .availability-button.not-available {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  /* Delete and Update buttons in the same row */
+  .buttons-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .delete-button, .update-button {
+    width: 48%; /* Adjusted for equal spacing in the row */
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .delete-button {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .delete-button:hover {
+    background-color: #c82333;
+  }
+  
+  .update-button {
+    background-color: #cfccc4;
+    color: white;
+  }
+  
+  .update-button:hover {
+    background-color: #ebe8de;
+  }
+  
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .product-list {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .search-filter-container {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .buttons-container {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .delete-button, .update-button {
+      width: 100%;
+    }
+  }

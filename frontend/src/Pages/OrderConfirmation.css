@@ -1,0 +1,89 @@
+.order-confirmation {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.confirmation-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.order-details {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.order-summary {
+  flex: 2;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.shipping-details {
+  flex: 1;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  align-self: flex-start;
+}
+
+.order-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.order-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.item-details {
+  flex: 1;
+}
+
+.order-total {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  text-align: right;
+}
+
+.next-steps {
+  text-align: center;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.next-steps button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  margin: 1rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+
+.error {
+  color: #dc3545;
+}

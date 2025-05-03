@@ -1,0 +1,84 @@
+/* src/components/PendingOrders.css */
+
+.pending-orders-container {
+    font-family: sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9; /* Lighter background */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pending-orders-container h2 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 2px solid #eee; /* Subtle bottom border */
+    padding-bottom: 10px;
+  }
+  
+  .pending-orders-container ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .pending-orders-container li {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* Slightly more pronounced shadow */
+    border: 1px solid #e0e0e0; /* Lighter border */
+  }
+  
+  .pending-orders-container li strong {
+    font-weight: 600; /* Slightly bolder font weight */
+    margin-right: 5px;
+    color: #333;
+  }
+  
+  .pending-orders-container li div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .pending-orders-container li label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 0.95em; /* Slightly larger font size for label */
+  }
+  
+  .pending-orders-container li input[type="datetime-local"] {
+    padding: 10px; /* Increased padding */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(100% - 22px); /* Adjust for increased padding and border */
+    margin-bottom: 8px; /* Increased margin-bottom */
+    font-size: 1em; /* Match button font size */
+  } /* <-- THIS WAS THE MISSING CLOSING BRACE */
+  
+  .pending-orders-container li button {
+    background-color: #28a745; /* Green color for "Generate Tasks" */
+    color: white;
+    padding: 12px 20px; /* Increased padding */
+    border: none;
+    border-radius: 6px; /* More rounded corners */
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease-in-out; /* Smooth transition */
+  }
+  
+  .pending-orders-container li button:hover {
+    background-color: #1e7e34; /* Darker green on hover */
+  }
+  
+  .pending-orders-container li button:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5); /* Green focus shadow */
+  }
+  
+  .pending-orders-container .error-message {
+    color: #dc3545; /* Red color for error messages */
+    font-size: 0.9em;
+    margin-top: 5px;
+  }

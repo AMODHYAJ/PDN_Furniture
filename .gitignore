@@ -1,0 +1,15 @@
+﻿# Visual Studio
+.vs/
+bin/
+obj/
+*.suo
+*.user
+
+# Node.js
+node_modules/
+.cache/
+*.pack
+
+# Build files
+Debug/
+Release/

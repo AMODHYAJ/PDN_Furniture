@@ -1,0 +1,71 @@
+.analytics-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.product-info {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.product-info h3 {
+    font-size: 24px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.product-info .total-products {
+    font-size: 50px;
+    font-weight: bold;
+    color: #4CAF50; /* Green for Total Products */
+}
+
+.product-info .price-range {
+    font-size: 20px;
+    color: #888;
+}
+
+.chart-container {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+}
+
+.chart-container canvas {
+    width: 100% !important; /* Ensure chart takes full width */
+    height: auto !important;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    margin-top: 30px;
+    width: 100%;
+}
+
+footer p {
+    margin: 0;
+    font-size: 16px;
+}

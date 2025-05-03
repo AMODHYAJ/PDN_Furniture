@@ -1,0 +1,89 @@
+/* src/components/TaskPreview.css */
+
+.task-preview-container {
+    font-family: sans-serif;
+    padding: 20px;
+    background-color: #f8f8f8; /* Light gray background */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-preview-container h2 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.task-preview-container > div { /* Style each task preview block */
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+}
+
+.task-preview-container > div:last-child {
+    margin-bottom: 0;
+}
+
+.task-preview-container label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 0.95em;
+    font-weight: bold;
+}
+
+.task-preview-container input[type="text"],
+.task-preview-container input[type="number"],
+.task-preview-container input[type="date"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(100% - 22px);
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.task-preview-container p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 1em;
+}
+
+.task-preview-container p strong {
+    font-weight: bold;
+}
+
+.task-preview-container button {
+    background-color: #007bff; /* Primary blue button */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.2s ease-in-out;
+    display: block; /* Make button take full width */
+    margin-top: 20px;
+    width: 100%;
+}
+
+.task-preview-container button:hover {
+    background-color: #0056b3;
+}
+
+.task-preview-container button:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+}
+
+/* Optional: Style for suggested new deadline */
+.task-preview-container .suggested-deadline {
+    color: #5cb85c; /* Green color for positive suggestion */
+    font-weight: bold;
+}

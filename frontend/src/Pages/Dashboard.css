@@ -1,0 +1,74 @@
+/* Dashboard.css */
+.dashboard {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .dashboard h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+  }
+  
+  .dashboard-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+  
+  .dashboard-card {
+    display: block;
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border-left: 4px solid #3498db;
+  }
+  
+  .dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-left-color: #2980b9;
+  }
+  
+  .dashboard-card h2 {
+    color: #3498db;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+  }
+  
+  .dashboard-card p {
+    color: #7f8c8d;
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .dashboard-links {
+      grid-template-columns: 1fr;
+    }
+    
+    .dashboard h1 {
+      font-size: 2rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .dashboard {
+      padding: 0 0.5rem;
+    }
+    
+    .dashboard-card {
+      padding: 1rem;
+    }
+  }
