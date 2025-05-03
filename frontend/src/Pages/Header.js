@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Header.css'; // You can style the header here
+import './AdminHeader.css'; // You can style the header here
 
 const Header = () => {
     return (
-        <header className="header">
+        <header className="admin-header">
             
-            <nav className="navbar">
+            <nav className="admin-navbar">
                 <Link to="/">Manage Products</Link>
                 <Link to="/customer-dashboard">Go to Customer Dashboard</Link>
                 <Link to="/manage-discounts">Discounts</Link>

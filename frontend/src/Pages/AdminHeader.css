@@ -1,0 +1,23 @@
+.admin-header {
+    background-color: #222;
+    padding: 1rem 2rem;
+}
+
+.admin-navbar {
+    display: flex;
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.admin-navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 0;
+    font-weight: 500;
+}
+
+.admin-navbar a:hover {
+    color: #ddd;
+    text-decoration: underline;
+}
