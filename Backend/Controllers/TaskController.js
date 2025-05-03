@@ -142,7 +142,7 @@ const getTasksByEmployee = async (req, res, next) => {
 
 // 8️⃣ Update Task Progress (Mark as In Progress / Completed)
 const updateTaskProgress = async (req, res, next) => {
-    const { taskId, status } = req.body; // Task ID within the order, and new status
+    const { taskId, status } = req.body;
     try {
         // Find the task schedule containing this task
         const taskSchedule = await Task.findOne({ "tasks._id": taskId });
@@ -154,7 +154,7 @@ const updateTaskProgress = async (req, res, next) => {
         // Update task status
         const updatedTasks = taskSchedule.tasks.map(task => {
             if (task._id.toString() === taskId) {
-                task.status = status; // "Pending" → "In Progress" → "Completed"
+                task.status = status;
             }
             return task;
         });
@@ -168,8 +168,13 @@ const updateTaskProgress = async (req, res, next) => {
         taskSchedule.tasks = updatedTasks;
         taskSchedule.progress = newProgress;
 
-
         await taskSchedule.save();
+
+        // Check if all tasks are completed
+        if (newProgress === 100) {
+            // Update the associated order status to "shipped"
+            await OrderIntegration.updateOrderStatus(taskSchedule.orderId, "shipped");
+        }
 
         return res.status(200).json({ 
             message: "Task status updated.", 

@@ -33,8 +33,22 @@ class OrderIntegration {
     // Update order status when tasks are completed
     static async updateOrderStatus(orderId, newStatus) {
         try {
-            await Order.findByIdAndUpdate(orderId, { status: newStatus });
-            return { success: true };
+            // First update the order status
+            const updatedOrder = await Order.findByIdAndUpdate(
+                orderId, 
+                { status: newStatus, shippedAt: new Date() }, // Add shippedAt timestamp
+                { new: true }
+            );
+            
+            // Then update the task's dispatch status if it's being shipped
+            if (newStatus === "shipped") {
+                await Task.findOneAndUpdate(
+                    { orderId: orderId },
+                    { dispatchStatus: true }
+                );
+            }
+            
+            return { success: true, order: updatedOrder };
         } catch (error) {
             console.error("Error updating order status:", error);
             throw error;
