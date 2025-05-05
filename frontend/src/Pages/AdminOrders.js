@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import api from "../utils/api";
 import "./AdminOrders.css";
+import AssignDeliveryModal from "./AssignDeliveryModal";
 
 const AdminOrders = () => {
   const { isAdmin, logout } = useAuth();
@@ -20,6 +21,8 @@ const AdminOrders = () => {
     status: "all",
     sort: "-createdAt",
   });
+  const [showAssignModal, setShowAssignModal] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   const fetchOrders = useCallback(async () => {
     if (!isAdmin) {
@@ -30,35 +33,35 @@ const AdminOrders = () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       const params = {
         page: pagination.page,
         limit: pagination.limit,
-        sort: filters.sort
+        sort: filters.sort,
       };
-      
-      if (filters.status !== 'all') {
+
+      if (filters.status !== "all") {
         params.status = filters.status;
       }
 
-      const response = await api.get('/orders/admin/all-orders', { params });
-      
+      const response = await api.get("/orders/admin/all-orders", { params });
+
       if (response.data && response.data.orders) {
         setOrders(response.data.orders);
         setPagination({
           page: response.data.currentPage || pagination.page,
           limit: pagination.limit,
           totalPages: response.data.totalPages || 1,
-          totalOrders: response.data.totalOrders || 0
+          totalOrders: response.data.totalOrders || 0,
         });
       }
     } catch (err) {
       if (err.response?.status === 401) {
         logout();
       } else if (err.response?.status === 403) {
-        setError('You are not authorized to view this page');
+        setError("You are not authorized to view this page");
       } else {
-        setError(err.message || 'Failed to fetch orders');
+        setError(err.message || "Failed to fetch orders");
       }
     } finally {
       setLoading(false);
@@ -80,6 +83,32 @@ const AdminOrders = () => {
 
   const handleSortChange = (e) => {
     setFilters((prev) => ({ ...prev, sort: e.target.value }));
+  };
+
+  const handleAssignClick = (order) => {
+    // Debug log to verify full ID
+    console.log('Assigning order:', {
+      truncatedId: order._id.substring(0, 8),
+      fullId: order._id,
+      length: order._id.length
+    });
+  
+    if (order._id.length !== 24) {
+      alert(`Invalid order ID length (${order._id.length}). Must be 24 characters.`);
+      return;
+    }
+  
+    setSelectedOrder(order);
+    setShowAssignModal(true);
+  };
+
+  const handleDeliveryAssign = async (updatedOrder) => {
+    setOrders(prevOrders => 
+      prevOrders.map(order => 
+        order._id === updatedOrder._id ? updatedOrder : order
+      )
+    );
+    setShowAssignModal(false);
   };
 
   const getStatusBadge = (status) => {
@@ -148,13 +177,18 @@ const AdminOrders = () => {
               <th>Items</th>
               <th>Total</th>
               <th>Status</th>
+              <th>Delivery</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {orders.map((order) => (
               <tr key={order._id}>
-                <td>#{order._id.substring(0, 8)}</td>
+                <td>
+                  <span className="order-id" title={order._id}>
+                    #{order._id.substring(0, 8).toUpperCase()}
+                  </span>
+                </td>
                 <td>
                   {order.userId?.name || "Guest"}
                   <br />
@@ -164,6 +198,21 @@ const AdminOrders = () => {
                 <td>{order.items.length} item(s)</td>
                 <td>Rs. {order.totalPrice.toFixed(2)}</td>
                 <td>{getStatusBadge(order.status)}</td>
+                <td>
+                  {order.status === "shipped" && !order.deliveryOfficer && (
+                    <button
+                      onClick={() => handleAssignClick(order)}
+                      className="assign-btn"
+                    >
+                      Assign Delivery
+                    </button>
+                  )}
+                  {order.deliveryOfficer && (
+                    <span className="assigned-badge">
+                      Assigned to {order.deliveryOfficer.name}
+                    </span>
+                  )}
+                </td>
                 <td>
                   <button
                     className="view-btn"
@@ -227,6 +276,14 @@ const AdminOrders = () => {
         {Math.min(pagination.page * pagination.limit, pagination.totalOrders)}{" "}
         of {pagination.totalOrders} orders
       </div>
+
+      {showAssignModal && (
+        <AssignDeliveryModal
+          order={selectedOrder}
+          onClose={() => setShowAssignModal(false)}
+          onAssign={handleDeliveryAssign}
+        />
+      )}
     </div>
   );
 };

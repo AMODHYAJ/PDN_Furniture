@@ -1,8 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./Context/AuthContext";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Home from "./Pages/Home";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
@@ -32,17 +32,20 @@ import AdminProductView from "./Pages/AdminProductView";
 import DiscountManager from "./Pages/DiscountManager";
 import AdminInventory from "./Pages/AdminInventory";
 import AddInventory from "./Pages/AddInventory";
-import UpdateInventory from "./Pages/UpdateInventory"
+import UpdateInventory from "./Pages/UpdateInventory";
 import AdminProgress from "./Pages/AdminProgress";
 import ProgressOrderDetails from "./Pages/ProgressOrderDetails";
-import TaskPreview from './Pages/TaskPreview';
-import Alerts from './Pages/Alerts';
-import EmployeeList from './Pages/EmployeeList';
-import EmployeeForm from './Pages/EmployeeForm';
-import PendingOrders from './Pages/PendingOrders';
-import OngoingOrders from './Pages/OngoingOrders';
-import CompletedOrders from './Pages/CompletedOrders';
-import ProductAnalytics from './Pages/ProductAnalytics';
+import TaskPreview from "./Pages/TaskPreview";
+import Alerts from "./Pages/Alerts";
+import EmployeeList from "./Pages/EmployeeList";
+import EmployeeForm from "./Pages/EmployeeForm";
+import PendingOrders from "./Pages/PendingOrders";
+import OngoingOrders from "./Pages/OngoingOrders";
+import CompletedOrders from "./Pages/CompletedOrders";
+import ProductAnalytics from "./Pages/ProductAnalytics";
+import DeliveryDashboard from "./Pages/DeliveryDashboard";
+import DeliveryOfficersList from "./Pages/DeliveryOfficersList";
+import DeliveryOfficerForm from "./Pages/DeliveryOfficerForm";
 import "./App.css";
 
 const App = () => {
@@ -206,7 +209,7 @@ const App = () => {
             path="/manage-discounts"
             element={
               <AdminRoute>
-                <DiscountManager/>
+                <DiscountManager />
               </AdminRoute>
             }
           />
@@ -214,7 +217,7 @@ const App = () => {
             path="/analytics"
             element={
               <AdminRoute>
-                <ProductAnalytics/>
+                <ProductAnalytics />
               </AdminRoute>
             }
           />
@@ -222,7 +225,7 @@ const App = () => {
             path="/admin/inventory"
             element={
               <AdminRoute>
-                <AdminInventory/>
+                <AdminInventory />
               </AdminRoute>
             }
           />
@@ -230,7 +233,7 @@ const App = () => {
             path="/add-inventory"
             element={
               <AdminRoute>
-                <AddInventory/>
+                <AddInventory />
               </AdminRoute>
             }
           />
@@ -238,7 +241,7 @@ const App = () => {
             path="/update-inventory/:id"
             element={
               <AdminRoute>
-                <UpdateInventory/>
+                <UpdateInventory />
               </AdminRoute>
             }
           />
@@ -246,21 +249,116 @@ const App = () => {
             path="/admin/workforce"
             element={
               <AdminRoute>
-                <AdminProgress/>
+                <AdminProgress />
               </AdminRoute>
             }
           />
-           <Route path="/order/:id" element={<AdminRoute><ProgressOrderDetails /></AdminRoute>} />
-           <Route path="/taskpreview" element={<AdminRoute><TaskPreview  /></AdminRoute>} />
-           <Route path="/alerts" element={<AdminRoute><Alerts   /></AdminRoute>} />
-           <Route path="/employees" element={<AdminRoute><EmployeeList    /></AdminRoute>} />
-           <Route path="/employees/add" element={<AdminRoute><EmployeeForm     /></AdminRoute>} />
-           <Route path="/employees/edit/:id" element={<AdminRoute><EmployeeForm     /></AdminRoute>} />
-           <Route path="/pending" element={<AdminRoute><PendingOrders      /></AdminRoute>} />
-           <Route path="/ongoing" element={<AdminRoute><OngoingOrders      /></AdminRoute>} />
-           <Route path="/completed" element={<AdminRoute><CompletedOrders      /></AdminRoute>} />
+          <Route
+            path="/order/:id"
+            element={
+              <AdminRoute>
+                <ProgressOrderDetails />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/taskpreview"
+            element={
+              <AdminRoute>
+                <TaskPreview />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/alerts"
+            element={
+              <AdminRoute>
+                <Alerts />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/employees"
+            element={
+              <AdminRoute>
+                <EmployeeList />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/employees/add"
+            element={
+              <AdminRoute>
+                <EmployeeForm />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/employees/edit/:id"
+            element={
+              <AdminRoute>
+                <EmployeeForm />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/pending"
+            element={
+              <AdminRoute>
+                <PendingOrders />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/ongoing"
+            element={
+              <AdminRoute>
+                <OngoingOrders />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/completed"
+            element={
+              <AdminRoute>
+                <CompletedOrders />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/delivery"
+            element={
+              <AdminRoute>
+                <DeliveryDashboard />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/delivery-officers"
+            element={
+              <AdminRoute>
+                <DeliveryOfficersList />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/delivery-officers/add"
+            element={
+              <AdminRoute>
+                <DeliveryOfficerForm />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/delivery-officers/edit/:id"
+            element={
+              <AdminRoute>
+                <DeliveryOfficerForm />
+              </AdminRoute>
+            }
+          />
         </Routes>
-        <ToastContainer 
+        <ToastContainer
           position="bottom-right"
           autoClose={3000}
           hideProgressBar={false}

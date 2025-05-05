@@ -1,0 +1,117 @@
+.delivery-officers-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .add-btn {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .add-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .officers-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .officers-table th, .officers-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .officers-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .status {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+  }
+  
+  .status.available {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .status.unavailable {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .toggle-btn, .edit-btn, .delete-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: opacity 0.3s;
+  }
+  
+  .toggle-btn:hover, .edit-btn:hover, .delete-btn:hover {
+    opacity: 0.8;
+  }
+  
+  .toggle-btn {
+    background-color: #ffc107;
+    color: #212529;
+  }
+  
+  .toggle-btn.make-available {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .toggle-btn.make-unavailable {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .edit-btn {
+    background-color: #17a2b8;
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+  }
+  
+  .delete-btn {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.2em;
+  }
+  
+  .error {
+    color: #dc3545;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2em;
+  }

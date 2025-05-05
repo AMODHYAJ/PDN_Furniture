@@ -1,15 +1,25 @@
-import express from "express";
-import { assignOrder, getAssignedOrdersByUser, getAllAssignedOrders,deleteAssignedOrder} from "../Controllers/deliveryOfficerController";
-
+const express = require("express");
 const router = express.Router();
+const {
+  getAssignedOrders,
+  updateDeliveryStatus,
+  getDeliveryOfficers,
+  getOrderTracking
+} = require("../Controllers/deliveryController");
+const authenticate = require("../middleware/authenticate");
+const isAdmin = require("../middleware/isAdmin");
 
-router.post("/assign", assignOrder);
-router.get("/assigned-orders/:userId", getAssignedOrdersByUser); // Get assigned orders by User
-router.get("/all-assigned-orders", getAllAssignedOrders); // Admin View
-router.delete("/delivery/:orderId", deleteAssignedOrder);
 
+// Get all assigned orders
+router.get("/assigned", authenticate, getAssignedOrders);
 
+// Update delivery status
+router.put("/:orderId/status", authenticate, updateDeliveryStatus);
 
+// Get available delivery officers
+router.get("/officers", authenticate, getDeliveryOfficers);
 
+// Get order tracking info
+router.get("/tracking/:orderId", authenticate, getOrderTracking);
 
-export default router;
+module.exports = router;

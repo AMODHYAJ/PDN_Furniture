@@ -1,25 +1,35 @@
-import jwt from 'jsonwebtoken';
+const jwt = require("jsonwebtoken");
 
 const agentAuth = async (req, res, next) => {
   try {
-    // Get token from Authorization header (Bearer <token>)
-    const token = req.headers['authorization']?.split(' ')[1];
-    
-    if (!token) {
-      return res.status(401).json({ success: false, message: 'Token required. Not Authorized' });
+    const authHeader = req.header("Authorization");
+    if (!authHeader?.startsWith("Bearer ")) {
+      return res.status(401).json({ 
+        success: false,
+        message: "Access denied. No valid token provided." 
+      });
     }
 
-    // Verify the token and get the decoded data
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    
+    // Additional check for agent role if needed
+    if (decoded.role !== 'delivery') {
+      return res.status(403).json({
+        success: false,
+        message: "Access restricted to delivery agents"
+      });
+    }
 
-    // Attach the decoded token (user info) to req.user
-    req.agent = decodedToken;
-
-    next(); // Proceed to the next middleware or route handler
+    req.agent = decoded;
+    next();
   } catch (error) {
-    console.error(error);
-    res.status(401).json({ success: false, message: 'Invalid or expired token. Not Authorized' });
+    console.error("Agent auth failed:", error);
+    res.status(401).json({ 
+      success: false,
+      message: "Invalid or expired token." 
+    });
   }
 };
 
-export default agentAuth;
+module.exports = agentAuth;

@@ -1,11 +1,9 @@
-// src/components/CompletedOrders.js
 import React, { useState, useEffect } from 'react';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
-import api from '../utils/api'; // Use configured axios instance
+import api from '../utils/api';
 import './CompletedOrders.css';
 import ProgressNavBar from "../Components/ProgressNavBar";
 
-// PDF Document Component
 const ProductionReportPDF = ({ order }) => (
   <Document>
     <Page style={styles.page}>
@@ -44,7 +42,6 @@ const ProductionReportPDF = ({ order }) => (
   </Document>
 );
 
-// PDF Styles
 const styles = StyleSheet.create({
   page: { padding: 30 },
   header: { fontSize: 24, marginBottom: 10, fontWeight: 'bold' },
@@ -68,13 +65,11 @@ const CompletedOrders = () => {
             try {
                 setLoading(true);
                 setError(null);
-                
-                // Use the api instance instead of axios directly
                 const response = await api.get('/tasks/orders');
                 setOrders(response.data.filter(order => order.progress === 100));
             } catch (error) {
                 console.error("Error fetching completed orders:", error);
-                setError("Failed to load completed orders. Please try again.");
+                setError("Failed to load completed orders");
             } finally {
                 setLoading(false);
             }
@@ -85,14 +80,20 @@ const CompletedOrders = () => {
     if (loading) return (
         <div className="completed-orders-container">
             <ProgressNavBar />
-            <div className="loading-message">Loading completed orders...</div>
+            <div className="loading-spinner">
+                <div className="spinner"></div>
+                Loading completed orders...
+            </div>
         </div>
     );
 
     if (error) return (
         <div className="completed-orders-container">
             <ProgressNavBar />
-            <div className="error-message">{error}</div>
+            <div className="error-message">
+                <span className="error-icon">⚠️</span>
+                {error}
+            </div>
         </div>
     );
 
@@ -100,83 +101,121 @@ const CompletedOrders = () => {
         <>
             <ProgressNavBar />
             <div className="completed-orders-container">
-                <h2>Completed Orders</h2>
+                <div className="header-section">
+                    <h2>Completed Orders</h2>
+                    <div className="stats-summary">
+                        <span className="stat-item">
+                            <span className="stat-value">{orders.length}</span>
+                            <span className="stat-label">Total Orders</span>
+                        </span>
+                    </div>
+                </div>
 
                 {selectedOrder ? (
-                    <div className="report-preview">
-                        <h3>Production Report Preview - Order #{selectedOrder.orderId}</h3>
+                    <div className="report-preview-container">
+                        <div className="report-header">
+                            <h3>Production Report - Order #{selectedOrder.orderId}</h3>
+                            <button 
+                                onClick={() => setSelectedOrder(null)}
+                                className="back-button"
+                            >
+                                ← Back to List
+                            </button>
+                        </div>
 
                         <div className="report-content">
-                            <h4>Tasks Summary</h4>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Task Name</th>
-                                        <th>Status</th>
-                                        <th>Time (hrs)</th>
-                                        <th>Due Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {selectedOrder.tasks?.map((task, index) => (
-                                        <tr key={index}>
-                                            <td>{task.taskName}</td>
-                                            <td>{task.status}</td>
-                                            <td>{task.estimatedTime}</td>
-                                            <td>{task.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'N/A'}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                            <div className="report-summary-card">
+                                <div className="summary-item">
+                                    <span className="summary-label">Total Time</span>
+                                    <span className="summary-value">{selectedOrder.totalEstimatedTime} hours</span>
+                                </div>
+                                <div className="summary-item">
+                                    <span className="summary-label">Priority</span>
+                                    <span className="summary-value">{selectedOrder.priorityLevel}</span>
+                                </div>
+                                <div className="summary-item">
+                                    <span className="summary-label">Risk Level</span>
+                                    <span className="summary-value">{selectedOrder.riskLevel}</span>
+                                </div>
+                            </div>
 
-                            <div className="report-summary">
-                                <p><strong>Total Time:</strong> {selectedOrder.totalEstimatedTime} hours</p>
-                                <p><strong>Priority:</strong> {selectedOrder.priorityLevel}</p>
-                                <p><strong>Risk Level:</strong> {selectedOrder.riskLevel}</p>
+                            <div className="tasks-table-container">
+                                <table className="tasks-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Task Name</th>
+                                            <th>Status</th>
+                                            <th>Time (hrs)</th>
+                                            <th>Due Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {selectedOrder.tasks?.map((task, index) => (
+                                            <tr key={index}>
+                                                <td>{task.taskName}</td>
+                                                <td>
+                                                    <span className={`status-badge ${task.status.toLowerCase()}`}>
+                                                        {task.status}
+                                                    </span>
+                                                </td>
+                                                <td>{task.estimatedTime}</td>
+                                                <td>{task.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'N/A'}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
                             </div>
 
                             <div className="report-actions">
-                                <button 
-                                    onClick={() => setSelectedOrder(null)}
-                                    className="back-button"
-                                >
-                                    Back to List
-                                </button>
-
                                 <PDFDownloadLink
                                     document={<ProductionReportPDF order={selectedOrder} />}
                                     fileName={`production_report_${selectedOrder.orderId}.pdf`}
                                     className="pdf-download-button"
                                 >
-                                    {({ loading }) => (loading ? 'Generating PDF...' : 'Export PDF')}
+                                    {({ loading }) => (
+                                        loading ? 'Generating PDF...' : 'Export PDF Report'
+                                    )}
                                 </PDFDownloadLink>
                             </div>
                         </div>
                     </div>
                 ) : (
-                    <div className="orders-list">
+                    <div className="orders-list-container">
                         {orders.length === 0 ? (
-                            <p className="no-orders-message">No completed orders found</p>
+                            <div className="empty-state">
+                                <div className="empty-icon">📦</div>
+                                <h3>No Completed Orders</h3>
+                                <p>All completed orders will appear here</p>
+                            </div>
                         ) : (
-                            <ul>
+                            <div className="orders-grid">
                                 {orders.map(order => (
-                                    <li key={order._id} className="order-item">
-                                        <div className="order-details">
-                                            <p><span className="detail-label">Order ID:</span> {order.orderId}</p>
-                                            <p><span className="detail-label">Priority:</span> {order.priorityLevel}</p>
-                                            {order.totalEstimatedTime && (
-                                                <p><span className="detail-label">Total Time:</span> {order.totalEstimatedTime} hours</p>
-                                            )}
+                                    <div key={order._id} className="order-card">
+                                        <div className="card-header">
+                                            <span className="order-id">Order #{order.orderId}</span>
+                                            <span className={`priority-badge ${order.priorityLevel.toLowerCase()}`}>
+                                                {order.priorityLevel}
+                                            </span>
+                                        </div>
+                                        <div className="card-body">
+                                            <div className="order-meta">
+                                                <div className="meta-item">
+                                                    <span className="meta-label">Total Time</span>
+                                                    <span className="meta-value">{order.totalEstimatedTime} hours</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="card-footer">
                                             <button
-                                                className="report-button"
+                                                className="view-report-button"
                                                 onClick={() => setSelectedOrder(order)}
                                             >
-                                                Production Report
+                                                View Production Report
                                             </button>
                                         </div>
-                                    </li>
+                                    </div>
                                 ))}
-                            </ul>
+                            </div>
                         )}
                     </div>
                 )}

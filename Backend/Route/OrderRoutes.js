@@ -10,33 +10,52 @@ const isAdmin = require("../middleware/isAdmin");
 router.post("/", authenticate, OrderController.createOrder);
 router.get("/:id", authenticate, OrderController.getOrderById);
 router.get("/user/my-orders", authenticate, OrderController.getUserOrders);
-router.get('/user/history', authenticate, OrderController.getOrderHistory);
-router.put('/:id/cancel', authenticate, OrderController.cancelOrder);
-router.get('/:id/tracking', authenticate, OrderController.getTrackingInfo);
+router.get("/user/history", authenticate, OrderController.getOrderHistory);
+router.put("/:id/cancel", authenticate, OrderController.cancelOrder);
+router.get("/:id/tracking", authenticate, OrderController.getTrackingInfo);
 
 // Admin routes with proper middleware chaining
-router.get("/admin/all-orders", 
-    authenticate, 
-    isAdmin, 
-    OrderController.getAllOrders
-  );
-  
-  router.get("/admin/stats", 
-    authenticate, 
-    isAdmin, 
-    OrderController.getOrderStats
-  );
-  
-  router.put("/admin/:id/update-status", 
-    authenticate, 
-    isAdmin, 
-    OrderController.updateOrderStatus
-  );
-  
-  router.get("/admin/:id", 
-    authenticate, 
-    isAdmin, 
-    OrderController.getAdminOrderById
-  );
-  
-  module.exports = router;
+router.get(
+  "/admin/all-orders",
+  authenticate,
+  isAdmin,
+  OrderController.getAllOrders
+);
+
+router.get(
+  "/admin/stats",
+  authenticate,
+  isAdmin,
+  OrderController.getOrderStats
+);
+
+router.put(
+  "/admin/:id/update-status",
+  authenticate,
+  isAdmin,
+  OrderController.updateOrderStatus
+);
+
+router.get(
+  "/admin/:id",
+  authenticate,
+  isAdmin,
+  OrderController.getAdminOrderById
+);
+
+// New delivery assignment routes
+router.get(
+  "/admin/for-delivery",
+  authenticate,
+  isAdmin,
+  OrderController.getOrdersForDelivery
+);
+
+router.post(
+  "/assign-delivery",
+  authenticate,
+  isAdmin,
+  OrderController.assignToDelivery
+);
+
+module.exports = router;

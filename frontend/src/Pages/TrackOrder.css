@@ -5,22 +5,6 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.back-button {
-  background: none;
-  border: none;
-  color: #0066cc;
-  font-size: 16px;
-  cursor: pointer;
-  margin-bottom: 20px;
-  padding: 5px 10px;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-}
-
-.back-button:hover {
-  background-color: #f0f0f0;
-}
-
 .tracking-header {
   margin-bottom: 30px;
   padding-bottom: 15px;
@@ -39,18 +23,6 @@
   color: #666;
 }
 
-.order-preparation {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 30px;
-}
-
-.order-preparation h2 {
-  margin-top: 0;
-  color: #333;
-}
-
 .tracking-info-card {
   background: white;
   padding: 20px;
@@ -61,6 +33,7 @@
 
 .tracking-info-card h2 {
   margin-top: 0;
+  color: #333;
 }
 
 .tracking-meta {
@@ -71,6 +44,7 @@
 
 .tracking-meta p {
   margin: 5px 0;
+  color: #555;
 }
 
 .timeline-container {
@@ -78,16 +52,17 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  margin-bottom: 30px;
 }
 
 .timeline-container h2 {
   margin-top: 0;
+  color: #333;
 }
 
 .timeline {
   position: relative;
   padding-left: 30px;
+  margin-top: 20px;
 }
 
 .timeline-step {
@@ -108,26 +83,28 @@
   background: #007bff;
   border: 3px solid white;
   box-shadow: 0 0 0 2px #007bff;
+  z-index: 1;
 }
 
 .marker-line {
   position: absolute;
-  left: 50%;
+  left: 5px;
   top: 16px;
   bottom: 0;
   width: 2px;
   background: #ddd;
-  transform: translateX(-50%);
 }
 
 .timeline-content {
-  padding: 10px 15px;
+  padding: 15px;
   background: #f8f9fa;
   border-radius: 6px;
+  margin-bottom: 10px;
 }
 
 .timeline-content h4 {
   margin: 0 0 5px 0;
+  color: #333;
 }
 
 .timeline-meta {
@@ -140,7 +117,7 @@
 
 .status-badge {
   display: inline-block;
-  padding: 3px 8px;
+  padding: 4px 8px;
   border-radius: 4px;
   font-size: 0.8em;
   font-weight: bold;
@@ -172,23 +149,6 @@
   color: #721c24;
 }
 
-.delivery-confirmation {
-  text-align: center;
-  padding: 20px;
-  background: #d4edda;
-  border-radius: 8px;
-}
-
-.view-order-btn {
-  padding: 8px 16px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
 .loading {
   text-align: center;
   padding: 50px;
@@ -212,5 +172,10 @@
   
   .timeline-marker {
     left: -20px;
+  }
+  
+  .timeline-meta {
+    flex-direction: column;
+    gap: 5px;
   }
 }

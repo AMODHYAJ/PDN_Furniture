@@ -36,6 +36,10 @@ const AdminDashboard = () => {
             <h2>Manage Delivery</h2>
             <p>Manage and track deivery</p>
           </Link>
+          <Link to="/admin/delivery-officers" className="admin-card">
+          <h2>Manage Delivery Officers</h2>
+          <p>Add, edit, or remove delivery personnel</p>
+        </Link>
         </div>
       </div>
     </div>

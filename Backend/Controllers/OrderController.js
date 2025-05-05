@@ -1,6 +1,8 @@
 const Order = require('../Model/OrderModel');
 const Cart = require('../Model/CartModel');
 const Product = require('../Model/ProductModel');
+const DeliveryOfficer = require("../Model/DeliveryOfficerModel");
+const mongoose = require('mongoose');
 
 exports.createOrder = async (req, res) => {
   try {
@@ -147,16 +149,24 @@ exports.getUserOrders = async (req, res) => {
 // Get paginated order history
 exports.getOrderHistory = async (req, res) => {
   try {
-    const { page = 1, limit = 10 } = req.query;
+    const { page = 1, limit = 10, status } = req.query;
     const skip = (page - 1) * limit;
 
-    const orders = await Order.find({ userId: req.userId })
+    // Build query object
+    const query = { userId: req.userId };
+    
+    // Add status filter if provided and not 'all'
+    if (status && status !== 'all') {
+      query.status = status;
+    }
+
+    const orders = await Order.find(query)
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(parseInt(limit))
       .populate('items.productId', 'name image');
 
-    const count = await Order.countDocuments({ userId: req.userId });
+    const count = await Order.countDocuments(query);
 
     res.json({
       success: true,
@@ -303,6 +313,7 @@ exports.getAllOrders = async (req, res) => {
 
     const orders = await Order.find(query)
       .populate('userId', 'name email')
+      .populate('deliveryOfficer', 'name phone')
       .populate('items.productId', 'name price image')
       .sort(sort)
       .skip(skip)
@@ -463,6 +474,82 @@ exports.getAdminOrderById = async (req, res) => {
       success: false,
       message: 'Failed to fetch order',
       error: error.message
+    });
+  }
+};
+
+// Get orders ready for delivery assignment
+exports.getOrdersForDelivery = async (req, res) => {
+  try {
+    const orders = await Order.find({ 
+      status: 'shipped',
+      deliveryStatus: { $in: ['pending', 'assigned'] }
+    })
+    .populate('userId', 'name email')
+    .populate('items.productId', 'name')
+    .sort('-createdAt');
+    
+    res.json({ success: true, orders });
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      message: "Failed to fetch orders",
+      error: error.message 
+    });
+  }
+};
+
+// Update the assignToDelivery method
+exports.assignToDelivery = async (req, res) => {
+  try {
+    const { orderId, officerId, estimatedDate, notes, fee } = req.body;
+
+    // Validate IDs
+    if (!mongoose.Types.ObjectId.isValid(orderId) || !mongoose.Types.ObjectId.isValid(officerId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid ID format"
+      });
+    }
+
+    // Update order
+    const updatedOrder = await Order.findByIdAndUpdate(
+      orderId,
+      {
+        deliveryOfficer: officerId,
+        estimatedDeliveryDate: estimatedDate,
+        deliveryStatus: 'assigned',
+        deliveryNotes: notes,
+        deliveryFee: fee || 0,
+        trackingNumber: `TRK-${Math.floor(100000 + Math.random() * 900000)}`
+      },
+      { new: true }
+    ).populate('userId deliveryOfficer', 'name email phone');
+
+    if (!updatedOrder) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found"
+      });
+    }
+
+    // Update officer availability
+    await DeliveryOfficer.findByIdAndUpdate(
+      officerId,
+      { isAvailable: false }
+    );
+
+    res.json({
+      success: true,
+      order: updatedOrder
+    });
+
+  } catch (error) {
+    console.error('Delivery assignment error:', error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to assign order",
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 };

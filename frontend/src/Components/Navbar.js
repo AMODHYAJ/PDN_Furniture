@@ -34,6 +34,7 @@ const Navbar = () => {
                   <Link to="/admin/inventory" className="nav-link">Inventory</Link>
                   <Link to="/admin/workforce" className="nav-link">Production Progress</Link>
                   <Link to="/admin/delivery" className="nav-link">Delivery</Link>
+                  <Link to="/admin/delivery-officers" className="nav-link">Delivery Officers</Link>
                   <Link to="/admin/stats" className="nav-link">Statistics</Link>
                 </>
               ) : (

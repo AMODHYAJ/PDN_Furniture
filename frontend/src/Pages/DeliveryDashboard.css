@@ -1,0 +1,104 @@
+.delivery-dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .delivery-dashboard h1 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .status-filter {
+    margin-bottom: 20px;
+  }
+  
+  .status-filter select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: white;
+    cursor: pointer;
+  }
+  
+  .orders-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .order-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .order-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .order-card h3 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+  }
+  
+  .order-card p {
+    margin: 8px 0;
+    color: #555;
+    font-size: 0.9rem;
+  }
+  
+  .order-card strong {
+    color: #333;
+  }
+  
+  .status-actions {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+  }
+  
+  .status-actions button {
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+  }
+  
+  .status-actions button:hover {
+    background-color: #0069d9;
+  }
+  
+  .status-actions button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 50px;
+    color: #666;
+  }
+  
+  .error {
+    text-align: center;
+    padding: 50px;
+    color: #dc3545;
+  }
+  
+  @media (max-width: 768px) {
+    .orders-list {
+      grid-template-columns: 1fr;
+    }
+  }

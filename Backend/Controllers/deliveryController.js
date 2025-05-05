@@ -1,93 +1,153 @@
-const Delivery = require("../Model/DeliveryModel")
-const User = require("../Model/UserModel")
+const Order = require("../Model/OrderModel");
+const DeliveryOfficer = require("../Model/DeliveryOfficerModel");
 
-// Assign an Order to a Delivery Officer
-export const assignOrder = async (req, res) => {
+// Get assigned orders
+exports.getAssignedOrders = async (req, res) => {
   try {
-    const {
-      userId, // User who placed the order
-      orderId,
-      customerName,
-      deliveryOfficer,
-      deliveryOfficerEmail,
-      estimatedDeliveryDate,
-      deliveryNotes,
-      deliveryFee,
-      trackingNumber,
-      comments
-    } = req.body;
-
-    // Check if user exists
-    const userExists = await User.findById(userId);
-    if (!userExists) {
-      return res.status(404).json({ error: "User not found" });
+    const { status } = req.query;
+    let query = { deliveryStatus: { $ne: 'pending' } };
+    
+    if (status) {
+      query.deliveryStatus = status;
     }
-
-    // Create a new Delivery record
-    const newDelivery = new Delivery({
-      userId, // Store user ID
-      orderId,
-      customerName,
-      deliveryOfficer,
-      deliveryOfficerEmail,
-      estimatedDeliveryDate,
-      deliveryNotes,
-      deliveryFee,
-      trackingNumber,
-      comments
+    
+    const orders = await Order.find(query)
+      .populate('userId', 'name email')
+      .populate('deliveryOfficer', 'name phone')
+      .sort('-shippedAt');
+    
+    res.json({ success: true, orders });
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      message: "Failed to fetch orders",
+      error: error.message 
     });
-
-    await newDelivery.save();
-    res.status(201).json({ message: "Order assigned successfully", newDelivery });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
   }
 };
 
-
-
-// Get all assigned orders for a specific user
-export const getAssignedOrdersByUser = async (req, res) => {
+// Update delivery status
+exports.updateDeliveryStatus = async (req, res) => {
   try {
-    const { userId } = req.params;
-
-    // Validate user existence
-    const userExists = await User.findById(userId);
-    if (!userExists) {
-      return res.status(404).json({ error: "User not found" });
+    const { orderId } = req.params;
+    const { status } = req.body;
+    
+    if (!['in_transit', 'delivered', 'failed'].includes(status)) {
+      return res.status(400).json({ 
+        success: false,
+        message: "Invalid status" 
+      });
     }
-
-    const deliveries = await Delivery.find({ userId }).sort({ assignedAt: -1 });
-    res.status(200).json(deliveries);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-// Get all assigned orders (Admin View)
-export const getAllAssignedOrders = async (req, res) => {
-  try {
-    const deliveries = await Delivery.find().populate("userId", "name email").sort({ assignedAt: -1 });
-    res.status(200).json(deliveries);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-
-export const deleteAssignedOrder = async (req, res) => {
-  try {
-    const { orderId } = req.params; // Get orderId from request params
-
-    // Find and delete the delivery order
-    const deletedOrder = await Delivery.findOneAndDelete({ orderId });
-
-    if (!deletedOrder) {
-      return res.status(404).json({ error: "Order not found" });
+    
+    const updateData = { deliveryStatus: status };
+    
+    if (status === 'delivered') {
+      updateData.deliveredAt = new Date();
+      updateData.status = 'delivered';
     }
-
-    res.status(200).json({ message: "Order deleted successfully", deletedOrder });
+    
+    const order = await Order.findByIdAndUpdate(
+      orderId,
+      updateData,
+      { new: true }
+    ).populate('userId', 'name email')
+     .populate('deliveryOfficer', 'name phone');
+    
+    if (!order) {
+      return res.status(404).json({ 
+        success: false,
+        message: "Order not found" 
+      });
+    }
+    
+    res.json({ success: true, order });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ 
+      success: false,
+      message: "Failed to update status",
+      error: error.message 
+    });
+  }
+};
+
+// Get available delivery officers
+exports.getDeliveryOfficers = async (req, res) => {
+  try {
+    const officers = await DeliveryOfficer.find({ isAvailable: true });
+    res.json({ success: true, officers });
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      message: "Failed to fetch officers",
+      error: error.message 
+    });
+  }
+};
+
+// Get order tracking info
+exports.getOrderTracking = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    
+    const order = await Order.findById(orderId)
+      .populate('userId', 'name email')
+      .populate('deliveryOfficer', 'name phone');
+    
+    if (!order) {
+      return res.status(404).json({ 
+        success: false,
+        message: "Order not found" 
+      });
+    }
+    
+    // Generate timeline events
+    const trackingUpdates = [
+      {
+        status: 'processing',
+        location: 'Warehouse',
+        date: order.createdAt,
+        description: 'Order received and being processed'
+      }
+    ];
+    
+    if (order.shippedAt) {
+      trackingUpdates.push({
+        status: 'shipped',
+        location: 'Distribution Center',
+        date: order.shippedAt,
+        description: 'Order has been shipped'
+      });
+    }
+    
+    if (order.deliveryStatus === 'in_transit') {
+      trackingUpdates.push({
+        status: 'in_transit',
+        location: 'In Transit',
+        date: new Date(order.shippedAt.getTime() + 12 * 60 * 60 * 1000),
+        description: 'Package is in transit'
+      });
+    }
+    
+    if (order.deliveredAt) {
+      trackingUpdates.push({
+        status: 'delivered',
+        location: order.shippingAddress.city,
+        date: order.deliveredAt,
+        description: 'Order has been delivered'
+      });
+    }
+    
+    res.json({
+      success: true,
+      order,
+      trackingUpdates,
+      estimatedDelivery: order.estimatedDeliveryDate
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      message: "Failed to get tracking info",
+      error: error.message 
+    });
   }
 };

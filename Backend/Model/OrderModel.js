@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema({
   userId: {
@@ -58,6 +58,19 @@ const OrderSchema = new mongoose.Schema({
   },
   cancelledAt: {
     type: Date
+  },
+  // Delivery assignment fields
+  deliveryOfficer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'DeliveryOfficerModel'
+  },
+  estimatedDeliveryDate: Date,
+  deliveryNotes: String,
+  deliveryFee: Number,
+  deliveryStatus: {
+    type: String,
+    enum: ['pending', 'assigned', 'in_transit', 'delivered', 'failed'],
+    default: 'pending'
   }
 }, {
   timestamps: true

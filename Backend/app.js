@@ -20,6 +20,8 @@ const taskRouter = require("./Route/TaskRoutes");
 const productReportRoutes = require('./Route/ProductReportRoute');
 const analyticsRoutes = require('./Route/AnalyticsRoutes');
 const inventoryReportRoute = require('./Route/inventoryReportRoute');
+const deliveryRoutes = require('./Route/deliveryRoutes');
+const deliveryOfficerRoutes = require('./Route/deliveryOfficerRoutes');
 
 // Load environment variables
 dotenv.config();
@@ -46,7 +48,6 @@ app.use('/images', express.static(path.join(__dirname, 'public/images')));
 // Serve static files from public directory
 app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
 
-
 // Routes
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
@@ -63,6 +64,8 @@ app.use("/tasks", taskRouter);
 app.use('/reports', productReportRoutes);
 app.use('/analytics', analyticsRoutes);
 app.use('/api/reports',inventoryReportRoute);
+app.use("/delivery",deliveryRoutes);
+app.use("/delivery-officers",deliveryOfficerRoutes);
 
 // Health check endpoint
 app.get("/health", (req, res) => {

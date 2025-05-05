@@ -1,7 +1,6 @@
-// src/components/OngoingOrders.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import api from '../utils/api'; // Use your configured axios instance
+import api from '../utils/api';
 import './OngoingOrders.css';
 import ProgressNavBar from "../Components/ProgressNavBar";
 
@@ -16,7 +15,6 @@ const OngoingOrders = () => {
         setLoading(true);
         setError(null);
         
-        // Use the api instance instead of axios directly
         const response = await api.get('/tasks/orders');
         
         setOrders(response.data.filter(order => 
@@ -34,10 +32,9 @@ const OngoingOrders = () => {
 
     fetchOrders();
   }, []);
-  
 
-  if (loading) return <div>Loading orders...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="loading-spinner">Loading orders...</div>;
+  if (error) return <div className="error-message">Error: {error}</div>;
 
   return (
     <>
@@ -46,25 +43,44 @@ const OngoingOrders = () => {
         <h2>Ongoing Orders</h2>
         
         {orders.length === 0 ? (
-          <p>No ongoing orders found</p>
+          <div className="no-orders">
+            <p>No ongoing orders found</p>
+            <Link to="/new-order" className="new-order-btn">
+              Create New Order
+            </Link>
+          </div>
         ) : (
-          <ul className="orders-list">
+          <div className="orders-grid">
             {orders.map(order => (
-              <li key={order._id} className="order-item">
-                <div className="order-details">
-                  <p><strong>Order ID:</strong> {order.orderId}</p>
-                  <p><strong>Total Estimated Time:</strong> {order.totalEstimatedTime || 'N/A'} hours</p>
-                  <p><strong>Progress:</strong> {order.progress}%</p>
+              <div key={order._id} className="order-card">
+                <div className="order-header">
+                  <h3>Order #{order.orderId?.substring(0, 8) || 'N/A'}</h3>
+                  <span className="estimated-time">
+                    {order.totalEstimatedTime || 'N/A'} hours
+                  </span>
                 </div>
-                <Link
-                  to={`/order/${order._id}`}
-                  className="view-progress-button"
-                >
-                  View Order Progress
-                </Link>
-              </li>
+                
+                <div className="progress-container">
+                  <div className="progress-bar">
+                    <div 
+                      className="progress-fill"
+                      style={{ width: `${order.progress}%` }}
+                    ></div>
+                  </div>
+                  <span className="progress-percent">{order.progress}%</span>
+                </div>
+                
+                <div className="order-footer">
+                  <Link
+                    to={`/order/${order._id}`}
+                    className="view-progress-button"
+                  >
+                    View Details
+                  </Link>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
     </>
