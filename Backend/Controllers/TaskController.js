@@ -60,31 +60,39 @@ const saveTaskSchedule = async (req, res, next) => {
     const { orderId, tasks, totalEstimatedTime, riskLevel, suggestedNewDeadline } = req.body;
 
     try {
-        // First verify the order exists and is in processing state
-        const order = await Order.findById(orderId);
-        if (!order || order.status !== "processing") {
-            return res.status(400).json({ message: "Order not in processing state or doesn't exist" });
+        // Validate employee assignments
+        const hasUnassignedTasks = tasks.tasks.some(task => !task.assignedTo);
+        if (hasUnassignedTasks) {
+            return res.status(400).json({ message: "All tasks must have assigned employees" });
         }
 
-        // Update the existing order document
+        // Verify the order exists
+        const order = await Order.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+
+        // Update the order document
         const updatedOrder = await Task.findOneAndUpdate(
             { orderId: orderId },
             {
-                customerApproval: "Approved", // Or whatever the 'ongoing' approval status is
-                productionStatus: "Processing", // Example: set a production status
+                customerApproval: "Approved",
+                productionStatus: "Processing",
                 tasks: tasks.tasks,
                 totalEstimatedTime: totalEstimatedTime,
                 riskLevel: riskLevel,
                 suggestedNewDeadline: suggestedNewDeadline || null,
             },
-            { new: true }
+            { new: true, upsert: true } // Create if doesn't exist
         );
 
-        if (!updatedOrder) {
-            return res.status(404).json({ message: `Pending order with ID ${orderId} not found.` });
-        }
+        // Update the original order status
+        await Order.findByIdAndUpdate(orderId, { status: "in_production" });
 
-        return res.status(200).json({ message: "Order updated to ongoing with generated tasks.", updatedOrder });
+        return res.status(200).json({ 
+            message: "Order updated with generated tasks", 
+            updatedOrder 
+        });
 
     } catch (error) {
         console.error("Error updating order:", error);

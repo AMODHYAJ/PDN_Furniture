@@ -11,14 +11,21 @@ const ProgressOrderDetails = () => {
   const [isStatusChanged, setIsStatusChanged] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [employees, setEmployees] = useState([]);
+  const [refreshTrigger, setRefreshTrigger] = useState(false);
 
   useEffect(() => {
-    const fetchOrder = async () => {
+    const fetchData = async () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await api.get(`/tasks/orders`);
-        const selectedOrder = response.data.find((o) => o._id === id);
+        // Fetch employees first
+        const empResponse = await api.get('/employees');
+        setEmployees(empResponse.data);
+
+        // Then fetch the order with fresh data
+        const orderResponse = await api.get(`/tasks/orders`);
+        const selectedOrder = orderResponse.data.find((o) => o._id === id);
         setOrder(selectedOrder);
 
         if (selectedOrder && selectedOrder.tasks) {
@@ -29,15 +36,21 @@ const ProgressOrderDetails = () => {
           setTaskStatus(initialStatus);
         }
       } catch (error) {
-        console.error("Error fetching order:", error);
+        console.error("Error fetching data:", error);
         setError("Failed to load order details.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchOrder();
-  }, [id]);
+    fetchData();
+  }, [id, refreshTrigger]);
+
+  const getEmployeeName = (employeeId) => {
+    if (!employeeId) return "Not Assigned";
+    const employee = employees.find(emp => emp._id === employeeId);
+    return employee ? `${employee.name} (${employee.role})` : "Unknown Employee";
+  };
 
   useEffect(() => {
     if (order && order.tasks) {
@@ -71,16 +84,9 @@ const ProgressOrderDetails = () => {
         for (const taskId of updatesToSend) {
           const newStatus = taskStatus[taskId];
           try {
-            const response = await api.put("/tasks/update-task-progress", {
+            await api.put("/tasks/update-task-progress", {
               taskId: taskId,
               status: newStatus,
-            });
-            setOrder((prevOrder) => {
-              if (!prevOrder || !prevOrder.tasks) return prevOrder;
-              const updatedTasks = prevOrder.tasks.map((task) =>
-                task._id === taskId ? { ...task, status: newStatus } : task
-              );
-              return { ...prevOrder, tasks: updatedTasks };
             });
           } catch (updateError) {
             console.error(`Error updating task ${taskId}:`, updateError);
@@ -89,6 +95,9 @@ const ProgressOrderDetails = () => {
             return;
           }
         }
+        
+        // Trigger refresh after all updates
+        setRefreshTrigger(prev => !prev);
         setIsStatusChanged(false);
         alert("Task status updated successfully!");
       } else {
@@ -133,31 +142,37 @@ const ProgressOrderDetails = () => {
         </p>
 
         <h3>Tasks:</h3>
-        <ul>
+        <div className="task-table">
+          <div className="task-header">
+            <div className="task-column">Task Name</div>
+            <div className="task-column">Assigned To</div>
+            <div className="task-column">Status</div>
+            <div className="task-column">Update Status</div>
+          </div>
+          
           {order.tasks?.map((task) => (
-            <li key={task._id}>
-              <p>
-                <strong>Task Name:</strong> {task.taskName}
-              </p>
-              <p>
-                <strong>Assigned To:</strong>{" "}
-                {task.assignedTo?.name || "Not Assigned"}
-              </p>
-              <p>
-                <strong>Status:</strong> {taskStatus[task._id]}
-              </p>
-              <select
-                value={taskStatus[task._id]}
-                onChange={(e) => handleStatusChange(task._id, e.target.value)}
-                disabled={task.status === "Completed"}
-              >
-                <option value="Pending">Pending</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
-              </select>
-            </li>
+            <div key={task._id} className="task-row">
+              <div className="task-column">{task.taskName}</div>
+              <div className="task-column">{getEmployeeName(task.assignedTo)}</div>
+              <div className="task-column">
+                <span className={`status-badge ${taskStatus[task._id].toLowerCase().replace(' ', '-')}`}>
+                  {taskStatus[task._id]}
+                </span>
+              </div>
+              <div className="task-column">
+                <select
+                  value={taskStatus[task._id]}
+                  onChange={(e) => handleStatusChange(task._id, e.target.value)}
+                  disabled={task.status === "Completed"}
+                >
+                  <option value="Pending">Pending</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
 
         <div className="luxury-actions">
           <button

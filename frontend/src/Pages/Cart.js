@@ -91,17 +91,24 @@ const Cart = () => {
     if (!window.confirm("Are you sure you want to clear your cart?")) return;
     
     try {
-      // Optimistic UI update
-      setCart({ items: [], totalPrice: 0, totalQuantity: 0 });
+      const response = await api.delete(`/cart/${user._id}/clear`);
       
-      await api.delete(`/cart/${user._id}/clear`);
-      await fetchCart();
+      // Use the response data to update the state
+      if (response.data.success) {
+        setCart({
+          items: [],
+          totalPrice: 0,
+          totalQuantity: 0
+        });
+      } else {
+        await fetchCart(); // Fallback to refetch if something went wrong
+      }
     } catch (error) {
       console.error("Error clearing cart:", error);
-      await fetchCart();
       alert(error.response?.data?.error || "Failed to clear cart");
+      await fetchCart(); // Ensure we're showing the current state
     }
-  };
+};
 
   if (loading) return <div className="loading">Loading your cart...</div>;
   if (error) return <div className="error">{error}</div>;

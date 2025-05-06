@@ -108,23 +108,17 @@ const updateCartItemQuantity = async (req, res) => {
     }
 };
 
-// Clear Cart (improved response)
+// Clear Cart (fixed implementation)
 const clearCart = async (req, res) => {
     try {
         const { userId } = req.params;
 
+        // Find and update the cart in one operation
         const cart = await Cart.findOneAndUpdate(
             { userId },
-            { 
-                $set: { 
-                    items: [], 
-                    totalPrice: 0, 
-                    totalQuantity: 0,
-                    updatedAt: new Date() 
-                } 
-            },
+            { $set: { items: [] } }, // Only clear the items array
             { new: true }
-        ).lean();
+        ).populate("items.productId", "name price image");
 
         if (!cart) {
             return res.status(404).json({ error: "Cart not found" });
@@ -134,7 +128,7 @@ const clearCart = async (req, res) => {
             success: true,
             message: "Cart cleared successfully",
             cart: {
-                ...cart,
+                ...cart.toObject(),
                 items: [],
                 totalPrice: 0,
                 totalQuantity: 0
