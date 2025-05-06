@@ -46,62 +46,85 @@ const DeliveryOfficersList = () => {
     }
   };
 
-  if (loading) return <div className="loading">Loading officers...</div>;
-  if (error) return <div className="error">{error}</div>;
+  if (loading) return (
+    <div className="luxury-loading">
+      <div className="luxury-spinner"></div>
+      <p>Loading delivery team...</p>
+    </div>
+  );
+  
+  if (error) return (
+    <div className="luxury-error-message">
+      <span className="luxury-error-icon">⚠️</span>
+      {error}
+    </div>
+  );
 
   return (
-    <div className="delivery-officers-container">
-      <div className="header">
-        <h1>Delivery Officers</h1>
-        <Link to="/admin/delivery-officers/add" className="add-btn">
-          Add New Officer
+    <div className="luxury-officers-container">
+      <div className="luxury-header">
+        <h1 className="luxury-title">Delivery Team Management</h1>
+        <div className="luxury-divider"></div>
+      </div>
+
+      <div className="luxury-controls">
+        <Link to="/admin/delivery-officers/add" className="luxury-add-btn">
+          <span className="luxury-btn-icon">+</span> Add New Officer
         </Link>
       </div>
 
-      <table className="officers-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Role</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {officers.map(officer => (
-            <tr key={officer._id}>
-              <td>{officer.name}</td>
-              <td>{officer.email}</td>
-              <td>{officer.phone}</td>
-              <td>{officer.role}</td>
-              <td>
-                <span className={`status ${officer.isAvailable ? 'available' : 'unavailable'}`}>
-                  {officer.isAvailable ? 'Available' : 'Unavailable'}
-                </span>
-              </td>
-              <td className="actions">
-                <button
-                  onClick={() => handleToggleAvailability(officer._id, officer.isAvailable)}
-                  className={`toggle-btn ${officer.isAvailable ? 'make-unavailable' : 'make-available'}`}
-                >
-                  {officer.isAvailable ? 'Mark Unavailable' : 'Mark Available'}
-                </button>
-                <Link to={`/admin/delivery-officers/edit/${officer._id}`} className="edit-btn">
-                  Edit
-                </Link>
-                <button
-                  onClick={() => handleDelete(officer._id)}
-                  className="delete-btn"
-                >
-                  Delete
-                </button>
-              </td>
+      <div className="luxury-table-container">
+        <table className="luxury-officers-table">
+          <thead>
+            <tr>
+              <th>Officer</th>
+              <th>Contact</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {officers.map(officer => (
+              <tr key={officer._id} className="luxury-table-row">
+                <td className="luxury-officer-name">
+                  <div className="luxury-name">{officer.name}</div>
+                  <div className="luxury-email">{officer.email}</div>
+                </td>
+                <td className="luxury-phone">{officer.phone || 'N/A'}</td>
+                <td className="luxury-role">
+                  <span className={`luxury-role-tag ${officer.role.toLowerCase()}`}>
+                    {officer.role}
+                  </span>
+                </td>
+                <td>
+                  <span className={`luxury-status ${officer.isAvailable ? 'available' : 'unavailable'}`}>
+                    <span className="luxury-status-indicator"></span>
+                    {officer.isAvailable ? 'Available' : 'Unavailable'}
+                  </span>
+                </td>
+                <td className="luxury-actions">
+                  <button
+                    onClick={() => handleToggleAvailability(officer._id, officer.isAvailable)}
+                    className={`luxury-action-btn ${officer.isAvailable ? 'make-unavailable' : 'make-available'}`}
+                  >
+                    {officer.isAvailable ? 'Set Unavailable' : 'Set Available'}
+                  </button>
+                  <Link to={`/admin/delivery-officers/edit/${officer._id}`} className="luxury-action-btn luxury-edit-btn">
+                    Edit
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(officer._id)}
+                    className="luxury-action-btn luxury-delete-btn"
+                  >
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

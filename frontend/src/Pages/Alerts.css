@@ -1,76 +1,211 @@
-/* src/components/Alerts.css */
-
+/* Luxury Furniture Style Alerts */
 .alerts-container {
-    font-family: sans-serif;
-    padding: 20px;
-    background-color: #fce4ec; /* Light pink background for alerts */
-    border: 1px solid #f48fb1; /* Pink border */
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f9f5f0;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Montserrat', sans-serif;
 }
 
-.alerts-container h2 {
-    color: #d32f2f; /* Dark red for the main heading */
-    margin-bottom: 15px;
-    border-bottom: 2px solid #f48fb1;
-    padding-bottom: 10px;
+.alerts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e8e0d5;
 }
 
-.alerts-container ul {
-    list-style: none;
-    padding: 0;
+.alerts-header h2 {
+    color: #3a2e26;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+    font-family: 'Playfair Display', serif;
 }
 
-.alerts-container li {
+.alert-count {
+    background-color: #c17c74;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.alert-cards-container {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.order-alert-card {
     background-color: #fff;
-    border: 1px solid #f48fb1;
+    border-radius: 6px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e8e0d5;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.order-alert-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 1.5rem;
+    background-color: #f5f1eb;
+    border-bottom: 1px solid #e8e0d5;
+}
+
+.order-header h3 {
+    color: #3a2e26;
+    font-size: 1.2rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.status-badge {
+    padding: 0.3rem 0.8rem;
     border-radius: 4px;
-    margin-bottom: 15px;
-    padding: 15px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
-.alerts-container li:last-child {
-    margin-bottom: 0;
+.status-badge.delayed {
+    background-color: rgba(193, 124, 116, 0.1);
+    color: #c17c74;
 }
 
-.alerts-container h3 {
-    color: #c62828; /* Darker red for order ID heading */
-    margin-top: 0;
-    margin-bottom: 10px;
+.task-list {
+    padding: 1rem 1.5rem;
 }
 
-.alerts-container li ul {
-    list-style: none;
-    padding-left: 15px;
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f0e9e0;
 }
 
-.alerts-container li ul li {
-    background-color: #ffebee; /* Very light pink for individual tasks */
-    border: 1px solid #f48fb1;
+.task-item:last-child {
+    border-bottom: none;
+}
+
+.task-info {
+    flex: 1;
+}
+
+.task-name {
+    color: #3a2e26;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.icon-warning {
+    color: #c17c74;
+    font-size: 1.2rem;
+}
+
+.task-details {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.detail-item {
+    display: flex;
+    gap: 0.3rem;
+    font-size: 0.9rem;
+}
+
+.detail-label {
+    color: #8a7f75;
+    font-weight: 500;
+}
+
+.detail-value {
+    color: #5a4a42;
+}
+
+.detail-value.overdue {
+    color: #c17c74;
+    font-weight: 500;
+}
+
+.action-button {
+    background-color: #a38b6a;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
     border-radius: 4px;
-    margin-bottom: 10px;
-    padding: 10px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
-.alerts-container li ul li:last-child {
-    margin-bottom: 0;
+.action-button:hover {
+    background-color: #8a7557;
+    transform: translateY(-2px);
 }
 
-.alerts-container li ul li p {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    color: #555;
+.no-alerts-message {
+    text-align: center;
+    padding: 3rem;
+    background-color: #fff;
+    border-radius: 6px;
+    border: 1px solid #e8e0d5;
 }
 
-.alerts-container li ul li p strong {
-    font-weight: bold;
-    color: #333;
-    margin-right: 5px;
+.no-alerts-message p {
+    color: #5a4a42;
+    font-size: 1.1rem;
+    margin-top: 1rem;
 }
 
-.no-delayed-tasks {
-    font-style: italic;
-    color: #777;
+.icon-check {
+    color: #7a9f6e;
+    font-size: 2.5rem;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #f0e9e0;
+    border-top: 4px solid #a38b6a;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 2rem auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .task-details {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .action-button {
+        align-self: flex-end;
+    }
 }

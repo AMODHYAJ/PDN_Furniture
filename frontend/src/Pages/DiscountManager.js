@@ -1,46 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './DiscountManager.css';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "./DiscountManager.css";
 
 const DiscountManager = ({ onClose }) => {
   const [discounts, setDiscounts] = useState([]);
-  const [productId, setProductId] = useState('');
-  const [discountPercentage, setDiscountPercentage] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [error, setError] = useState('');
+  const [productId, setProductId] = useState("");
+  const [discountPercentage, setDiscountPercentage] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [error, setError] = useState("");
   const [selectedDiscount, setSelectedDiscount] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDiscounts = async () => {
+      setIsLoading(true);
       try {
-        const response = await fetch('http://localhost:5000/api/discount');
+        const response = await fetch("http://localhost:5000/api/discount");
         if (!response.ok) {
-          throw new Error('Failed to fetch discounts');
+          throw new Error("Failed to fetch discounts");
         }
         const data = await response.json();
         setDiscounts(data);
       } catch (error) {
-        console.error('Error fetching discounts:', error);
-        setError('Error fetching discounts');
+        console.error("Error fetching discounts:", error);
+        setError("Error fetching discounts");
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchDiscounts();
   }, []);
 
-  //discount validations
   const handleAddDiscount = async () => {
     if (!productId || !discountPercentage || !startDate || !endDate) {
-      setError('Please fill out all fields.');
-      alert('Please fill out all fields.');
+      setError("Please fill out all fields.");
       return;
     }
 
     if (discountPercentage <= 0 || discountPercentage > 100) {
-      setError('Discount percentage must be between 1 and 100.');
-      alert('Discount percentage must be between 1 and 100.');
+      setError("Discount percentage must be between 1 and 100.");
       return;
     }
 
@@ -51,46 +52,68 @@ const DiscountManager = ({ onClose }) => {
       endDate,
     };
 
+    setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/discount/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(discountData),
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/discount/create",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(discountData),
+        }
+      );
 
       if (response.ok) {
         const result = await response.json();
         setDiscounts((prevDiscounts) => [...prevDiscounts, result]);
-        setError('');
-        alert('Discount added successfully!');
+        setError("");
+        setProductId("");
+        setDiscountPercentage("");
+        setStartDate("");
+        setEndDate("");
       } else {
-        setError('Failed to add discount. Please try again.');
-        alert('Failed to add discount. Please try again.');
+        setError("Failed to add discount. Please try again.");
       }
     } catch (error) {
-      console.error('Error adding discount:', error);
-      setError('Error adding discount. Please try again.');
-      alert('Error adding discount. Please try again.');
+      console.error("Error adding discount:", error);
+      setError("Error adding discount. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleDeleteDiscount = async (discountId) => {
+    if (!window.confirm("Are you sure you want to delete this discount?"))
+      return;
+
+    setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:5000/api/discount/delete/${discountId}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/discount/delete/${discountId}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (response.ok) {
-        setDiscounts(discounts.filter((discount) => discount._id !== discountId));
-        alert('Discount deleted successfully!');
+        setDiscounts(
+          discounts.filter((discount) => discount._id !== discountId)
+        );
+        if (selectedDiscount?._id === discountId) {
+          setSelectedDiscount(null);
+          setProductId("");
+          setDiscountPercentage("");
+          setStartDate("");
+          setEndDate("");
+        }
       } else {
-        setError('Failed to delete discount. Please try again.');
-        alert('Failed to delete discount. Please try again.');
+        setError("Failed to delete discount. Please try again.");
       }
     } catch (error) {
-      console.error('Error deleting discount:', error);
-      setError('Error deleting discount. Please try again.');
-      alert('Error deleting discount. Please try again.');
+      console.error("Error deleting discount:", error);
+      setError("Error deleting discount. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -98,14 +121,12 @@ const DiscountManager = ({ onClose }) => {
     if (!selectedDiscount) return;
 
     if (!productId || !discountPercentage || !startDate || !endDate) {
-      setError('Please fill out all fields.');
-      alert('Please fill out all fields.');
+      setError("Please fill out all fields.");
       return;
     }
 
     if (discountPercentage <= 0 || discountPercentage > 100) {
-      setError('Discount percentage must be between 1 and 100.');
-      alert('Discount percentage must be between 1 and 100.');
+      setError("Discount percentage must be between 1 and 100.");
       return;
     }
 
@@ -116,37 +137,58 @@ const DiscountManager = ({ onClose }) => {
       endDate,
     };
 
+    setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:5000/api/discount/update/${selectedDiscount._id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(discountData),
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/discount/update/${selectedDiscount._id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(discountData),
+        }
+      );
 
       if (response.ok) {
         const result = await response.json();
         setDiscounts(
           discounts.map((discount) =>
-            discount._id === selectedDiscount._id ? result.updatedDiscount : discount
+            discount._id === selectedDiscount._id
+              ? result.updatedDiscount
+              : discount
           )
         );
         setSelectedDiscount(null);
-        setError('');
-        alert('Discount updated successfully!');
+        setError("");
+        setProductId("");
+        setDiscountPercentage("");
+        setStartDate("");
+        setEndDate("");
       } else {
-        setError('Failed to update discount. Please try again.');
-        alert('Failed to update discount. Please try again.');
+        setError("Failed to update discount. Please try again.");
       }
     } catch (error) {
-      console.error('Error updating discount:', error);
-      setError('Error updating discount. Please try again.');
-      alert('Error updating discount. Please try again.');
+      console.error("Error updating discount:", error);
+      setError("Error updating discount. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  // Navigate to the admin dashboard when closing
-  const handleClose = () => {
-    navigate('/'); // Change to your admin dashboard route
+  const handleEditClick = (discount) => {
+    setSelectedDiscount(discount);
+    setProductId(discount.productId);
+    setDiscountPercentage(discount.discountPercentage);
+    setStartDate(discount.startDate.split("T")[0]);
+    setEndDate(discount.endDate.split("T")[0]);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleCancelEdit = () => {
+    setSelectedDiscount(null);
+    setProductId("");
+    setDiscountPercentage("");
+    setStartDate("");
+    setEndDate("");
   };
 
   return (
@@ -155,59 +197,97 @@ const DiscountManager = ({ onClose }) => {
 
       {error && <p className="error">{error}</p>}
 
-      <div>
-        <h3>{selectedDiscount ? 'Update Discount' : 'Add New Discount'}</h3>
+      <div className="discount-form-section">
+        <h3>{selectedDiscount ? "Update Discount" : "Add New Discount"}</h3>
+
         <label className="input-label">Product ID</label>
         <input
           type="text"
-          placeholder="Product ID"
+          placeholder="Enter product ID"
           value={productId}
           onChange={(e) => setProductId(e.target.value)}
         />
+
         <label className="input-label">Discount Percentage</label>
         <input
           type="number"
-          placeholder="Discount Percentage"
+          placeholder="1-100%"
+          min="1"
+          max="100"
           value={discountPercentage}
           onChange={(e) => setDiscountPercentage(e.target.value)}
         />
+
         <label className="input-label">Start Date</label>
         <input
           type="date"
-          placeholder="Start Date"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
         />
+
         <label className="input-label">End Date</label>
         <input
           type="date"
-          placeholder="End Date"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
         />
-        <button onClick={selectedDiscount ? handleUpdateDiscount : handleAddDiscount}>
-          {selectedDiscount ? 'Update Discount' : 'Add Discount'}
-        </button>
+
+        <div className="button-container">
+          <button
+            className="primary-button"
+            onClick={
+              selectedDiscount ? handleUpdateDiscount : handleAddDiscount
+            }
+            disabled={isLoading}
+          >
+            {isLoading
+              ? "Processing..."
+              : selectedDiscount
+              ? "Update Discount"
+              : "Add Discount"}
+          </button>
+          {selectedDiscount && (
+            <button className="secondary-button" onClick={handleCancelEdit}>
+              Cancel
+            </button>
+          )}
+        </div>
       </div>
 
-      <div>
-        <h3>Existing Discounts</h3>
-        {discounts.length === 0 ? (
-          <p>No discounts available.</p>
+      <div className="discount-list-section">
+        <h3>Current Discounts</h3>
+        {isLoading && discounts.length === 0 ? (
+          <p>Loading discounts...</p>
+        ) : discounts.length === 0 ? (
+          <p className="empty-state">No active discounts</p>
         ) : (
           <ul>
             {discounts.map((discount) => (
               <li key={discount._id}>
-                <div>
-                  <strong>Product ID:</strong> {discount.productId}
-                  <div className="discount-info">
-                    <strong>Discount:</strong> {discount.discountPercentage}% |{' '}
-                    <strong>Valid:</strong> {discount.startDate} to {discount.endDate}
+                <div className="discount-info">
+                  <div>
+                    <strong>Product ID:</strong> {discount.productId}
+                  </div>
+                  <div>
+                    <strong>Discount:</strong> {discount.discountPercentage}%
+                  </div>
+                  <div className="date-range">
+                    <strong>Valid:</strong>{" "}
+                    {new Date(discount.startDate).toLocaleDateString()} -{" "}
+                    {new Date(discount.endDate).toLocaleDateString()}
                   </div>
                 </div>
-                <div>
-                  <button onClick={() => setSelectedDiscount(discount)}>Edit</button>
-                  <button className="delete" onClick={() => handleDeleteDiscount(discount._id)}>
+                <div className="discount-actions">
+                  <button
+                    className="secondary-button"
+                    onClick={() => handleEditClick(discount)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDeleteDiscount(discount._id)}
+                  >
                     Delete
                   </button>
                 </div>
@@ -217,7 +297,13 @@ const DiscountManager = ({ onClose }) => {
         )}
       </div>
 
-      <button onClick={handleClose}>Close</button>
+      <button
+        className="secondary-button"
+        onClick={() => navigate("/admin/products")}
+        style={{ marginTop: "2rem" }}
+      >
+        Back to Products
+      </button>
     </div>
   );
 };

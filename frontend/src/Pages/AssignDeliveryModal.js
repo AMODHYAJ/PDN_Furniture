@@ -34,35 +34,26 @@ const AssignDeliveryModal = ({ order, onClose, onAssign }) => {
 
   const validateForm = () => {
     const errors = {};
-
-    if (!selectedOfficer) {
-      errors.officer = "Please select a delivery officer";
-    }
-
+    if (!selectedOfficer) errors.officer = "Please select a delivery officer";
     if (!estimatedDate) {
       errors.date = "Please select an estimated delivery date";
     } else if (new Date(estimatedDate) < new Date()) {
       errors.date = "Delivery date cannot be in the past";
     }
-
     if (fee && isNaN(Number(fee))) {
       errors.fee = "Delivery fee must be a number";
     } else if (fee && Number(fee) < 0) {
       errors.fee = "Delivery fee cannot be negative";
     }
-
-    // Validate order ID length
     if (order._id.length !== 24) {
       errors.orderId = "Invalid order ID format - must be 24 characters";
     }
-
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     if (!validateForm()) return;
   
     setLoading(true);
@@ -91,11 +82,11 @@ const AssignDeliveryModal = ({ order, onClose, onAssign }) => {
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
+    <div className="luxury-modal-overlay">
+      <div className="luxury-modal-content">
         <h2>Assign Order to Delivery</h2>
         
-        <div className="order-id-display">
+        <div className="luxury-order-id-display">
           <p>
             <strong>Order ID:</strong> 
             <span title={`Full ID: ${order._id}`}>
@@ -103,32 +94,32 @@ const AssignDeliveryModal = ({ order, onClose, onAssign }) => {
             </span>
             <button 
               onClick={copyToClipboard}
-              className={`copy-btn ${copied ? "copied" : ""}`}
+              className={`luxury-copy-btn ${copied ? "copied" : ""}`}
               title="Copy full ID to clipboard"
             >
               {copied ? "✓ Copied" : "Copy ID"}
             </button>
           </p>
           {formErrors.orderId && (
-            <p className="error-message">{formErrors.orderId}</p>
+            <p className="luxury-field-error">{formErrors.orderId}</p>
           )}
         </div>
 
         {error && (
-          <div className="error-message">
-            <div className="error-content">
+          <div className="luxury-error-message">
+            <div className="luxury-error-content">
               {error.split('\n').map((line, i) => (
                 <p key={i}>{line}</p>
               ))}
             </div>
-            <button onClick={() => setError("")} className="dismiss-error">
+            <button onClick={() => setError("")} className="luxury-dismiss-error">
               ×
             </button>
           </div>
         )}
 
         <form onSubmit={handleSubmit}>
-          <div className={`form-group ${formErrors.officer ? "error" : ""}`}>
+          <div className={`luxury-form-group ${formErrors.officer ? "error" : ""}`}>
             <label>Available Officers:</label>
             <select
               value={selectedOfficer}
@@ -146,11 +137,11 @@ const AssignDeliveryModal = ({ order, onClose, onAssign }) => {
               ))}
             </select>
             {formErrors.officer && (
-              <span className="field-error">{formErrors.officer}</span>
+              <span className="luxury-field-error">{formErrors.officer}</span>
             )}
           </div>
 
-          <div className={`form-group ${formErrors.date ? "error" : ""}`}>
+          <div className={`luxury-form-group ${formErrors.date ? "error" : ""}`}>
             <label>Estimated Delivery Date:</label>
             <input
               type="datetime-local"
@@ -163,11 +154,11 @@ const AssignDeliveryModal = ({ order, onClose, onAssign }) => {
               required
             />
             {formErrors.date && (
-              <span className="field-error">{formErrors.date}</span>
+              <span className="luxury-field-error">{formErrors.date}</span>
             )}
           </div>
 
-          <div className={`form-group ${formErrors.fee ? "error" : ""}`}>
+          <div className={`luxury-form-group ${formErrors.fee ? "error" : ""}`}>
             <label>Delivery Fee:</label>
             <input
               type="number"
@@ -181,11 +172,11 @@ const AssignDeliveryModal = ({ order, onClose, onAssign }) => {
               placeholder="Enter amount (optional)"
             />
             {formErrors.fee && (
-              <span className="field-error">{formErrors.fee}</span>
+              <span className="luxury-field-error">{formErrors.fee}</span>
             )}
           </div>
 
-          <div className="form-group">
+          <div className="luxury-form-group">
             <label>Special Instructions:</label>
             <textarea
               value={notes}
@@ -195,23 +186,23 @@ const AssignDeliveryModal = ({ order, onClose, onAssign }) => {
             />
           </div>
 
-          <div className="modal-actions">
+          <div className="luxury-modal-actions">
             <button
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="cancel-btn"
+              className="luxury-cancel-btn"
             >
               Cancel
             </button>
             <button 
               type="submit" 
               disabled={loading}
-              className="submit-btn"
+              className="luxury-submit-btn"
             >
               {loading ? (
                 <>
-                  <span className="spinner"></span>
+                  <span className="luxury-spinner"></span>
                   Assigning...
                 </>
               ) : (

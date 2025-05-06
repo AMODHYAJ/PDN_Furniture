@@ -1,21 +1,35 @@
 .admin-orders-container {
-  padding: 20px;
-  max-width: 1200px;
+  padding: 30px;
+  max-width: 1400px;
   margin: 0 auto;
+  background-color: #f8f5f2;
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
 }
 
 .admin-orders-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 20px;
+  border-bottom: 1px solid #d7ccc8;
+  padding-bottom: 20px;
+}
+
+.admin-orders-header h1 {
+  font-family: 'Playfair Display', serif;
+  color: #4e342e;
+  font-size: 2.2rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin: 0;
 }
 
 .admin-orders-controls {
   display: flex;
-  gap: 15px;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
@@ -25,16 +39,34 @@
   gap: 10px;
 }
 
+.filter-control label, .sort-control label {
+  color: #5d4037;
+  font-weight: 500;
+}
+
 .filter-control select, .sort-control select {
-  padding: 8px 12px;
+  padding: 10px 15px;
   border-radius: 4px;
-  border: 1px solid #ddd;
+  border: 1px solid #d7ccc8;
   background-color: white;
+  color: #4e342e;
+  font-family: 'Roboto', sans-serif;
+  min-width: 180px;
+  transition: all 0.3s ease;
+}
+
+.filter-control select:focus, .sort-control select:focus {
+  outline: none;
+  border-color: #c8a97e;
+  box-shadow: 0 0 0 2px rgba(200, 169, 126, 0.2);
 }
 
 .orders-table-container {
   overflow-x: auto;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(78, 52, 46, 0.05);
 }
 
 .orders-table {
@@ -43,119 +75,176 @@
 }
 
 .orders-table th, .orders-table td {
-  padding: 12px 15px;
+  padding: 15px 20px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #efebe9;
   vertical-align: middle;
 }
 
 .orders-table th {
-  background-color: #f5f5f5;
+  background-color: #f5f3f0;
   font-weight: 600;
+  color: #4e342e;
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 0.3px;
 }
 
 .orders-table tr:hover {
-  background-color: #f9f9f9;
+  background-color: #faf9f7;
+}
+
+.order-id {
+  font-family: 'Courier New', monospace;
+  color: #8d6e63;
+  cursor: pointer;
+}
+
+.order-id:hover {
+  color: #5d4037;
+  text-decoration: underline;
 }
 
 .status-badge {
-  padding: 4px 8px;
-  border-radius: 12px;
+  padding: 6px 12px;
+  border-radius: 16px;
   font-size: 12px;
   font-weight: 500;
   text-transform: capitalize;
+  display: inline-block;
+  min-width: 80px;
+  text-align: center;
 }
 
 .badge-processing {
-  background-color: #fff3cd;
-  color: #856404;
+  background-color: #fff3e0;
+  color: #e65100;
+  border: 1px solid #ffe0b2;
 }
 
 .badge-shipped {
-  background-color: #cce5ff;
-  color: #004085;
+  background-color: #e3f2fd;
+  color: #1565c0;
+  border: 1px solid #bbdefb;
 }
 
 .badge-delivered {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
 }
 
 .badge-cancelled {
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
 }
 
 .view-btn {
-  padding: 6px 12px;
-  background-color: #007bff;
+  padding: 8px 16px;
+  background-color: #c8a97e;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 .view-btn:hover {
-  background-color: #0069d9;
+  background-color: #b38b5a;
+  transform: translateY(-1px);
 }
 
-.assign-btn svg {
-  font-size: 0.9rem;
+.assign-btn {
+  padding: 8px 16px;
+  background-color: #8d6e63;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
+.assign-btn:hover {
+  background-color: #6d4c41;
+  transform: translateY(-1px);
+}
 
-/* Make sure the delivery column has enough width */
-.orders-table th:nth-child(7),
-.orders-table td:nth-child(7) {
-  min-width: 150px;
+.assigned-badge {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  display: inline-block;
+  border: 1px solid #c8e6c9;
 }
 
 .pagination-controls {
   display: flex;
   justify-content: center;
-  gap: 5px;
-  margin: 20px 0;
+  gap: 8px;
+  margin: 30px 0;
 }
 
 .pagination-controls button {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
+  padding: 10px 16px;
+  border: 1px solid #d7ccc8;
   background-color: white;
   cursor: pointer;
   border-radius: 4px;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  color: #5d4037;
+  font-weight: 500;
 }
 
 .pagination-controls button:hover:not(:disabled) {
-  background-color: #f5f5f5;
+  background-color: #f5f3f0;
+  border-color: #c8a97e;
 }
 
 .pagination-controls button:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .pagination-controls button.active {
-  background-color: #007bff;
+  background-color: #c8a97e;
   color: white;
-  border-color: #007bff;
+  border-color: #c8a97e;
 }
 
 .orders-summary {
   text-align: center;
-  color: #666;
-  font-size: 14px;
+  color: #8d6e63;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
 }
 
 .loading, .error {
   text-align: center;
   padding: 40px;
-  font-size: 18px;
+  font-size: 1.1rem;
+  color: #5d4037;
 }
 
 .error {
-  color: #dc3545;
+  color: #c62828;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .admin-orders-container {
+    padding: 20px;
+  }
+  
+  .orders-table th, 
+  .orders-table td {
+    padding: 12px 15px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -178,33 +267,26 @@
 
   .orders-table th, 
   .orders-table td {
-    padding: 8px 10px;
-    font-size: 0.9rem;
+    padding: 10px 12px;
+    font-size: 0.85rem;
   }
 
+  .view-btn, .assign-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
 }
 
-/* Add to AdminOrders.css */
-.assign-btn {
-  background-color: #17a2b8;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.8em;
-  transition: background-color 0.3s;
-}
-
-.assign-btn:hover {
-  background-color: #138496;
-}
-
-.assigned-badge {
-  background-color: #d4edda;
-  color: #155724;
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 0.8em;
-  display: inline-block;
+@media (max-width: 480px) {
+  .admin-orders-container {
+    padding: 15px;
+  }
+  
+  .admin-orders-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .pagination-controls button {
+    padding: 8px 12px;
+  }
 }

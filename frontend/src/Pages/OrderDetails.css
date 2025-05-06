@@ -1,106 +1,162 @@
-.order-details-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* Order Details - Luxury Furniture Style */
+:root {
+  --wood-dark: #4e342e;       /* Dark walnut */
+  --wood-medium: #795548;     /* Rich brown */
+  --wood-light: #d7ccc8;      /* Light beech */
+  --neutral-light: #efebe9;   /* Cream background */
+  --neutral-lighter: #fff8f5; /* Off-white */
+  --text-dark: #3e2723;       /* Dark text */
+  --text-medium: #5d4037;     /* Medium text */
+  --accent-gold: #c8a97e;     /* Gold accents */
+  --processing: #ffa000;      /* Amber */
+  --shipped: #0288d1;         /* Blue */
+  --delivered: #388e3c;       /* Green */
+  --cancelled: #d32f2f;       /* Red */
 }
 
+.order-details-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+}
+
+/* Back Button */
 .back-button {
-  background: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--neutral-lighter);
+  color: var(--wood-medium);
   border: none;
-  color: #0066cc;
-  font-size: 16px;
-  cursor: pointer;
-  margin-bottom: 20px;
-  padding: 5px 10px;
+  padding: 0.8rem 1.5rem;
   border-radius: 4px;
-  transition: background-color 0.2s;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .back-button:hover {
-  background-color: #f0f0f0;
+  background-color: var(--wood-light);
+  color: var(--wood-dark);
 }
 
+/* Order Header */
 .order-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #eee;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--wood-light);
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.order-header h1 {
+  color: var(--wood-dark);
+  font-size: 2rem;
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 .order-status {
-  text-align: right;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-.badge {
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-weight: bold;
+.order-date {
+  color: var(--text-medium);
+  font-size: 0.95rem;
+}
+
+/* Status Badge */
+.status-badge {
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
   text-transform: capitalize;
 }
 
 .badge-processing {
-  background-color: #ffc107;
-  color: #000;
+  background-color: rgba(255, 160, 0, 0.1);
+  color: var(--processing);
+  border: 1px solid rgba(255, 160, 0, 0.3);
 }
 
 .badge-shipped {
-  background-color: #17a2b8;
-  color: #fff;
+  background-color: rgba(2, 136, 209, 0.1);
+  color: var(--shipped);
+  border: 1px solid rgba(2, 136, 209, 0.3);
 }
 
 .badge-delivered {
-  background-color: #28a745;
-  color: #fff;
+  background-color: rgba(56, 142, 60, 0.1);
+  color: var(--delivered);
+  border: 1px solid rgba(56, 142, 60, 0.3);
 }
 
 .badge-cancelled {
-  background-color: #dc3545;
-  color: #fff;
+  background-color: rgba(211, 47, 47, 0.1);
+  color: var(--cancelled);
+  border: 1px solid rgba(211, 47, 47, 0.3);
 }
 
+/* Order Sections */
 .order-sections {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 30px;
+  gap: 3rem;
+  margin-bottom: 3rem;
 }
 
+/* Order Items Section */
 .order-items-section {
-  background: #fff;
-  padding: 20px;
+  background: white;
+  padding: 2.5rem;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--wood-light);
 }
 
-.order-info-section {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.section-title {
+  color: var(--wood-dark);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--wood-light);
+  font-weight: 500;
+  font-size: 1.5rem;
 }
 
 .order-items {
-  margin-bottom: 20px;
+  margin: 2rem 0;
 }
 
 .order-item {
   display: flex;
-  padding: 15px 0;
-  border-bottom: 1px solid #eee;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--wood-light);
 }
 
 .order-item:last-child {
   border-bottom: none;
 }
 
-.product-image {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 4px;
-  margin-right: 15px;
+.order-item-image {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  border-radius: 6px;
+  background-color: var(--neutral-lighter);
+  padding: 1rem;
+  border: 1px solid var(--wood-light);
 }
 
 .item-details {
@@ -108,40 +164,68 @@
 }
 
 .item-details h4 {
-  margin: 0 0 5px 0;
-  color: #333;
+  margin: 0 0 0.5rem 0;
+  color: var(--text-dark);
+  font-weight: 500;
+  font-size: 1.1rem;
 }
 
 .item-meta {
   display: flex;
-  gap: 15px;
-  color: #666;
-  font-size: 14px;
+  gap: 1.5rem;
+  color: var(--text-medium);
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
 }
 
+.item-price {
+  font-weight: 500;
+  color: var(--wood-dark);
+}
+
+/* Order Summary */
 .order-summary {
-  border-top: 1px solid #eee;
-  padding-top: 15px;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--wood-light);
 }
 
 .summary-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
+  color: var(--text-medium);
 }
 
 .summary-row.total {
-  font-weight: bold;
-  font-size: 18px;
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid #eee;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--wood-dark);
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--wood-light);
+}
+
+/* Order Info Section */
+.order-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Shipping Info */
+.shipping-info, .payment-info {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--wood-light);
 }
 
 .info-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
+  gap: 1rem;
 }
 
 .info-row {
@@ -149,73 +233,215 @@
 }
 
 .info-label {
-  font-weight: bold;
   min-width: 120px;
-  color: #555;
+  color: var(--text-medium);
+  font-weight: 500;
+  font-size: 0.95rem;
 }
 
 .info-value {
-  color: #333;
+  color: var(--text-dark);
+  flex: 1;
 }
 
+/* Action Section */
 .action-section {
-  margin-top: 30px;
-  padding: 20px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-top: 2rem;
 }
 
 .cancellation-notice, .tracking-info {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--wood-light);
   text-align: center;
+  margin-bottom: 2rem;
 }
 
-.cancel-button, .track-button {
-  padding: 10px 20px;
+.cancellation-notice h3, .tracking-info h3 {
+  color: var(--wood-dark);
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.cancellation-notice p, .tracking-info p {
+  color: var(--text-medium);
+  margin-bottom: 1.5rem;
+}
+
+.action-button {
+  padding: 0.8rem 2rem;
   border: none;
   border-radius: 4px;
-  font-weight: bold;
+  font-weight: 500;
   cursor: pointer;
-  margin-top: 15px;
-  transition: opacity 0.2s;
+  transition: all 0.3s ease;
+  font-size: 1rem;
 }
 
 .cancel-button {
-  background-color: #dc3545;
+  background-color: var(--cancelled);
   color: white;
+}
+
+.cancel-button:hover {
+  background-color: #b71c1c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.2);
 }
 
 .track-button {
-  background-color: #17a2b8;
+  background-color: var(--shipped);
   color: white;
 }
 
-.cancel-button:hover, .track-button:hover {
-  opacity: 0.9;
+.track-button:hover {
+  background-color: #01579b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(2, 136, 209, 0.2);
 }
 
-.loading, .error {
-  text-align: center;
-  padding: 50px;
-  font-size: 18px;
+/* Delivery Estimate */
+.delivery-estimate {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background-color: rgba(200, 169, 126, 0.1);
+  border-radius: 8px;
+  border-left: 4px solid var(--accent-gold);
 }
 
-.error {
-  color: #dc3545;
+.delivery-estimate p {
+  margin: 0;
+  color: var(--text-dark);
 }
 
-@media (max-width: 768px) {
+.delivery-estimate strong {
+  color: var(--wood-dark);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
   .order-sections {
     grid-template-columns: 1fr;
   }
   
+  .order-item {
+    gap: 1.5rem;
+  }
+  
+  .order-item-image {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 768px) {
   .order-header {
     flex-direction: column;
     align-items: flex-start;
   }
   
   .order-status {
-    text-align: left;
-    margin-top: 10px;
+    width: 100%;
+    justify-content: space-between;
   }
+  
+  .order-item {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .order-item-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+  }
+  
+  .item-meta {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .order-details-container {
+    padding: 0 1rem;
+  }
+  
+  .order-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .order-items-section,
+  .shipping-info,
+  .payment-info {
+    padding: 1.5rem;
+  }
+  
+  .info-row {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  
+  .info-label {
+    min-width: auto;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.order-header,
+.order-sections,
+.action-section {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.order-sections {
+  animation-delay: 0.2s;
+}
+
+.action-section {
+  animation-delay: 0.4s;
+}
+
+/* Loading State */
+.loading {
+  text-align: center;
+  padding: 4rem;
+  color: var(--wood-medium);
+  font-size: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(121, 85, 72, 0.1);
+  border-top-color: var(--wood-medium);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error State */
+.error {
+  text-align: center;
+  padding: 3rem;
+  color: var(--cancelled);
+  font-size: 1.1rem;
+  background: rgba(211, 47, 47, 0.05);
+  border-radius: 8px;
+  margin: 2rem 0;
+  border-left: 4px solid var(--cancelled);
 }

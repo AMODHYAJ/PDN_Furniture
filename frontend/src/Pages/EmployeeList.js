@@ -33,14 +33,14 @@ const EmployeeList = () => {
 
     // Apply search filter
     if (searchTerm) {
-      result = result.filter(employee =>
+      result = result.filter((employee) =>
         employee.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     // Apply role filter
     if (roleFilter !== "All") {
-      result = result.filter(employee => employee.role === roleFilter);
+      result = result.filter((employee) => employee.role === roleFilter);
     }
 
     setFilteredEmployees(result);
@@ -67,7 +67,7 @@ const EmployeeList = () => {
   };
 
   const getUniqueRoles = () => {
-    const roles = new Set(employees.map(employee => employee.role));
+    const roles = new Set(employees.map((employee) => employee.role));
     return ["All", ...Array.from(roles)];
   };
 
@@ -94,8 +94,10 @@ const EmployeeList = () => {
           </div>
           <div className="role-filter">
             <select value={roleFilter} onChange={handleRoleFilterChange}>
-              {getUniqueRoles().map(role => (
-                <option key={role} value={role}>{role}</option>
+              {getUniqueRoles().map((role) => (
+                <option key={role} value={role}>
+                  {role}
+                </option>
               ))}
             </select>
           </div>
@@ -127,7 +129,8 @@ const EmployeeList = () => {
                     <strong>Role:</strong> {employee.role}
                   </p>
                   <p>
-                    <strong>Status:</strong> {employee.status}
+                    <strong data-status={employee.status}>Status:</strong>{" "}
+                    {employee.status}
                   </p>
                   <p>
                     <strong>Phone:</strong> {employee.phone}
@@ -150,7 +153,9 @@ const EmployeeList = () => {
               </div>
             ))
           ) : (
-            <div className="no-results">No employees found matching your criteria.</div>
+            <div className="no-results">
+              No employees found matching your criteria.
+            </div>
           )}
         </div>
       </div>

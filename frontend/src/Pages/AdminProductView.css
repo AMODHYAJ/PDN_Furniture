@@ -1,41 +1,226 @@
-.admin-product-view {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ddd;
+/* Luxury Furniture Style */
+.luxury-product-view {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 40px;
+    background: #fff;
     border-radius: 8px;
-    background: #f9f9f9;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    font-family: 'Playfair Display', serif;
+    color: #333;
+}
+
+.luxury-header {
+    margin-bottom: 40px;
     text-align: center;
 }
 
-.admin-product-view img {
-    width: 100%;
-    max-height: 300px;
-    object-fit: cover;
+.luxury-title {
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: #3a3a3a;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.luxury-divider {
+    height: 2px;
+    width: 100px;
+    background: linear-gradient(to right, transparent, #c8a97e, transparent);
+    margin: 0 auto;
+}
+
+.luxury-product-container {
+    display: flex;
+    gap: 50px;
+    margin-bottom: 40px;
+}
+
+.luxury-image-container {
+    flex: 1;
+    min-width: 400px;
+    overflow: hidden;
     border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.admin-product-view .discount-info {
-    color: red;
-    font-weight: bold;
+.luxury-product-image {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
 }
 
-.admin-product-view .available {
-    color: green;
-    font-weight: bold;
+.luxury-product-image:hover {
+    transform: scale(1.02);
 }
 
-.admin-product-view .not-available {
-    color: gray;
-    font-weight: bold;
+.luxury-details-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.admin-product-view .back-button {
-    margin-top: 20px;
-    padding: 10px;
-    background: #007bff;
-    color: white;
+.luxury-product-name {
+    font-size: 2rem;
+    font-weight: 500;
+    color: #2a2a2a;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.luxury-detail-item {
+    display: flex;
+    gap: 15px;
+    align-items: baseline;
+}
+
+.luxury-detail-item.full-width {
+    flex-direction: column;
+    gap: 5px;
+}
+
+.detail-label {
+    font-weight: 500;
+    color: #666;
+    min-width: 100px;
+}
+
+.detail-value {
+    font-size: 1.1rem;
+}
+
+.price {
+    font-size: 1.5rem;
+    color: #c8a97e;
+    font-weight: 500;
+}
+
+.luxury-description {
+    line-height: 1.8;
+    color: #555;
+    font-size: 1.05rem;
+    margin-top: 5px;
+}
+
+.luxury-discount-badge {
+    background: #f8f1e7;
+    border-left: 4px solid #c8a97e;
+    padding: 12px 20px;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.discount-percent {
+    color: #b8860b;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.discount-period {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.no-discount-tag {
+    color: #999;
+    font-style: italic;
+    padding: 10px 0;
+}
+
+.availability-tag {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.availability-tag.available {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+.availability-tag.not-available {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+}
+
+.luxury-button-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.luxury-button {
+    padding: 12px 30px;
     border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
     cursor: pointer;
-    border-radius: 5px;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.update-btn {
+    background: #c8a97e;
+    color: white;
+}
+
+.update-btn:hover {
+    background: #b89a6e;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(200, 169, 126, 0.3);
+}
+
+.back-btn {
+    background: transparent;
+    color: #666;
+    border: 1px solid #ddd;
+}
+
+.back-btn:hover {
+    background: #f5f5f5;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #c8a97e;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.error-message {
+    color: #c62828;
+    text-align: center;
+    padding: 20px;
+    background: #ffebee;
+    border-radius: 4px;
+    margin: 20px;
 }

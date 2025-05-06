@@ -16,7 +16,12 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to={isAdmin ? "/admin-dashboard" : "/"} className="navbar-brand">
-          MyStore
+          <img 
+            src="http://localhost:5000/images/logo.png" 
+            alt="PDN Products Logo" 
+            className="brand-logo"
+          />
+          <span className="brand-name">PDN PRODUCTS</span>
         </Link>
         
         <div className="navbar-links">
@@ -36,6 +41,7 @@ const Navbar = () => {
                   <Link to="/admin/delivery" className="nav-link">Delivery</Link>
                   <Link to="/admin/delivery-officers" className="nav-link">Delivery Officers</Link>
                   <Link to="/admin/stats" className="nav-link">Statistics</Link>
+
                 </>
               ) : (
                 <>

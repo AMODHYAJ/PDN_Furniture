@@ -70,10 +70,9 @@ const ProductCatalog = () => {
           className="filter-dropdown"
         >
           <option value="">All Categories</option>
-          <option value="Furniture">Furniture</option>
-          <option value="Electronics">Electronics</option>
-          <option value="Clothing">Clothing</option>
-          <option value="Home Decor">Home Decor</option>
+          <option value="living room">Living Room</option>
+          <option value="dining room">Dining room</option>
+          <option value="bedroom">Bedroom</option>
         </select>
       </div>
 

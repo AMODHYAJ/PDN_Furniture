@@ -1,0 +1,407 @@
+/* AboutUs.css - Complete Revised Version */
+:root {
+    /* Brown Color Palette */
+    --wood-darkest: #3e2723;
+    --wood-dark: #4e342e;
+    --wood-medium: #5d4037;
+    --wood-light: #795548;
+    --wood-lightest: #d7ccc8;
+    
+    /* Neutral Colors */
+    --stone-dark: #8d6e63;
+    --stone-medium: #bcaaa4;
+    --stone-light: #efebe9;
+    --cream-white: #fff8f5;
+    
+    /* Accent Colors */
+    --accent-gold: #c8a97e;
+    --accent-gold-light: #d8c4a8;
+    
+    /* Text Colors */
+    --text-dark: #3e2723;
+    --text-medium: #5d4037;
+    --text-light: #fff8f5;
+    --text-gold: #c8a97e;
+  }
+  
+  /* Base Styles */
+  .about-us-container {
+    font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+    color: var(--text-dark);
+    line-height: 1.6;
+    background-color: var(--cream-white);
+  }
+  
+  section {
+    padding: 5rem 2rem;
+  }
+  
+  h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    color: var(--wood-dark);
+  }
+  
+ /* About Us Hero Section - Matching Home Page Style */
+.about-hero {
+    background: linear-gradient(to bottom, 
+                rgba(245, 243, 240, 0.2), 
+                rgba(245, 243, 240, 0.7)),
+      url('http://localhost:5000/images/about-hero.jpg') center/cover no-repeat;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-dark);
+    padding: 0 2rem;
+    position: relative;
+    margin-top: -70px;
+    padding-top: 70px;
+  }
+  
+  .hero-content {
+    max-width: 800px;
+    position: relative;
+    z-index: 1;
+    padding: 2.5rem;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 8px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .hero-content h1 {
+    font-size: 3.5rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    font-family: 'Playfair Display', serif;
+    color: var(--wood-dark);
+    text-transform: uppercase;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    margin-bottom: 2rem;
+    color: var(--wood-medium);
+    font-style: italic;
+  }
+  
+  /* History Section */
+  .history-section {
+    background-color: var(--stone-light);
+  }
+  
+  .history-content {
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 4rem;
+  }
+  
+  .history-text {
+    flex: 1;
+  }
+  
+  .history-text h2 {
+    font-size: 2.5rem;
+    color: var(--wood-dark);
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  
+  .history-text h2::after {
+    content: '';
+    position: absolute;
+    bottom: -0.8rem;
+    left: 0;
+    width: 80px;
+    height: 2px;
+    background: var(--accent-gold);
+  }
+  
+  .history-text p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: var(--text-medium);
+  }
+  
+  .history-image {
+    flex: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .history-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  
+  .history-image:hover img {
+    transform: scale(1.03);
+  }
+  
+  /* Craftsmanship Section */
+  .craftsmanship-section {
+    background-color: var(--cream-white);
+    text-align: center;
+  }
+  
+  .craftsmanship-section h2 {
+    font-size: 2.5rem;
+    color: var(--wood-dark);
+    margin-bottom: 4rem;
+    position: relative;
+  }
+  
+  .craftsmanship-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: var(--accent-gold);
+  }
+  
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .principle-card {
+    padding: 2.5rem;
+    background: var(--stone-light);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    border-top: 3px solid var(--accent-gold);
+  }
+  
+  .principle-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  }
+  
+  .principle-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  
+  .material-icon {
+    background-image: url('http://localhost:5000/images/wood-grain.png');
+  }
+  
+  .process-icon {
+    background-image: url('http://localhost:5000/images/craft-tools.jpeg');
+  }
+  
+  .detail-icon {
+    background-image: url('http://localhost:5000/images/magnifying-glass.jpg');
+  }
+  
+  .principle-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--wood-medium);
+  }
+  
+  .principle-card p {
+    color: var(--text-medium);
+  }
+  
+  /* Team Section */
+  .team-section {
+    background-color: var(--stone-light); /* Changed from wood-medium to stone-light */
+    color: var(--text-dark); /* Changed from text-light to text-dark */
+    text-align: center;
+  }
+  
+  .team-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 4rem;
+    color: var(--wood-dark); /* Changed from accent-gold to wood-dark */
+    position: relative;
+  }
+  
+  .team-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: var(--accent-gold);
+  }
+  
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .team-member {
+    background: rgba(78, 52, 46, 0.7); /* Semi-transparent dark brown */
+    padding: 2.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--accent-gold); /* Gold border */
+  }
+  
+  .team-member:hover {
+    background: rgba(78, 52, 46, 0.8); /* Slightly darker on hover */
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
+  
+  .team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 1.5rem;
+    border: 3px solid var(--accent-gold);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
+  }
+  
+  .team-member h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+  }
+  
+  .team-member p {
+    opacity: 0.9;
+    font-size: 0.95rem;
+    color: var(--accent-gold-light);
+  }
+  
+  /* Philosophy Section */
+  .philosophy-section {
+    background: 
+      linear-gradient(rgba(98, 65, 58, 0.9), rgba(87, 61, 51, 0.9)),
+      url('http://localhost:5000/images/wood-texture.jpeg') center/cover;
+    color: var(--text-light);
+    text-align: center;
+    padding-top: 70px;
+  }
+  
+  .philosophy-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .philosophy-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--accent-gold);
+  }
+  
+  blockquote {
+    font-size: 1.5rem;
+    font-style: italic;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    position: relative;
+    color: var(--text-light);
+  }
+  
+  blockquote::before,
+  blockquote::after {
+    content: '"';
+    font-size: 3rem;
+    color: var(--accent-gold);
+    opacity: 0.3;
+    position: absolute;
+  }
+  
+  blockquote::before {
+    top: -1.5rem;
+    left: -2rem;
+  }
+  
+  blockquote::after {
+    bottom: -3rem;
+    right: -2rem;
+  }
+  
+  .philosophy-content p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    color: var(--accent-gold-light);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .history-content {
+      flex-direction: column;
+      gap: 2rem;
+    }
+    
+    .history-image {
+      order: -1;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    section {
+      padding: 3rem 1.5rem;
+    }
+    
+    .hero-content h1 {
+      font-size: 2.8rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.2rem;
+    }
+    
+    h2 {
+      font-size: 2rem;
+    }
+    
+    blockquote {
+      font-size: 1.3rem;
+    }
+    
+    .principle-card,
+    .team-member {
+      padding: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero-content h1 {
+      font-size: 2.2rem;
+    }
+    
+    .principles-grid,
+    .team-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .hero-subtitle {
+      font-size: 1rem;
+    }
+  }

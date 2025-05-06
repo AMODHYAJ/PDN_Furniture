@@ -1,117 +1,274 @@
-.delivery-officers-container {
+/* Luxury Furniture Delivery Officers List */
+.luxury-officers-container {
+  max-width: 1400px;
+  margin: 40px auto;
+  padding: 40px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  font-family: 'Playfair Display', 'Georgia', serif;
+}
+
+.luxury-header {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.luxury-title {
+  font-size: 2.8rem;
+  font-weight: 400;
+  color: #3a3a3a;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+.luxury-divider {
+  height: 2px;
+  width: 120px;
+  background: linear-gradient(to right, transparent, #c8a97e, transparent);
+  margin: 0 auto;
+}
+
+.luxury-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 30px;
+}
+
+.luxury-add-btn {
+  padding: 12px 25px;
+  background-color: #c8a97e;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 5px rgba(200, 169, 126, 0.2);
+}
+
+.luxury-add-btn:hover {
+  background-color: #b89a6e;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(200, 169, 126, 0.3);
+}
+
+.luxury-btn-icon {
+  font-size: 1.2rem;
+}
+
+.luxury-table-container {
+  overflow-x: auto;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.luxury-officers-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.luxury-officers-table th {
+  background-color: #f5f3f0;
+  padding: 18px 20px;
+  text-align: left;
+  font-weight: 500;
+  color: #555;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #e0d6c2;
+}
+
+.luxury-officers-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+
+.luxury-table-row:hover {
+  background-color: #faf8f5 !important;
+}
+
+.luxury-officers-table tr:nth-child(even) {
+  background-color: #fcfcfc;
+}
+
+.luxury-officer-name {
+  min-width: 200px;
+}
+
+.luxury-name {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.luxury-email {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.luxury-phone {
+  color: #555;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.luxury-role-tag {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.luxury-role-tag.senior {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+.luxury-role-tag.junior {
+  background-color: #e3f2fd;
+  color: #1565c0;
+  border: 1px solid #bbdefb;
+}
+
+.luxury-role-tag.manager {
+  background-color: #f3e5f5;
+  color: #7b1fa2;
+  border: 1px solid #e1bee7;
+}
+
+.luxury-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.luxury-status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.luxury-status.available .luxury-status-indicator {
+  background-color: #4caf50;
+}
+
+.luxury-status.unavailable .luxury-status-indicator {
+  background-color: #f44336;
+}
+
+.luxury-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.luxury-action-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.luxury-action-btn.make-available {
+  background-color: #4caf50;
+  color: white;
+}
+
+.luxury-action-btn.make-unavailable {
+  background-color: #f44336;
+  color: white;
+}
+
+.luxury-edit-btn {
+  background-color: #2196f3;
+  color: white;
+  text-decoration: none;
+}
+
+.luxury-delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.luxury-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.luxury-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  color: #666;
+  font-size: 1.2rem;
+}
+
+.luxury-spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #c8a97e;
+  border-radius: 50%;
+  animation: luxury-spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes luxury-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.luxury-error-message {
+  text-align: center;
+  padding: 30px;
+  background: #fde8e8;
+  border-radius: 8px;
+  color: #b71c1c;
+  border-left: 4px solid #b71c1c;
+  max-width: 800px;
+  margin: 40px auto;
+  font-size: 1.1rem;
+}
+
+.luxury-error-icon {
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+  .luxury-officers-container {
     padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
   }
   
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+  .luxury-title {
+    font-size: 2rem;
   }
   
-  .add-btn {
+  .luxury-actions {
+    flex-direction: column;
+  }
+  
+  .luxury-add-btn {
     padding: 10px 15px;
-    background-color: #4CAF50;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s;
+    font-size: 0.9rem;
   }
-  
-  .add-btn:hover {
-    background-color: #45a049;
-  }
-  
-  .officers-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .officers-table th, .officers-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .officers-table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-  }
-  
-  .status {
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 0.8em;
-    font-weight: bold;
-  }
-  
-  .status.available {
-    background-color: #d4edda;
-    color: #155724;
-  }
-  
-  .status.unavailable {
-    background-color: #f8d7da;
-    color: #721c24;
-  }
-  
-  .actions {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .toggle-btn, .edit-btn, .delete-btn {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.8em;
-    transition: opacity 0.3s;
-  }
-  
-  .toggle-btn:hover, .edit-btn:hover, .delete-btn:hover {
-    opacity: 0.8;
-  }
-  
-  .toggle-btn {
-    background-color: #ffc107;
-    color: #212529;
-  }
-  
-  .toggle-btn.make-available {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .toggle-btn.make-unavailable {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .edit-btn {
-    background-color: #17a2b8;
-    color: white;
-    text-decoration: none;
-    padding: 5px 10px;
-  }
-  
-  .delete-btn {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .loading {
-    text-align: center;
-    padding: 20px;
-    font-size: 1.2em;
-  }
-  
-  .error {
-    color: #dc3545;
-    padding: 20px;
-    text-align: center;
-    font-size: 1.2em;
-  }
+}

@@ -1,6 +1,5 @@
-// src/components/AdminProgress.js
 import React, { useState, useEffect } from 'react';
-import api from '../utils/api'; // Import the configured axios instance
+import api from '../utils/api';
 import './AdminProgress.css';
 import ProgressNavBar from "../Components/ProgressNavBar";
 
@@ -15,7 +14,6 @@ const AdminProgress = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Use Promise.all to make parallel requests
         const [ordersResponse, delayedResponse] = await Promise.all([
           api.get('/tasks/orders'),
           api.get('/tasks/delays')
@@ -44,30 +42,30 @@ const AdminProgress = () => {
     fetchData();
   }, []);
 
-  if (loading) return <div>Loading dashboard...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="luxury-dashboard-container">Loading dashboard...</div>;
+  if (error) return <div className="luxury-dashboard-container">Error: {error}</div>;
 
   return (
     <>
       <ProgressNavBar />
-      <div className="dashboard-container">
-        <h2>Dashboard</h2>
-        <div className="dashboard-grid">
-          <div className="dashboard-grid-item pending">
+      <div className="luxury-dashboard-container">
+        <h2>Production Dashboard</h2>
+        <div className="luxury-dashboard-grid">
+          <div className="luxury-dashboard-grid-item luxury-pending">
             <h3>Pending Orders</h3>
-            <p className="count">{pendingCount}</p>
+            <p className="luxury-count">{pendingCount}</p>
           </div>
-          <div className="dashboard-grid-item ongoing">
+          <div className="luxury-dashboard-grid-item luxury-ongoing">
             <h3>Ongoing Orders</h3>
-            <p className="count">{ongoingCount}</p>
+            <p className="luxury-count">{ongoingCount}</p>
           </div>
-          <div className="dashboard-grid-item completed">
+          <div className="luxury-dashboard-grid-item luxury-completed">
             <h3>Completed Orders</h3>
-            <p className="count">{completedCount}</p>
+            <p className="luxury-count">{completedCount}</p>
           </div>
-          <div className="dashboard-grid-item delayed">
+          <div className="luxury-dashboard-grid-item luxury-delayed">
             <h3>Delayed Tasks</h3>
-            <p className="count">{delayedCount}</p>
+            <p className="luxury-count">{delayedCount}</p>
           </div>
         </div>
       </div>

@@ -37,7 +37,6 @@ const DeliveryOfficerForm = () => {
         } catch (err) {
           console.error('Fetch error:', err);
           setError(err.response?.data?.message || 'Failed to load officer data');
-          // Redirect if officer not found
           if (err.response?.status === 404) {
             setTimeout(() => navigate('/admin/delivery-officers'), 3000);
           }
@@ -61,7 +60,6 @@ const DeliveryOfficerForm = () => {
     setError('');
 
     try {
-      // Remove password if empty in edit mode
       const dataToSend = isEdit && !formData.password 
         ? {...formData, password: undefined}
         : formData;
@@ -81,91 +79,130 @@ const DeliveryOfficerForm = () => {
   };
 
   return (
-    <div className="delivery-officer-form">
-      <h1>{isEdit ? 'Edit Delivery Officer' : 'Add New Delivery Officer'}</h1>
+    <div className="luxury-officer-form">
+      <div className="luxury-form-header">
+        <h1 className="luxury-form-title">
+          {isEdit ? 'Edit Delivery Officer' : 'Add New Delivery Officer'}
+        </h1>
+        <div className="luxury-divider"></div>
+      </div>
       
       {error && (
-        <div className="error-message">
-          {error}
+        <div className="luxury-error-message">
+          <div className="luxury-error-content">
+            <span className="luxury-error-icon">⚠️</span>
+            {error}
+          </div>
           {error.includes('Failed to load') && (
             <button 
               onClick={() => navigate('/admin/delivery-officers')}
-              className="back-btn"
+              className="luxury-back-btn"
             >
-              Back to List
+              Back to Team List
             </button>
           )}
         </div>
       )}
 
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
+      <form onSubmit={handleSubmit} className="luxury-form">
+        <div className="luxury-form-grid">
+          <div className="luxury-form-group">
+            <label className="luxury-label">Full Name</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="luxury-input"
+              placeholder="Enter officer's full name"
+            />
+          </div>
+
+          <div className="luxury-form-group">
+            <label className="luxury-label">Email Address</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              disabled={isEdit}
+              className="luxury-input"
+              placeholder="Enter email address"
+            />
+          </div>
+
+          <div className="luxury-form-group">
+            <label className="luxury-label">
+              Password
+              {isEdit && <span className="luxury-hint"> (leave blank to keep current)</span>}
+            </label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required={!isEdit}
+              className="luxury-input"
+              placeholder={isEdit ? "••••••••" : "Create a password"}
+            />
+          </div>
+
+          <div className="luxury-form-group">
+            <label className="luxury-label">Phone Number</label>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+              className="luxury-input"
+              placeholder="Enter contact number"
+            />
+          </div>
+
+          <div className="luxury-form-group">
+            <label className="luxury-label">Role</label>
+            <div className="luxury-select-wrapper">
+              <select
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                className="luxury-select"
+              >
+                <option value="Junior">Junior Officer</option>
+                <option value="Senior">Senior Officer</option>
+              </select>
+              <span className="luxury-select-arrow">▼</span>
+            </div>
+          </div>
         </div>
 
-        <div className="form-group">
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            disabled={isEdit}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required={!isEdit}
-            placeholder={isEdit ? "Leave blank to keep current" : ""}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Phone:</label>
-          <input
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Role:</label>
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
+        <div className="luxury-form-actions">
+          <button 
+            type="submit" 
+            disabled={loading}
+            className="luxury-submit-btn"
           >
-            <option value="Junior">Junior</option>
-            <option value="Senior">Senior</option>
-          </select>
-        </div>
-
-        <div className="form-actions">
-          <button type="submit" disabled={loading}>
-            {loading ? 'Saving...' : 'Save Officer'}
+            {loading ? (
+              <>
+                <span className="luxury-spinner"></span>
+                Saving...
+              </>
+            ) : (
+              <>
+                <span className="luxury-btn-icon">✓</span>
+                {isEdit ? 'Update Officer' : 'Add Officer'}
+              </>
+            )}
           </button>
           <button
             type="button"
             onClick={() => navigate('/admin/delivery-officers')}
-            className="cancel-btn"
+            className="luxury-cancel-btn"
           >
+            <span className="luxury-btn-icon">×</span>
             Cancel
           </button>
         </div>

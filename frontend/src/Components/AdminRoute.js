@@ -10,6 +10,10 @@ const AdminRoute = ({ children }) => {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
+    if (isAdmin && location.pathname === '/dashboard') {
+        return <Navigate to="/admin-dashboard" replace />;
+    }
+
     if (!isAdmin) {
         return <Navigate to="/" replace />;
     }

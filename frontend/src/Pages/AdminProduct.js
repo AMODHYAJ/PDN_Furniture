@@ -6,7 +6,7 @@ import "./AdminProduct.css";
 import "./AddProduct.css";
 import "./EditProduct.css";
 import Header from "./Header";
-import Footer from "./Footer";
+//import Footer from "./Footer";
 
 const AdminProduct = () => {
   const [products, setProducts] = useState([]);
@@ -204,9 +204,8 @@ const AdminProduct = () => {
         >
           <option value="All">All Categories</option>
           <option value="living room">Living Room</option>
-          <option value="kitchen">Kitchen</option>
+          <option value="dining room">Dining room</option>
           <option value="bedroom">Bedroom</option>
-          <option value="office">Office</option>
         </select>
         <select
           value={availabilityFilter}
@@ -294,7 +293,7 @@ const AdminProduct = () => {
         )}
       </div>
 
-      <Footer />
+      {/*<Footer />*/}
     </div>
   );
 };

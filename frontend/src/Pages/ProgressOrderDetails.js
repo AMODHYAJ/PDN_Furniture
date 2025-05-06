@@ -1,10 +1,8 @@
-// src/components/OrderDetails.js
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
-import "./ProgressOrderDetails.css"; // Import the CSS file
-import ProgressNavBar from "../Components/ProgressNavBar";
 import api from "../utils/api";
+import "./ProgressOrderDetails.css";
+import ProgressNavBar from "../Components/ProgressNavBar";
 
 const ProgressOrderDetails = () => {
   const { id } = useParams();
@@ -23,7 +21,6 @@ const ProgressOrderDetails = () => {
         const selectedOrder = response.data.find((o) => o._id === id);
         setOrder(selectedOrder);
 
-        // Initialize taskStatus with current statuses
         if (selectedOrder && selectedOrder.tasks) {
           const initialStatus = {};
           selectedOrder.tasks.forEach((task) => {
@@ -40,7 +37,7 @@ const ProgressOrderDetails = () => {
     };
 
     fetchOrder();
-  }, [id]); // Fetch order again if the ID in the URL changes
+  }, [id]);
 
   useEffect(() => {
     if (order && order.tasks) {
@@ -55,13 +52,8 @@ const ProgressOrderDetails = () => {
     const currentTask = order?.tasks?.find((task) => task._id === taskId);
     const currentStatus = taskStatus[taskId];
 
-    if (currentStatus === "Completed") {
-      return;
-    }
-
-    if (currentStatus === "In Progress" && newStatus === "Pending") {
-      return;
-    }
+    if (currentStatus === "Completed") return;
+    if (currentStatus === "In Progress" && newStatus === "Pending") return;
 
     setTaskStatus((prev) => ({ ...prev, [taskId]: newStatus }));
   };
@@ -75,22 +67,14 @@ const ProgressOrderDetails = () => {
         return originalTask && originalTask.status !== taskStatus[taskId];
       });
 
-      console.log("Tasks to update:", updatesToSend); // Check which task IDs are being considered
-
       if (updatesToSend.length > 0) {
         for (const taskId of updatesToSend) {
           const newStatus = taskStatus[taskId];
-          console.log(`Attempting to update task ${taskId} to ${newStatus}`); // Log before the update
-
           try {
             const response = await api.put("/tasks/update-task-progress", {
               taskId: taskId,
               status: newStatus,
             });
-            console.log(`Update response for ${taskId}:`, response?.data);
-
-            // After a successful update, you might want to update the local 'order' state
-            // to reflect the change immediately without a full re-fetch.
             setOrder((prevOrder) => {
               if (!prevOrder || !prevOrder.tasks) return prevOrder;
               const updatedTasks = prevOrder.tasks.map((task) =>
@@ -102,10 +86,9 @@ const ProgressOrderDetails = () => {
             console.error(`Error updating task ${taskId}:`, updateError);
             setError("Failed to update some or all task statuses.");
             setLoading(false);
-            return; // Stop further updates on the first error for now
+            return;
           }
         }
-        // If all updates succeed, clear the changed flag and loading state
         setIsStatusChanged(false);
         alert("Task status updated successfully!");
       } else {
@@ -119,35 +102,25 @@ const ProgressOrderDetails = () => {
     }
   };
 
-  // After the applyStatusChanges function
   useEffect(() => {
     if (order && order.tasks) {
       const allCompleted = order.tasks.every(
         (task) => task.status === "Completed"
       );
       if (allCompleted) {
-        // You might want to show a message that the order will be shipped
         console.log("All tasks completed - order will be marked as shipped");
       }
     }
   }, [order]);
 
-  if (loading) {
-    return <div className="order-details-container">Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="order-details-container">Error: {error}</div>;
-  }
-
-  if (!order) {
-    return <div className="order-details-container">Order not found.</div>;
-  }
+  if (loading) return <div className="luxury-order-details-container">Loading...</div>;
+  if (error) return <div className="luxury-order-details-container">Error: {error}</div>;
+  if (!order) return <div className="luxury-order-details-container">Order not found.</div>;
 
   return (
     <>
       <ProgressNavBar />
-      <div className="order-details-container">
+      <div className="luxury-order-details-container">
         <h2>Order Details: {order.orderId}</h2>
         <p>
           <strong>Order ID:</strong> {order.orderId}
@@ -186,10 +159,11 @@ const ProgressOrderDetails = () => {
           ))}
         </ul>
 
-        <div className="actions">
+        <div className="luxury-actions">
           <button
             onClick={applyStatusChanges}
             disabled={!isStatusChanged || loading}
+            className="luxury-save-btn"
           >
             {loading ? "Saving..." : "Apply Changes"}
           </button>

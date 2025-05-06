@@ -44,11 +44,16 @@ export const AuthProvider = ({ children }) => {
       const { token, user } = response.data;
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('userId', user._id); // Store user ID
+      localStorage.setItem('userId', user._id);
       setToken(token);
       setUser(user);
       
-      navigate(user.role === 'Admin' ? '/admin-dashboard' : '/dashboard');
+      // Fix: Always navigate to admin dashboard if user is admin
+      if (user.role === 'Admin') {
+        navigate('/admin-dashboard');
+      } else {
+        navigate('/dashboard');
+      }
       return user;
     } catch (error) {
       console.error('Login error:', error);
@@ -63,11 +68,16 @@ export const AuthProvider = ({ children }) => {
       
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('userId', user._id); // Store user ID
+      localStorage.setItem('userId', user._id);
       setToken(token);
       setUser(user);
       
-      navigate(user.role === 'Admin' ? '/admin-dashboard' : '/dashboard');
+      // Fix: Same logic as login
+      if (user.role === 'Admin') {
+        navigate('/admin-dashboard');
+      } else {
+        navigate('/dashboard');
+      }
       return user;
     } catch (error) {
       console.error('Registration error:', error);

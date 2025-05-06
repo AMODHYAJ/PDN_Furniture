@@ -1,71 +1,148 @@
+/* ProductAnalytics.css */
 .analytics-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px;
-    font-family: Arial, sans-serif;
+    padding: 2rem;
+    background-color: #f8f5f2; /* Cream background */
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
 }
 
 h1 {
-    font-size: 32px;
-    color: #333;
-    margin-bottom: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #4e342e; /* Dark walnut */
+    margin-bottom: 2rem;
+    text-align: center;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #c8a97e; /* Gold accent */
+    padding-bottom: 1rem;
+    width: 80%;
+    max-width: 1200px;
 }
 
 .product-info {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 3rem;
+    background-color: white;
+    padding: 1.5rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(78, 52, 46, 0.05);
+    width: 80%;
+    max-width: 1200px;
 }
 
 .product-info h3 {
-    font-size: 24px;
-    color: #555;
-    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: #5d4037; /* Medium brown */
+    margin-bottom: 1rem;
 }
 
 .product-info .total-products {
-    font-size: 50px;
+    font-size: 2.5rem;
     font-weight: bold;
-    color: #4CAF50; /* Green for Total Products */
+    color: #8d6e63; /* Lighter brown */
 }
 
 .product-info .price-range {
-    font-size: 20px;
-    color: #888;
+    font-size: 1.2rem;
+    color: #8d6e63;
+    font-weight: 500;
 }
 
 .chart-container {
     width: 80%;
-    max-width: 800px;
-    margin: 20px 0;
-    padding: 20px;
+    max-width: 1000px;
+    margin: 2rem 0;
+    padding: 2rem;
     border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    box-shadow: 0 3px 10px rgba(78, 52, 46, 0.05);
+    border: 1px solid #efebe9;
 }
 
 .chart-container h3 {
-    font-size: 20px;
-    margin-bottom: 15px;
-    color: #333;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #4e342e;
     text-align: center;
+    border-bottom: 1px solid #d7ccc8; /* Light beech */
+    padding-bottom: 0.5rem;
 }
 
-.chart-container canvas {
-    width: 100% !important; /* Ensure chart takes full width */
-    height: auto !important;
+/* Custom chart colors to match luxury theme */
+.chart-container .chartjs-render-monitor {
+    background-color: #faf9f7;
 }
 
-footer {
+/* Loading and Error States */
+.loading, .error {
     text-align: center;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    margin-top: 30px;
+    padding: 3rem;
+    font-size: 1.2rem;
+    color: #5d4037;
     width: 100%;
 }
 
-footer p {
-    margin: 0;
-    font-size: 16px;
+.error {
+    color: #c62828;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+    
+    .product-info, .chart-container {
+        width: 90%;
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .product-info h3 {
+        font-size: 1.3rem;
+    }
+    
+    .product-info .total-products {
+        font-size: 2rem;
+    }
+    
+    .chart-container {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .analytics-container {
+        padding: 1.5rem;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .product-info {
+        padding: 1rem;
+    }
+    
+    .product-info h3 {
+        font-size: 1.1rem;
+    }
+    
+    .chart-container {
+        width: 95%;
+        padding: 1rem;
+    }
+    
+    .chart-container h3 {
+        font-size: 1.2rem;
+    }
 }

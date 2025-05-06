@@ -1,11 +1,11 @@
-// src/components/Alerts.js
 import React, { useState, useEffect } from 'react';
-import api from '../utils/api'; // Use configured axios instance
-import './Alerts.css'; // Import the CSS file
+import api from '../utils/api';
+import './Alerts.css';
 import ProgressNavBar from "../Components/ProgressNavBar";
 
 const Alerts = () => {
     const [delayedTasks, setDelayedTasks] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchDelayedTasks = async () => {
@@ -14,37 +14,83 @@ const Alerts = () => {
                 setDelayedTasks(response.data);
             } catch (error) {
                 console.error("Error fetching delayed tasks:", error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
         fetchDelayedTasks();
     }, []);
 
+    if (isLoading) {
+        return (
+            <><ProgressNavBar />
+            <div className="alerts-container">
+                <div className="loading-spinner"></div>
+            </div></>
+        );
+    }
+
     if (delayedTasks.length === 0) {
-        return <div className="alerts-container">
-            <p className="no-delayed-tasks">No delayed tasks.</p>
-        </div>;
+        return (
+            <><ProgressNavBar />
+            <div className="alerts-container">
+                <div className="no-alerts-message">
+                    <i className="icon-check"></i>
+                    <p>All tasks are on schedule</p>
+                </div>
+            </div></>
+        );
     }
 
     return (
-        <><ProgressNavBar /><div className="alerts-container">
-            <h2>Delayed Tasks</h2>
-            <ul>
+        <><ProgressNavBar />
+        <div className="alerts-container">
+            <div className="alerts-header">
+                <h2>Delayed Tasks</h2>
+                <div className="alert-count">{delayedTasks.length} delayed orders</div>
+            </div>
+            
+            <div className="alert-cards-container">
                 {delayedTasks.map(order => (
-                    <li key={order._id}>
-                        <h3>Order ID: {order.orderId}</h3>
-                        <ul>
+                    <div key={order._id} className="order-alert-card">
+                        <div className="order-header">
+                            <h3>Order #{order.orderId}</h3>
+                            <span className="status-badge delayed">Delayed</span>
+                        </div>
+                        
+                        <div className="task-list">
                             {order.tasks.map(task => (
-                                <li key={task._id}>
-                                    <p><strong>Task Name:</strong> {task.taskName}</p>
-                                    <p><strong>Due Date:</strong> {new Date(task.dueDate).toLocaleString()}</p>
-                                    <p><strong>Assigned To:</strong> {task.assignedTo?.name || "Not Assigned"}</p>
-                                </li>
+                                <div key={task._id} className="task-item">
+                                    <div className="task-info">
+                                        <div className="task-name">
+                                            <i className="icon-warning"></i>
+                                            {task.taskName}
+                                        </div>
+                                        <div className="task-details">
+                                            <div className="detail-item">
+                                                <span className="detail-label">Due:</span>
+                                                <span className="detail-value overdue">
+                                                    {new Date(task.dueDate).toLocaleDateString()}
+                                                </span>
+                                            </div>
+                                            <div className="detail-item">
+                                                <span className="detail-label">Assigned:</span>
+                                                <span className="detail-value">
+                                                    {task.assignedTo?.name || "Unassigned"}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button className="action-button">
+                                        Take Action
+                                    </button>
+                                </div>
                             ))}
-                        </ul>
-                    </li>
+                        </div>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div></>
     );
 };

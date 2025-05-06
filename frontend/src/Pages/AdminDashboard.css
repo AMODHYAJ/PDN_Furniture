@@ -1,44 +1,144 @@
 .admin-dashboard {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8f5f2; /* Warm cream background */
+  padding: 30px;
+  font-family: 'Playfair Display', serif;
+}
+
+.admin-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.admin-content h1 {
+  font-size: 2.8rem;
+  color: #4e342e; /* Rich walnut color */
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #d7ccc8; /* Light beech wood accent */
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.admin-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+
+.admin-card {
+  padding: 2.5rem;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s ease;
+  text-decoration: none;
+  color: #5d4037; /* Medium brown text */
+  border: 1px solid #d7ccc8; /* Light wood grain border */
+  position: relative;
+  overflow: hidden;
+  background-image: url('http://localhost:5000/images/wood-texture-light.jpg');
+  background-size: cover;
+  background-blend-mode: overlay;
+}
+
+.admin-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  border-color: #c8a97e; /* Gold accent */
+}
+
+.admin-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(200, 169, 126, 0.1) 0%, rgba(200, 169, 126, 0) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.admin-card:hover::after {
+  opacity: 1;
+}
+
+.admin-card h2 {
+  margin-top: 0;
+  color: #4e342e; /* Dark walnut */
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  position: relative;
+  letter-spacing: 0.3px;
+}
+
+.admin-card h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  background: #c8a97e; /* Gold accent */
+}
+
+.admin-card p {
+  color: #8d6e63; /* Lighter brown */
+  margin-bottom: 0;
+  line-height: 1.7;
+  font-size: 1.05rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Gold accent elements */
+.admin-card .icon {
+  color: #c8a97e;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .admin-links {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 20px;
   }
   
-  .admin-content {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
+  .admin-content h1 {
+    font-size: 2.2rem;
   }
   
   .admin-links {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    grid-template-columns: 1fr;
   }
   
   .admin-card {
-    padding: 1.5rem;
-    border-radius: 8px;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-    text-decoration: none;
-    color: inherit;
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-content h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
   }
   
-  .admin-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  .admin-card {
+    padding: 1.8rem;
   }
   
   .admin-card h2 {
-    margin-top: 0;
-    color: #333;
+    font-size: 1.4rem;
   }
-  
-  .admin-card p {
-    color: #666;
-    margin-bottom: 0;
-  }
+}

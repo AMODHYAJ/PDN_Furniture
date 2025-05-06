@@ -37,42 +37,84 @@ const DeliveryDashboard = () => {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return (
+    <div className="luxury-loading">
+      <div className="luxury-spinner"></div>
+      <p>Loading deliveries...</p>
+    </div>
+  );
+  
+  if (error) return (
+    <div className="luxury-error-message">
+      <span className="luxury-error-icon">⚠️</span>
+      {error}
+    </div>
+  );
 
   return (
-    <div className="delivery-dashboard">
-      <h1>Delivery Dashboard</h1>
+    <div className="luxury-delivery-dashboard">
+      <div className="luxury-header">
+        <h1 className="luxury-title">Delivery Management</h1>
+        <div className="luxury-divider"></div>
+      </div>
       
-      <div className="status-filter">
+      <div className="luxury-status-filter">
         <select 
           value={selectedStatus} 
           onChange={(e) => setSelectedStatus(e.target.value)}
+          className="luxury-status-select"
         >
-          <option value="assigned">Assigned</option>
+          <option value="assigned">Assigned Deliveries</option>
           <option value="in_transit">In Transit</option>
-          <option value="delivered">Delivered</option>
+          <option value="delivered">Completed Deliveries</option>
         </select>
       </div>
       
-      <div className="orders-list">
+      <div className="luxury-orders-grid">
         {assignedOrders.length === 0 ? (
-          <p>No orders found</p>
+          <div className="luxury-empty-state">
+            <div className="luxury-empty-icon">📦</div>
+            <p>No {selectedStatus.replace('_', ' ')} deliveries found</p>
+          </div>
         ) : (
           assignedOrders.map(order => (
-            <div key={order._id} className="order-card">
-              <h3>Order #{order._id.substring(0, 8).toUpperCase()}</h3>
-              <p><strong>Customer:</strong> {order.userId.name}</p>
-              <p><strong>Address:</strong> {order.shippingAddress.address}, {order.shippingAddress.city}</p>
-              <p><strong>Estimated Delivery:</strong> {new Date(order.estimatedDeliveryDate).toLocaleDateString()}</p>
+            <div key={order._id} className="luxury-order-card">
+              <div className="luxury-order-header">
+                <h3 className="luxury-order-id">ORDER #{order._id.substring(0, 8).toUpperCase()}</h3>
+                <span className={`luxury-status-badge ${order.deliveryStatus}`}>
+                  {order.deliveryStatus.replace('_', ' ')}
+                </span>
+              </div>
               
-              <div className="status-actions">
+              <div className="luxury-order-details">
+                <div className="luxury-detail-row">
+                  <span className="luxury-detail-label">Customer:</span>
+                  <span className="luxury-detail-value">{order.userId.name}</span>
+                </div>
+                
+                <div className="luxury-detail-row">
+                  <span className="luxury-detail-label">Delivery Address:</span>
+                  <span className="luxury-detail-value">
+                    {order.shippingAddress.address}, {order.shippingAddress.city}
+                  </span>
+                </div>
+                
+                <div className="luxury-detail-row">
+                  <span className="luxury-detail-label">Estimated Delivery:</span>
+                  <span className="luxury-detail-value">
+                    {new Date(order.estimatedDeliveryDate).toLocaleDateString()}
+                  </span>
+                </div>
+              </div>
+              
+              <div className="luxury-order-actions">
                 {order.deliveryStatus === 'assigned' && (
                   <button 
                     onClick={() => updateOrderStatus(order._id, 'in_transit')}
                     disabled={loading}
+                    className="luxury-action-btn transit-btn"
                   >
-                    Mark as In Transit
+                    Begin Delivery
                   </button>
                 )}
                 
@@ -80,6 +122,7 @@ const DeliveryDashboard = () => {
                   <button 
                     onClick={() => updateOrderStatus(order._id, 'delivered')}
                     disabled={loading}
+                    className="luxury-action-btn deliver-btn"
                   >
                     Mark as Delivered
                   </button>

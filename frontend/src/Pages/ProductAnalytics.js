@@ -3,7 +3,7 @@ import { Pie, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto';
 
 import Header from "./Header";
-import Footer from "./Footer";
+//import Footer from "./Footer";
 import './ProductAnalytics.css';
 
 const ProductAnalytics = () => {
@@ -109,7 +109,7 @@ const ProductAnalytics = () => {
                     />
                 </div>
             </div>
-            <Footer />
+           {/*} <Footer />*/}
         </div>
     );
 };

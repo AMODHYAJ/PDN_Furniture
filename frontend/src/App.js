@@ -47,6 +47,7 @@ import DeliveryDashboard from "./Pages/DeliveryDashboard";
 import DeliveryOfficersList from "./Pages/DeliveryOfficersList";
 import DeliveryOfficerForm from "./Pages/DeliveryOfficerForm";
 import "./App.css";
+import AboutUs from "./Pages/AboutUs";
 
 const App = () => {
   return (
@@ -56,6 +57,7 @@ const App = () => {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<AboutUs />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
 

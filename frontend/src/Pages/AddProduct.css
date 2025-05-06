@@ -1,61 +1,100 @@
+/* AddProduct.css - Luxury Furniture Theme */
 .add-product-container {
-  max-width: 600px;
+  max-width: 800px;
   margin: 2rem auto;
-  padding: 2rem;
-  background: #fff;
+  padding: 2.5rem;
+  background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 15px rgba(78, 52, 46, 0.05);
+  border: 1px solid #efebe9;
+  font-family: 'Roboto', sans-serif;
 }
 
-.add-product-form .form-group {
-  margin-bottom: 1.5rem;
+.add-product-container h2 {
+  font-family: 'Playfair Display', serif;
+  color: #4e342e;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #c8a97e;
 }
 
-.add-product-form label {
-  display: block;
+.add-product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: #5d4037;
   margin-bottom: 0.5rem;
-  font-weight: 600;
+  font-size: 1rem;
 }
 
 .add-product-form input[type="text"],
 .add-product-form input[type="number"],
 .add-product-form select {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
+  padding: 0.8rem 1rem;
+  border: 1px solid #d7ccc8;
   border-radius: 4px;
   font-size: 1rem;
+  color: #5d4037;
+  transition: all 0.3s ease;
+}
+
+.add-product-form input[type="text"]:focus,
+.add-product-form input[type="number"]:focus,
+.add-product-form select:focus {
+  outline: none;
+  border-color: #c8a97e;
+  box-shadow: 0 0 0 2px rgba(200, 169, 126, 0.2);
 }
 
 .add-product-form input[type="file"] {
   width: 100%;
   padding: 0.5rem 0;
+  color: #5d4037;
 }
 
 .error {
-  color: #e74c3c;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
+  color: #c62828;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
 }
 
 .submit-button {
-  background-color: #3498db;
+  background-color: #8d6e63;
   color: white;
-  padding: 0.75rem 1.5rem;
+  padding: 0.8rem 1.5rem;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
-  transition: background-color 0.3s;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  align-self: center;
+  width: 200px;
 }
 
 .submit-button:hover {
-  background-color: #2980b9;
+  background-color: #6d4c41;
+  transform: translateY(-2px);
 }
 
 .submit-button:disabled {
-  background-color: #95a5a6;
+  background-color: #bcaaa4;
   cursor: not-allowed;
+  transform: none;
 }
 
 .image-preview {
@@ -65,7 +104,40 @@
 
 .image-preview img {
   max-width: 100%;
-  max-height: 200px;
+  max-height: 300px;
   border-radius: 4px;
-  border: 1px solid #ddd;
+  border: 1px solid #d7ccc8;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .add-product-container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .add-product-container h2 {
+    font-size: 1.8rem;
+  }
+  
+  .submit-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-product-container {
+    padding: 1rem;
+  }
+  
+  .add-product-container h2 {
+    font-size: 1.5rem;
+  }
+  
+  .add-product-form input[type="text"],
+  .add-product-form input[type="number"],
+  .add-product-form select {
+    padding: 0.7rem;
+  }
 }
