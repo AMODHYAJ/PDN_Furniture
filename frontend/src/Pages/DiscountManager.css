@@ -1,106 +1,200 @@
+/* Luxury Furniture Style Discount Manager */
 .discount-manager {
-    width: 500px;
-    margin: 0 auto;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    font-family: 'Arial', sans-serif;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background-color: #f9f5f0;
+  border: 1px solid #d4c9b8;
+  border-radius: 10px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.discount-manager h1 {
+  text-align: center;
+  color: #3a2e26;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  font-family: 'Playfair Display', serif;
+  border-bottom: 2px solid #d4c9b8;
+  padding-bottom: 1rem;
+}
+
+.discount-manager h3 {
+  font-size: 1.3rem;
+  color: #5a4a42;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  font-family: 'Playfair Display', serif;
+}
+
+.discount-input-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #5a4a42;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.discount-manager input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #d4c9b8;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #3a2e26;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.discount-manager input:focus {
+  outline: none;
+  border-color: #a38b6a;
+  box-shadow: 0 0 0 3px rgba(163, 139, 106, 0.2);
+}
+
+.discount-form-section {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 6px;
+  margin-bottom: 2rem;
+  border: 1px solid #e8e0d5;
+}
+
+.discount-list-section {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 6px;
+  border: 1px solid #e8e0d5;
+}
+
+.discount-manager button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.discount-primary-button {
+  background-color: #a38b6a;
+  color: white;
+  margin-right: 1rem;
+}
+
+.discount-primary-button:hover {
+  background-color: #8a7557;
+  transform: translateY(-2px);
+}
+
+.discount-secondary-button {
+  background-color: #5a4a42;
+  color: white;
+}
+
+.discount-secondary-button:hover {
+  background-color: #3a2e26;
+  transform: translateY(-2px);
+}
+
+.discount-delete-button {
+  background-color: #c17c74;
+  color: white;
+  margin-left: 1rem;
+}
+
+.discount-delete-button:hover {
+  background-color: #a86962;
+  transform: translateY(-2px);
+}
+
+.discount-manager ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.discount-manager li {
+  background-color: #f5f1eb;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e8e0d5;
+  transition: all 0.3s ease;
+}
+
+.discount-manager li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.discount-info {
+  flex: 1;
+}
+
+.discount-info strong {
+  color: #3a2e26;
+  font-weight: 600;
+}
+
+.discount-actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.discount-error {
+  color: #c17c74;
+  background-color: rgba(193, 124, 116, 0.1);
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  border-left: 4px solid #c17c74;
+  font-weight: 500;
+}
+
+.discount-empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: #8a7f75;
+  font-style: italic;
+}
+
+.discount-date-range {
+  font-size: 0.9rem;
+  color: #8a7f75;
+  margin-top: 0.3rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .discount-manager {
+      padding: 1.5rem;
+      width: 90%;
   }
   
-  h1 {
-    text-align: center;
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
+  .discount-manager li {
+      flex-direction: column;
+      align-items: flex-start;
   }
   
-  h3 {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 15px;
+  .discount-actions {
+      margin-top: 1rem;
+      width: 100%;
+      justify-content: flex-end;
   }
   
-  input, button {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
+  .discount-actions button {
+      flex: 1;
   }
-  
-  input:focus, button:focus {
-    outline: none;
-    border-color: #4CAF50;
-  }
-  
-  input[type="number"] {
-    -moz-appearance: textfield;
-    appearance: textfield;
-  }
-  
-  button {
-    background-color: #4CAF50;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
-  button:active {
-    background-color: #388e3c;
-  }
-  
-  button.delete {
-    background-color: #f44336;
-  }
-  
-  button.delete:hover {
-    background-color: #e53935;
-  }
-  
-  button.delete:active {
-    background-color: #d32f2f;
-  }
-  
-  ul {
-    padding: 0;
-    margin-top: 20px;
-  }
-  
-  li {
-    background-color: #f9f9f9;
-    padding: 12px;
-    margin-bottom: 12px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  li button {
-    margin-left: 10px;
-  }
-  
-  .error {
-    color: red;
-    text-align: center;
-    margin-bottom: 15px;
-  }
-  
-  .input-label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
-  }
-  
-  .discount-info {
-    font-size: 14px;
-    color: #666;
-  }
+}

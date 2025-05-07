@@ -79,15 +79,15 @@ const PendingOrders = () => {
   };
 
   if (isLoading) return (
-    <div className="luxury-loading">
-      <div className="luxury-spinner"></div>
+    <div className="loading-container">
+      <div className="loading-spinner"></div>
       Loading orders...
     </div>
   );
   
   if (error) return (
-    <div className="luxury-error-message">
-      <span className="luxury-error-icon">⚠️</span>
+    <div className="error-container">
+      <span className="error-icon">⚠️</span>
       Error: {error}
     </div>
   );
@@ -95,40 +95,40 @@ const PendingOrders = () => {
   return (
     <>
       <ProgressNavBar />
-      <div className="luxury-pending-orders">
-        <div className="luxury-header">
-          <h1 className="luxury-title">Pending Approval</h1>
-          <div className="luxury-divider"></div>
+      <div className="pending-orders-container">
+        <div className="orders-header">
+          <h1 className="orders-title">Pending Approval</h1>
+          <p className="orders-subtitle">Orders awaiting customer confirmation</p>
         </div>
         
         {syncLoading && (
-          <div className="luxury-sync-notice">
-            <span className="luxury-sync-icon">🔄</span>
+          <div className="sync-notice">
+            <span className="sync-icon">🔄</span>
             Syncing with order system...
           </div>
         )}
         
         {orders.length === 0 ? (
-          <div className="luxury-empty-state">
-            <div className="luxury-empty-icon">📋</div>
-            <h3>No Pending Approvals</h3>
-            <p>All orders have been processed</p>
+          <div className="empty-state">
+            <div className="empty-icon">📋</div>
+            <h3 className="empty-title">No Pending Approvals</h3>
+            <p className="empty-text">All orders have been processed</p>
           </div>
         ) : (
-          <ul className="luxury-orders-list">
+          <ul className="orders-list">
             {orders.map(order => (
-              <li key={order._id} className="luxury-order-item">
-                <div className="luxury-order-info">
-                  <div className="luxury-order-id">
-                    <span className="luxury-label">Order ID:</span>
-                    <span className="luxury-value">{order.orderId}</span>
+              <li key={order._id} className="order-card">
+                <div className="order-info">
+                  <div>
+                    <span className="order-label">Order ID:</span>
+                    <span className="order-id">{order.orderId}</span>
                   </div>
                   
-                  <div className="luxury-deadline-section">
-                    <label className="luxury-label">Production Deadline:</label>
+                  <div>
+                    <label className="order-label">Production Deadline:</label>
                     <input
                       type="datetime-local"
-                      className="luxury-deadline-input"
+                      className="deadline-input"
                       value={selectedOrderId === order.orderId ? deadline : getTwoWeeksFromNow()}
                       onChange={(e) => {
                         setSelectedOrderId(order.orderId);
@@ -137,16 +137,15 @@ const PendingOrders = () => {
                       }}
                       min={getTwoWeeksFromNow()}
                     />
+                    {selectedOrderId === order.orderId && deadlineError && (
+                      <p className="error-message">{deadlineError}</p>
+                    )}
                   </div>
-                  
-                  {selectedOrderId === order.orderId && deadlineError && (
-                    <p className="luxury-error-text">{deadlineError}</p>
-                  )}
                 </div>
                 
                 <button 
                   onClick={() => handleGenerateTasks(order.orderId)}
-                  className="luxury-generate-btn"
+                  className="generate-btn"
                 >
                   Generate Production Plan
                 </button>

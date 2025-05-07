@@ -195,12 +195,12 @@ const DiscountManager = ({ onClose }) => {
     <div className="discount-manager">
       <h1>Manage Discounts</h1>
 
-      {error && <p className="error">{error}</p>}
+      {error && <p className="discount-error">{error}</p>}
 
       <div className="discount-form-section">
         <h3>{selectedDiscount ? "Update Discount" : "Add New Discount"}</h3>
 
-        <label className="input-label">Product ID</label>
+        <label className="discount-input-label">Product ID</label>
         <input
           type="text"
           placeholder="Enter product ID"
@@ -208,7 +208,7 @@ const DiscountManager = ({ onClose }) => {
           onChange={(e) => setProductId(e.target.value)}
         />
 
-        <label className="input-label">Discount Percentage</label>
+        <label className="discount-input-label">Discount Percentage</label>
         <input
           type="number"
           placeholder="1-100%"
@@ -218,23 +218,23 @@ const DiscountManager = ({ onClose }) => {
           onChange={(e) => setDiscountPercentage(e.target.value)}
         />
 
-        <label className="input-label">Start Date</label>
+        <label className="discount-input-label">Start Date</label>
         <input
           type="date"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
         />
 
-        <label className="input-label">End Date</label>
+        <label className="discount-input-label">End Date</label>
         <input
           type="date"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
         />
 
-        <div className="button-container">
+        <div className="discount-button-container">
           <button
-            className="primary-button"
+            className="discount-primary-button"
             onClick={
               selectedDiscount ? handleUpdateDiscount : handleAddDiscount
             }
@@ -247,7 +247,7 @@ const DiscountManager = ({ onClose }) => {
               : "Add Discount"}
           </button>
           {selectedDiscount && (
-            <button className="secondary-button" onClick={handleCancelEdit}>
+            <button className="discount-secondary-button" onClick={handleCancelEdit}>
               Cancel
             </button>
           )}
@@ -259,7 +259,7 @@ const DiscountManager = ({ onClose }) => {
         {isLoading && discounts.length === 0 ? (
           <p>Loading discounts...</p>
         ) : discounts.length === 0 ? (
-          <p className="empty-state">No active discounts</p>
+          <p className="discount-empty-state">No active discounts</p>
         ) : (
           <ul>
             {discounts.map((discount) => (
@@ -271,7 +271,7 @@ const DiscountManager = ({ onClose }) => {
                   <div>
                     <strong>Discount:</strong> {discount.discountPercentage}%
                   </div>
-                  <div className="date-range">
+                  <div className="discount-date-range">
                     <strong>Valid:</strong>{" "}
                     {new Date(discount.startDate).toLocaleDateString()} -{" "}
                     {new Date(discount.endDate).toLocaleDateString()}
@@ -279,13 +279,13 @@ const DiscountManager = ({ onClose }) => {
                 </div>
                 <div className="discount-actions">
                   <button
-                    className="secondary-button"
+                    className="discount-secondary-button"
                     onClick={() => handleEditClick(discount)}
                   >
                     Edit
                   </button>
                   <button
-                    className="delete-button"
+                    className="discount-delete-button"
                     onClick={() => handleDeleteDiscount(discount._id)}
                   >
                     Delete
@@ -298,7 +298,7 @@ const DiscountManager = ({ onClose }) => {
       </div>
 
       <button
-        className="secondary-button"
+        className="discount-secondary-button"
         onClick={() => navigate("/admin/products")}
         style={{ marginTop: "2rem" }}
       >

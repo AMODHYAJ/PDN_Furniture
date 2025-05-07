@@ -1,162 +1,214 @@
-/* Order Details - Luxury Furniture Style */
+/* Luxury Furniture Order Details - Premium Style */
 :root {
-  --wood-dark: #4e342e;       /* Dark walnut */
-  --wood-medium: #795548;     /* Rich brown */
-  --wood-light: #d7ccc8;      /* Light beech */
-  --neutral-light: #efebe9;   /* Cream background */
-  --neutral-lighter: #fff8f5; /* Off-white */
-  --text-dark: #3e2723;       /* Dark text */
-  --text-medium: #5d4037;     /* Medium text */
-  --accent-gold: #c8a97e;     /* Gold accents */
-  --processing: #ffa000;      /* Amber */
-  --shipped: #0288d1;         /* Blue */
-  --delivered: #388e3c;       /* Green */
-  --cancelled: #d32f2f;       /* Red */
+  --wood-dark: #3a2a22;       /* Deep espresso */
+  --wood-medium: #5d4a3c;     /* Rich mahogany */
+  --wood-light: #b8a99a;      /* Washed oak */
+  --neutral-light: #f5f1ee;   /* Linen background */
+  --neutral-lighter: #fffcf9; /* Ivory */
+  --text-dark: #2b211c;       /* Dark chocolate */
+  --text-medium: #4d3d32;     /* Coffee */
+  --accent-gold: #c8b273;     /* Brushed gold */
+  --processing: #d4a017;      /* Amber */
+  --shipped: #7a6b5f;         /* Taupe */
+  --delivered: #5a8f3d;       /* Olive green */
+  --cancelled: #a64444;       /* Terra cotta */
+  --leather: #a67c52;         /* Cognac leather */
 }
 
-.order-details-container {
+.order-details-page {
   max-width: 1200px;
-  margin: 2rem auto;
+  margin: 3rem auto;
   padding: 0 2rem;
-  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+  font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+  color: var(--text-dark);
 }
 
-/* Back Button */
+/* Back Button - Leather Inspired */
 .back-button {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.8rem;
   background-color: var(--neutral-lighter);
   color: var(--wood-medium);
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 4px;
-  font-size: 1rem;
+  border: 1px solid var(--wood-light);
+  padding: 1rem 2rem;
+  border-radius: 0;
+  font-size: 1.1rem;
   cursor: pointer;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  font-family: inherit;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.back-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(166, 124, 82, 0.1), transparent);
+  transition: all 0.4s ease;
+  z-index: -1;
 }
 
 .back-button:hover {
-  background-color: var(--wood-light);
   color: var(--wood-dark);
+  border-color: var(--wood-medium);
 }
 
-/* Order Header */
+.back-button:hover::before {
+  left: 100%;
+}
+
+/* Order Header - Luxury Showcase */
 .order-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2.5rem;
-  padding-bottom: 1.5rem;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
   border-bottom: 1px solid var(--wood-light);
   flex-wrap: wrap;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .order-header h1 {
   color: var(--wood-dark);
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin: 0;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.5px;
+  font-family: 'Playfair Display', serif;
+  text-transform: uppercase;
 }
 
 .order-status {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .order-date {
   color: var(--text-medium);
-  font-size: 0.95rem;
+  font-size: 1.1rem;
+  letter-spacing: 0.3px;
 }
 
-/* Status Badge */
+/* Status Badge - Luxury Tags */
 .status-badge {
-  padding: 0.5rem 1.2rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  text-transform: capitalize;
+  padding: 0.7rem 1.8rem;
+  border-radius: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Cormorant Garamond', serif;
+  border: 1px solid transparent;
 }
 
 .badge-processing {
-  background-color: rgba(255, 160, 0, 0.1);
+  background-color: rgba(212, 160, 23, 0.1);
   color: var(--processing);
-  border: 1px solid rgba(255, 160, 0, 0.3);
+  border-color: var(--processing);
 }
 
 .badge-shipped {
-  background-color: rgba(2, 136, 209, 0.1);
+  background-color: rgba(122, 107, 95, 0.1);
   color: var(--shipped);
-  border: 1px solid rgba(2, 136, 209, 0.3);
+  border-color: var(--shipped);
 }
 
 .badge-delivered {
-  background-color: rgba(56, 142, 60, 0.1);
+  background-color: rgba(90, 143, 61, 0.1);
   color: var(--delivered);
-  border: 1px solid rgba(56, 142, 60, 0.3);
+  border-color: var(--delivered);
 }
 
 .badge-cancelled {
-  background-color: rgba(211, 47, 47, 0.1);
+  background-color: rgba(166, 68, 68, 0.1);
   color: var(--cancelled);
-  border: 1px solid rgba(211, 47, 47, 0.3);
+  border-color: var(--cancelled);
 }
 
-/* Order Sections */
+/* Order Sections - Premium Layout */
 .order-sections {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 3rem;
-  margin-bottom: 3rem;
+  gap: 4rem;
+  margin-bottom: 4rem;
 }
 
-/* Order Items Section */
+/* Order Items Section - Gallery Style */
 .order-items-section {
-  background: white;
-  padding: 2.5rem;
-  border-radius: 8px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  background: var(--neutral-lighter);
+  padding: 3rem;
+  border-radius: 0;
   border: 1px solid var(--wood-light);
+  position: relative;
+  box-shadow: none;
+}
+
+.order-items-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+  opacity: 0.2;
+  pointer-events: none;
 }
 
 .section-title {
   color: var(--wood-dark);
   margin-top: 0;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--wood-light);
-  font-weight: 500;
-  font-size: 1.5rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--wood-light);
+  font-weight: 600;
+  font-size: 1.8rem;
+  letter-spacing: 0.5px;
+  font-family: 'Playfair Display', serif;
+  text-transform: uppercase;
 }
 
 .order-items {
-  margin: 2rem 0;
+  margin: 3rem 0;
 }
 
 .order-item {
   display: flex;
-  gap: 2rem;
-  padding: 1.5rem 0;
+  gap: 2.5rem;
+  padding: 2.5rem 0;
   border-bottom: 1px solid var(--wood-light);
+  align-items: center;
 }
 
 .order-item:last-child {
   border-bottom: none;
 }
 
-.order-item-image {
-  width: 120px;
-  height: 120px;
+.product-image {
+  width: 140px;
+  height: 140px;
   object-fit: contain;
-  border-radius: 6px;
+  border-radius: 2px;
   background-color: var(--neutral-lighter);
   padding: 1rem;
   border: 1px solid var(--wood-light);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.product-image:hover {
+  transform: scale(1.03);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .item-details {
@@ -164,267 +216,328 @@
 }
 
 .item-details h4 {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 1.2rem 0;
   color: var(--text-dark);
-  font-weight: 500;
-  font-size: 1.1rem;
+  font-weight: 600;
+  font-size: 1.4rem;
+  font-family: 'Cormorant Garamond', serif;
 }
 
 .item-meta {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   color: var(--text-medium);
-  font-size: 0.95rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  letter-spacing: 0.3px;
+  margin-bottom: 0.8rem;
 }
 
 .item-price {
-  font-weight: 500;
+  font-weight: 600;
   color: var(--wood-dark);
 }
 
-/* Order Summary */
+/* Order Summary - Elegant Totals */
 .order-summary {
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--wood-light);
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--wood-light);
 }
 
 .summary-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
   color: var(--text-medium);
+  font-size: 1.1rem;
+  letter-spacing: 0.3px;
 }
 
 .summary-row.total {
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: var(--wood-dark);
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--wood-light);
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--wood-light);
+  font-family: 'Cormorant Garamond', serif;
 }
 
-/* Order Info Section */
+/* Order Info Section - Side Panel */
 .order-info-section {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
 }
 
-/* Shipping Info */
+/* Shipping & Payment Info - Elegant Cards */
 .shipping-info, .payment-info {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  background: var(--neutral-lighter);
+  padding: 3rem;
+  border-radius: 0;
   border: 1px solid var(--wood-light);
+  position: relative;
+  box-shadow: none;
+}
+
+.shipping-info::before, .payment-info::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+  opacity: 0.2;
+  pointer-events: none;
 }
 
 .info-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 .info-row {
   display: flex;
+  align-items: baseline;
 }
 
 .info-label {
-  min-width: 120px;
+  min-width: 150px;
   color: var(--text-medium);
-  font-weight: 500;
-  font-size: 0.95rem;
+  font-weight: 600;
+  font-size: 1.1rem;
 }
 
 .info-value {
   color: var(--text-dark);
   flex: 1;
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--wood-light);
+  font-size: 1.1rem;
 }
 
-/* Action Section */
+/* Action Section - Prominent CTAs */
 .action-section {
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 
 .cancellation-notice, .tracking-info {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  background: var(--neutral-lighter);
+  padding: 3rem;
+  border-radius: 0;
   border: 1px solid var(--wood-light);
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.cancellation-notice::before, .tracking-info::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+  opacity: 0.2;
+  pointer-events: none;
 }
 
 .cancellation-notice h3, .tracking-info h3 {
   color: var(--wood-dark);
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  font-family: 'Playfair Display', serif;
 }
 
 .cancellation-notice p, .tracking-info p {
   color: var(--text-medium);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  line-height: 1.8;
 }
 
 .action-button {
-  padding: 0.8rem 2rem;
+  padding: 1.2rem 3rem;
   border: none;
-  border-radius: 4px;
-  font-weight: 500;
+  border-radius: 0;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1rem;
+  transition: all 0.4s ease;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  font-family: 'Cormorant Garamond', serif;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
 }
 
+.action-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: all 0.6s ease;
+  z-index: -1;
+}
+
+.action-button:hover::before {
+  left: 100%;
+}
+
+/* Cancel Button - Luxury Style */
 .cancel-button {
-  background-color: var(--cancelled);
-  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 1.2rem 3rem;
+  background-color: transparent;
+  color: var(--cancelled);
+  border: 2px solid var(--cancelled);
+  border-radius: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: 'Cormorant Garamond', serif;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.cancel-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+              transparent, 
+              rgba(166, 68, 68, 0.1), 
+              transparent);
+  transition: all 0.6s ease;
+  z-index: -1;
 }
 
 .cancel-button:hover {
-  background-color: #b71c1c;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.2);
+  background-color: var(--cancelled);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(166, 68, 68, 0.2);
 }
 
+.cancel-button:hover::before {
+  left: 100%;
+}
+
+.cancel-button:active {
+  transform: translateY(-1px);
+}
+
+/* Optional: Add an icon */
+.cancel-button::after {
+  content: '✕';
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.cancel-button:hover::after {
+  transform: rotate(90deg);
+}
+
+/* Track Button - Luxury Style */
 .track-button {
-  background-color: var(--shipped);
-  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem 4rem; /* Increased padding */
+  background-color: transparent;
+  color: var(--shipped);
+  border: 3px solid var(--shipped); /* Thicker border */
+  border-radius: 0;
+  font-size: 1.4rem; /* Larger font */
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-family: 'Cormorant Garamond', serif;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+  min-width: 350px; /* Minimum width */
+  margin: 2.5rem auto; /* More spacing */
+}
+
+.track-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+              transparent, 
+              rgba(122, 107, 95, 0.1), 
+              transparent);
+  transition: all 0.6s ease;
+  z-index: -1;
 }
 
 .track-button:hover {
-  background-color: #01579b;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(2, 136, 209, 0.2);
+  background-color: var(--shipped);
+  color: white;
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(122, 107, 95, 0.4);
 }
 
-/* Delivery Estimate */
-.delivery-estimate {
-  margin-top: 1.5rem;
-  padding: 1.5rem;
-  background-color: rgba(200, 169, 126, 0.1);
-  border-radius: 8px;
-  border-left: 4px solid var(--accent-gold);
+.track-button:hover::before {
+  left: 100%;
 }
 
-.delivery-estimate p {
-  margin: 0;
-  color: var(--text-dark);
+.track-button:active {
+  transform: translateY(-3px);
 }
 
-.delivery-estimate strong {
-  color: var(--wood-dark);
+/* Optional: Add an icon */
+.track-button::after {
+  content: '→';
+  font-size: 1.6rem;
+  transition: all 0.3s ease;
 }
 
-/* Responsive Design */
-@media (max-width: 992px) {
-  .order-sections {
-    grid-template-columns: 1fr;
-  }
-  
-  .order-item {
-    gap: 1.5rem;
-  }
-  
-  .order-item-image {
-    width: 100px;
-    height: 100px;
-  }
+.track-button:hover::after {
+  transform: translateX(5px);
 }
 
-@media (max-width: 768px) {
-  .order-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .order-status {
-    width: 100%;
-    justify-content: space-between;
-  }
-  
-  .order-item {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .order-item-image {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1/1;
-  }
-  
-  .item-meta {
-    flex-wrap: wrap;
-    gap: 0.8rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .order-details-container {
-    padding: 0 1rem;
-  }
-  
-  .order-header h1 {
-    font-size: 1.8rem;
-  }
-  
-  .order-items-section,
-  .shipping-info,
-  .payment-info {
-    padding: 1.5rem;
-  }
-  
-  .info-row {
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-  
-  .info-label {
-    min-width: auto;
-  }
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.order-header,
-.order-sections,
-.action-section {
-  animation: fadeIn 0.6s ease-out forwards;
-}
-
-.order-sections {
-  animation-delay: 0.2s;
-}
-
-.action-section {
-  animation-delay: 0.4s;
-}
-
-/* Loading State */
+/* Loading State - Elegant Spinner */
 .loading {
   text-align: center;
-  padding: 4rem;
+  padding: 6rem;
   color: var(--wood-medium);
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
+  font-family: 'Cormorant Garamond', serif;
 }
 
 .loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgba(121, 85, 72, 0.1);
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(93, 74, 60, 0.1);
   border-top-color: var(--wood-medium);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -434,14 +547,124 @@
   to { transform: rotate(360deg); }
 }
 
-/* Error State */
+/* Error State - Refined Alert */
 .error {
   text-align: center;
-  padding: 3rem;
+  padding: 4rem;
   color: var(--cancelled);
-  font-size: 1.1rem;
-  background: rgba(211, 47, 47, 0.05);
-  border-radius: 8px;
-  margin: 2rem 0;
+  font-size: 1.3rem;
+  background: rgba(166, 68, 68, 0.05);
+  border-radius: 0;
+  margin: 3rem 0;
   border-left: 4px solid var(--cancelled);
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .order-sections {
+    gap: 3rem;
+  }
+  
+  .order-item {
+    gap: 2rem;
+  }
+  
+  .product-image {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 992px) {
+  .order-sections {
+    grid-template-columns: 1fr;
+  }
+  
+  .order-info-section {
+    grid-template-columns: 1fr 1fr;
+    display: grid;
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .order-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+  
+  .order-status {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .order-info-section {
+    grid-template-columns: 1fr;
+  }
+  
+  .item-meta {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .order-details-page {
+    padding: 0 1.5rem;
+  }
+  
+  .order-header h1 {
+    font-size: 2rem;
+  }
+  
+  .order-items-section,
+  .shipping-info,
+  .payment-info,
+  .cancellation-notice,
+  .tracking-info {
+    padding: 2rem;
+  }
+  
+  .info-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .info-label {
+    min-width: auto;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--wood-light);
+  }
+  
+  .info-value {
+    padding-left: 0;
+    border-left: none;
+  }
+  
+  .action-button {
+    width: 100%;
+    padding: 1.2rem;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.order-header,
+.order-sections,
+.action-section {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.order-sections {
+  animation-delay: 0.3s;
+}
+
+.action-section {
+  animation-delay: 0.6s;
 }

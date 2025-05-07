@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
 import './DeliveryDashboard.css';
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet"></link>
 
 const DeliveryDashboard = () => {
   const [assignedOrders, setAssignedOrders] = useState([]);
@@ -38,31 +39,32 @@ const DeliveryDashboard = () => {
   };
 
   if (loading) return (
-    <div className="luxury-loading">
-      <div className="luxury-spinner"></div>
+    <div className="delivery-loading">
+      <div className="loading-spinner"></div>
       <p>Loading deliveries...</p>
     </div>
   );
   
   if (error) return (
-    <div className="luxury-error-message">
-      <span className="luxury-error-icon">⚠️</span>
+    <div className="delivery-error">
+      <span className="error-icon">⚠️</span>
       {error}
     </div>
   );
 
   return (
-    <div className="luxury-delivery-dashboard">
-      <div className="luxury-header">
-        <h1 className="luxury-title">Delivery Management</h1>
-        <div className="luxury-divider"></div>
+    <div className="delivery-container">
+      <div className="delivery-header">
+        <h1 className="delivery-title">Delivery Management</h1>
+        <p className="delivery-subtitle">Track and manage furniture deliveries</p>
+        <div className="divider"></div>
       </div>
       
-      <div className="luxury-status-filter">
+      <div className="status-filter">
         <select 
           value={selectedStatus} 
           onChange={(e) => setSelectedStatus(e.target.value)}
-          className="luxury-status-select"
+          className="status-select"
         >
           <option value="assigned">Assigned Deliveries</option>
           <option value="in_transit">In Transit</option>
@@ -70,49 +72,51 @@ const DeliveryDashboard = () => {
         </select>
       </div>
       
-      <div className="luxury-orders-grid">
+      <div className="delivery-grid">
         {assignedOrders.length === 0 ? (
-          <div className="luxury-empty-state">
-            <div className="luxury-empty-icon">📦</div>
-            <p>No {selectedStatus.replace('_', ' ')} deliveries found</p>
+          <div className="empty-state">
+            <div className="empty-icon">📦</div>
+            <h3>No {selectedStatus.replace('_', ' ')} deliveries</h3>
+            <p>Currently there are no deliveries in this category</p>
           </div>
         ) : (
           assignedOrders.map(order => (
-            <div key={order._id} className="luxury-order-card">
-              <div className="luxury-order-header">
-                <h3 className="luxury-order-id">ORDER #{order._id.substring(0, 8).toUpperCase()}</h3>
-                <span className={`luxury-status-badge ${order.deliveryStatus}`}>
+            <div key={order._id} className="delivery-card">
+              <div className="card-header">
+                <h3 className="order-id">ORDER #{order._id.substring(0, 8).toUpperCase()}</h3>
+                <span className={`status-badge ${order.deliveryStatus}`}>
                   {order.deliveryStatus.replace('_', ' ')}
                 </span>
               </div>
               
-              <div className="luxury-order-details">
-                <div className="luxury-detail-row">
-                  <span className="luxury-detail-label">Customer:</span>
-                  <span className="luxury-detail-value">{order.userId.name}</span>
+              <div className="card-body">
+                <div className="detail-row">
+                  <span className="detail-label">Customer:</span>
+                  <span className="detail-value">{order.userId?.name || 'N/A'}</span>
                 </div>
                 
-                <div className="luxury-detail-row">
-                  <span className="luxury-detail-label">Delivery Address:</span>
-                  <span className="luxury-detail-value">
-                    {order.shippingAddress.address}, {order.shippingAddress.city}
+                <div className="detail-row">
+                  <span className="detail-label">Address:</span>
+                  <span className="detail-value">
+                    {order.shippingAddress?.address || 'N/A'}, {order.shippingAddress?.city || 'N/A'}
                   </span>
                 </div>
                 
-                <div className="luxury-detail-row">
-                  <span className="luxury-detail-label">Estimated Delivery:</span>
-                  <span className="luxury-detail-value">
-                    {new Date(order.estimatedDeliveryDate).toLocaleDateString()}
+                <div className="detail-row">
+                  <span className="detail-label">Delivery Date:</span>
+                  <span className="detail-value">
+                    {order.estimatedDeliveryDate ? 
+                      new Date(order.estimatedDeliveryDate).toLocaleDateString() : 'N/A'}
                   </span>
                 </div>
               </div>
               
-              <div className="luxury-order-actions">
+              <div className="card-footer">
                 {order.deliveryStatus === 'assigned' && (
                   <button 
                     onClick={() => updateOrderStatus(order._id, 'in_transit')}
                     disabled={loading}
-                    className="luxury-action-btn transit-btn"
+                    className="action-btn begin-delivery"
                   >
                     Begin Delivery
                   </button>
@@ -122,7 +126,7 @@ const DeliveryDashboard = () => {
                   <button 
                     onClick={() => updateOrderStatus(order._id, 'delivered')}
                     disabled={loading}
-                    className="luxury-action-btn deliver-btn"
+                    className="action-btn complete-delivery"
                   >
                     Mark as Delivered
                   </button>

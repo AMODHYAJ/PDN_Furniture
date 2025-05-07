@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import api from "../utils/api";
 import "./ProgressOrderDetails.css";
 import ProgressNavBar from "../Components/ProgressNavBar";
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet"></link>
 
 const ProgressOrderDetails = () => {
   const { id } = useParams();
@@ -111,76 +112,114 @@ const ProgressOrderDetails = () => {
     }
   };
 
-  useEffect(() => {
-    if (order && order.tasks) {
-      const allCompleted = order.tasks.every(
-        (task) => task.status === "Completed"
-      );
-      if (allCompleted) {
-        console.log("All tasks completed - order will be marked as shipped");
-      }
-    }
-  }, [order]);
-
-  if (loading) return <div className="luxury-order-details-container">Loading...</div>;
-  if (error) return <div className="luxury-order-details-container">Error: {error}</div>;
-  if (!order) return <div className="luxury-order-details-container">Order not found.</div>;
+  if (loading) return (
+    <div className="order-details-loading">
+      <div className="loading-spinner"></div>
+      Loading order details...
+    </div>
+  );
+  
+  if (error) return (
+    <div className="order-details-error">
+      <span className="error-icon">⚠️</span>
+      {error}
+    </div>
+  );
+  
+  if (!order) return (
+    <div className="order-details-error">
+      Order not found
+    </div>
+  );
 
   return (
     <>
       <ProgressNavBar />
-      <div className="luxury-order-details-container">
-        <h2>Order Details: {order.orderId}</h2>
-        <p>
-          <strong>Order ID:</strong> {order.orderId}
-        </p>
-        <p>
-          <strong>Priority:</strong> {order.priorityLevel}
-        </p>
-        <p>
-          <strong>Progress:</strong> {order.progress}%
-        </p>
-
-        <h3>Tasks:</h3>
-        <div className="task-table">
-          <div className="task-header">
-            <div className="task-column">Task Name</div>
-            <div className="task-column">Assigned To</div>
-            <div className="task-column">Status</div>
-            <div className="task-column">Update Status</div>
-          </div>
-          
-          {order.tasks?.map((task) => (
-            <div key={task._id} className="task-row">
-              <div className="task-column">{task.taskName}</div>
-              <div className="task-column">{getEmployeeName(task.assignedTo)}</div>
-              <div className="task-column">
-                <span className={`status-badge ${taskStatus[task._id].toLowerCase().replace(' ', '-')}`}>
-                  {taskStatus[task._id]}
-                </span>
-              </div>
-              <div className="task-column">
-                <select
-                  value={taskStatus[task._id]}
-                  onChange={(e) => handleStatusChange(task._id, e.target.value)}
-                  disabled={task.status === "Completed"}
-                >
-                  <option value="Pending">Pending</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="Completed">Completed</option>
-                </select>
+      <div className="order-details-container">
+        <div className="order-header">
+          <h1 className="order-title">Order #{order.orderId}</h1>
+          <div className="order-meta">
+            <div className="meta-item">
+              <span className="meta-label">Priority:</span>
+              <span className={`priority-badge ${order.priorityLevel.toLowerCase()}`}>
+                {order.priorityLevel}
+              </span>
+            </div>
+            <div className="meta-item">
+              <span className="meta-label">Progress:</span>
+              <div className="progress-container">
+                <div className="progress-bar">
+                  <div 
+                    className="progress-fill"
+                    style={{ width: `${order.progress}%` }}
+                  ></div>
+                </div>
+                <span className="progress-percent">{order.progress}%</span>
               </div>
             </div>
-          ))}
+          </div>
         </div>
 
-        <div className="luxury-actions">
+        <div className="tasks-section">
+          <h2 className="section-title">Production Tasks</h2>
+          
+          <div className="tasks-table">
+            <div className="table-header">
+              <div className="table-column">Task</div>
+              <div className="table-column">Assigned To</div>
+              <div className="table-column">Status</div>
+              <div className="table-column">Update</div>
+            </div>
+            
+            {order.tasks?.map((task) => (
+              <div key={task._id} className="table-row">
+                <div className="table-column">
+                  <span className="task-name">{task.taskName}</span>
+                  {task.description && (
+                    <p className="task-description">{task.description}</p>
+                  )}
+                </div>
+                <div className="table-column">
+                  <span className="employee-info">
+                    {getEmployeeName(task.assignedTo)}
+                  </span>
+                </div>
+                <div className="table-column">
+                  <span className={`status-badge ${taskStatus[task._id].toLowerCase().replace(' ', '-')}`}>
+                    {taskStatus[task._id]}
+                  </span>
+                </div>
+                <div className="table-column">
+                  <select
+                    value={taskStatus[task._id]}
+                    onChange={(e) => handleStatusChange(task._id, e.target.value)}
+                    disabled={task.status === "Completed"}
+                    className="status-select"
+                  >
+                    <option value="Pending">Pending</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                  </select>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="action-buttons">
           <button
             onClick={applyStatusChanges}
             disabled={!isStatusChanged || loading}
-            className="luxury-save-btn"
+            className="save-btn"
           >
-            {loading ? "Saving..." : "Apply Changes"}
+            {loading ? (
+              <>
+                <span className="spinner"></span>
+                Saving...
+              </>
+            ) : (
+              "Save Changes"
+            )}
           </button>
         </div>
       </div>

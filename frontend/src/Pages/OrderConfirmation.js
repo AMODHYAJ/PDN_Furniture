@@ -113,7 +113,9 @@ const OrderConfirmation = () => {
       <div className="next-steps">
         <h2>What's Next?</h2>
         <p>You'll receive an email confirmation shortly.</p>
-        <button onClick={() => navigate('/products')}>Continue Shopping</button>
+        <button className="continue-shopping" onClick={() => navigate('/products')}>
+          <span>Continue Shopping</span>
+        </button>
       </div>
     </div>
   );

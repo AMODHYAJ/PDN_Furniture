@@ -80,7 +80,7 @@ const OrderDetails = () => {
       cancelled: "badge-cancelled",
     };
 
-    return <span className={`badge ${statusClasses[status]}`}>{status}</span>;
+    return <span className={`status-badge ${statusClasses[status]}`}>{status}</span>;
   };
 
   if (loading) return <div className="loading">Loading order details...</div>;

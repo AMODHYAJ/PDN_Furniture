@@ -94,10 +94,14 @@ const AdminUsers = () => {
   );
 
   if (loading) {
-    return <div className="luxury-loading">
-      <div className="luxury-spinner"></div>
-      <p>Loading user data...</p>
-    </div>;
+    return (
+      <div className="admin-users-container">
+        <div className="loading-spinner">
+          <div className="spinner"></div>
+          <p>Loading user data...</p>
+        </div>
+      </div>
+    );
   }
 
   if (!isAdmin) {
@@ -105,27 +109,29 @@ const AdminUsers = () => {
   }
 
   return (
-    <div className="luxury-admin-users">
-      <div className="luxury-header">
-        <h1 className="luxury-title">User Management</h1>
-        <div className="luxury-divider"></div>
+    <div className="admin-users-container">
+      <div className="admin-header">
+        <h1 className="admin-title">User Management</h1>
+        <div className="admin-search-container">
+          <input
+            type="text"
+            placeholder="Search users..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="admin-search-input"
+          />
+          <span className="admin-search-icon">🔍</span>
+        </div>
       </div>
       
-      {error && <div className="luxury-error">{error}</div>}
+      {error && (
+        <div className="error-message">
+          {error}
+        </div>
+      )}
       
-      <div className="luxury-search-container">
-        <input
-          type="text"
-          placeholder="Search users by name or email..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="luxury-search-input"
-        />
-        <span className="luxury-search-icon">🔍</span>
-      </div>
-      
-      <div className="luxury-table-container">
-        <table className="luxury-users-table">
+      <div className="admin-table-container">
+        <table className="admin-users-table">
           <thead>
             <tr>
               <th>Name</th>
@@ -138,7 +144,7 @@ const AdminUsers = () => {
           <tbody>
             {filteredUsers.length > 0 ? (
               filteredUsers.map(user => (
-                <tr key={user._id} className="luxury-table-row">
+                <tr key={user._id}>
                   {editUserId === user._id ? (
                     <>
                       <td>
@@ -147,7 +153,7 @@ const AdminUsers = () => {
                           name="name"
                           value={editFormData.name}
                           onChange={handleEditChange}
-                          className="luxury-edit-input"
+                          className="edit-input"
                         />
                       </td>
                       <td>
@@ -156,7 +162,7 @@ const AdminUsers = () => {
                           name="email"
                           value={editFormData.email}
                           onChange={handleEditChange}
-                          className="luxury-edit-input"
+                          className="edit-input"
                         />
                       </td>
                       <td>
@@ -164,22 +170,22 @@ const AdminUsers = () => {
                           name="role"
                           value={editFormData.role}
                           onChange={handleEditChange}
-                          className="luxury-edit-select"
+                          className="edit-select"
                         >
                           <option value="Admin">Admin</option>
                           <option value="Customer">Customer</option>
                         </select>
                       </td>
                       <td>{new Date(user.createdAt).toLocaleDateString()}</td>
-                      <td className="luxury-action-buttons">
+                      <td className="action-buttons">
                         <button 
-                          className="luxury-btn luxury-save-btn"
+                          className="action-btn save-btn"
                           onClick={handleEditSubmit}
                         >
                           Save
                         </button>
                         <button 
-                          className="luxury-btn luxury-cancel-btn"
+                          className="action-btn cancel-btn"
                           onClick={() => setEditUserId(null)}
                         >
                           Cancel
@@ -188,23 +194,23 @@ const AdminUsers = () => {
                     </>
                   ) : (
                     <>
-                      <td className="luxury-user-name">{user.name}</td>
-                      <td>{user.email}</td>
+                      <td className="user-name">{user.name}</td>
+                      <td className="user-email">{user.email}</td>
                       <td>
-                        <span className={`luxury-role-tag ${user.role.toLowerCase()}`}>
+                        <span className={`role-badge ${user.role.toLowerCase()}`}>
                           {user.role}
                         </span>
                       </td>
                       <td>{new Date(user.createdAt).toLocaleDateString()}</td>
-                      <td className="luxury-action-buttons">
+                      <td className="action-buttons">
                         <button 
-                          className="luxury-btn luxury-edit-btn"
+                          className="action-btn edit-btn"
                           onClick={() => handleEdit(user)}
                         >
                           Edit
                         </button>
                         <button 
-                          className="luxury-btn luxury-delete-btn"
+                          className="action-btn delete-btn"
                           onClick={() => handleDelete(user._id)}
                         >
                           Delete
@@ -215,11 +221,11 @@ const AdminUsers = () => {
                 </tr>
               ))
             ) : (
-              <tr className="luxury-empty-row">
-                <td colSpan="5" className="luxury-no-users">
-                  <div className="luxury-empty-state">
-                    <span className="luxury-empty-icon">👤</span>
-                    <p>No users found matching your search</p>
+              <tr>
+                <td colSpan="5" className="empty-state">
+                  <div className="empty-content">
+                    <span className="empty-icon">👤</span>
+                    <p className="empty-message">No users found matching your search</p>
                   </div>
                 </td>
               </tr>
