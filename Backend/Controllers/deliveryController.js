@@ -46,18 +46,34 @@ exports.updateDeliveryStatus = async (req, res) => {
       updateData.status = 'delivered';
     }
     
+    // Update the order
     const order = await Order.findByIdAndUpdate(
       orderId,
       updateData,
       { new: true }
-    ).populate('userId', 'name email')
-     .populate('deliveryOfficer', 'name phone');
+    ).populate('userId deliveryOfficer', 'name email phone');
     
     if (!order) {
       return res.status(404).json({ 
         success: false,
         message: "Order not found" 
       });
+    }
+    
+    // If status was changed to delivered, check if officer has other assigned orders
+    if (status === 'delivered' && order.deliveryOfficer) {
+      const assignedOrdersCount = await Order.countDocuments({
+        deliveryOfficer: order.deliveryOfficer._id,
+        deliveryStatus: { $in: ['assigned', 'in_transit'] }
+      });
+      
+      // If no more assigned orders, set officer to available
+      if (assignedOrdersCount === 0) {
+        await DeliveryOfficer.findByIdAndUpdate(
+          order.deliveryOfficer._id,
+          { isAvailable: true }
+        );
+      }
     }
     
     res.json({ success: true, order });

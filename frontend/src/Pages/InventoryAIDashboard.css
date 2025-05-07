@@ -1,0 +1,179 @@
+/* InventoryAIDashboard.css */
+
+.inventory-ai-dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Playfair Display', serif;
+    color: #333;
+  }
+  
+  .inventory-ai-dashboard h2 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #3a3a3a;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 1rem;
+  }
+  
+  .inventory-ai-dashboard h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: #c8a97e; /* Gold accent */
+  }
+  
+  .ai-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .ai-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid #e8e8e8;
+    position: relative;
+  }
+  
+  .ai-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  }
+  
+  .ai-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+  }
+  
+  .ai-card.high::before {
+    background: #e74c3c; /* Red for high priority */
+  }
+  
+  .ai-card.medium::before {
+    background: #f39c12; /* Orange for medium priority */
+  }
+  
+  .ai-card.low::before {
+    background: #2ecc71; /* Green for low priority */
+  }
+  
+  .ai-card h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #2c3e50;
+    padding: 1.5rem 1.5rem 0;
+    margin-bottom: 1rem;
+  }
+  
+  .ai-card p {
+    font-size: 1rem;
+    color: #666;
+    padding: 0 1.5rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+  }
+  
+  .ai-card .status-critical {
+    color: #e74c3c;
+    font-weight: 600;
+  }
+  
+  .ai-card .status-warning {
+    color: #f39c12;
+    font-weight: 600;
+  }
+  
+  .ai-card .status-ok {
+    color: #2ecc71;
+    font-weight: 600;
+  }
+  
+  .ai-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    border-top: 1px solid #f0f0f0;
+  }
+  
+  .ai-button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .ai-button {
+    background: #c8a97e; /* Gold */
+    color: white;
+  }
+  
+  .ai-button:hover {
+    background: #b8935a; /* Darker gold */
+    transform: translateY(-2px);
+  }
+  
+  .ai-button.secondary {
+    background: transparent;
+    color: #c8a97e;
+    border: 1px solid #c8a97e;
+  }
+  
+  .ai-button.secondary:hover {
+    background: rgba(200, 169, 126, 0.1);
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .ai-cards {
+      grid-template-columns: 1fr;
+    }
+    
+    .inventory-ai-dashboard {
+      padding: 1rem;
+    }
+  }
+  
+  /* Luxury animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .ai-card {
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  
+  .ai-card:nth-child(1) { animation-delay: 0.1s; }
+  .ai-card:nth-child(2) { animation-delay: 0.2s; }
+  .ai-card:nth-child(3) { animation-delay: 0.3s; }
+  .ai-card:nth-child(4) { animation-delay: 0.4s; }
+  .ai-card:nth-child(5) { animation-delay: 0.5s; }

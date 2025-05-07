@@ -1,53 +1,57 @@
 /* Luxury Furniture Delivery Officers List */
 .luxury-officers-container {
   max-width: 1400px;
-  margin: 40px auto;
-  padding: 40px;
+  margin: 2rem auto;
+  padding: 2.5rem;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  font-family: 'Playfair Display', 'Georgia', serif;
+  font-family: 'Playfair Display', serif;
+  border: 1px solid #e0d6c2;
 }
 
 .luxury-header {
-  margin-bottom: 40px;
+  margin-bottom: 2rem;
   text-align: center;
 }
 
 .luxury-title {
-  font-size: 2.8rem;
-  font-weight: 400;
-  color: #3a3a3a;
-  letter-spacing: 1px;
-  margin-bottom: 15px;
+  font-size: 2.2rem;
+  font-weight: 500;
+  color: #4e342e;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
 }
 
 .luxury-divider {
   height: 2px;
-  width: 120px;
+  width: 100px;
   background: linear-gradient(to right, transparent, #c8a97e, transparent);
-  margin: 0 auto;
+  margin: 1.5rem auto;
 }
 
 .luxury-controls {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 30px;
+  margin-bottom: 2rem;
 }
 
 .luxury-add-btn {
-  padding: 12px 25px;
+  padding: 0.75rem 1.5rem;
   background-color: #c8a97e;
   color: white;
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: 6px;
   transition: all 0.3s ease;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
   box-shadow: 0 2px 5px rgba(200, 169, 126, 0.2);
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
 }
 
 .luxury-add-btn:hover {
@@ -57,14 +61,15 @@
 }
 
 .luxury-btn-icon {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .luxury-table-container {
   overflow-x: auto;
-  margin-top: 20px;
+  margin-top: 1rem;
   border-radius: 8px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e0d6c2;
 }
 
 .luxury-officers-table {
@@ -74,22 +79,26 @@
   background: white;
   border-radius: 8px;
   overflow: hidden;
+  min-width: 800px;
 }
 
 .luxury-officers-table th {
   background-color: #f5f3f0;
-  padding: 18px 20px;
+  padding: 1rem 1.5rem;
   text-align: left;
   font-weight: 500;
-  color: #555;
-  font-size: 1.1rem;
+  color: #5d4037;
+  font-size: 1rem;
   border-bottom: 2px solid #e0d6c2;
+  font-family: 'Playfair Display', serif;
 }
 
 .luxury-officers-table td {
-  padding: 16px 20px;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #f0e6d2;
   vertical-align: middle;
+  font-family: 'Inter', sans-serif;
+  color: #5d4037;
 }
 
 .luxury-table-row:hover {
@@ -106,27 +115,30 @@
 
 .luxury-name {
   font-weight: 500;
-  color: #333;
-  margin-bottom: 5px;
+  color: #3a3a3a;
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
 }
 
 .luxury-email {
-  color: #666;
-  font-size: 0.9rem;
+  color: #8d6e63;
+  font-size: 0.85rem;
 }
 
 .luxury-phone {
-  color: #555;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #5d4037;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
 }
 
 .luxury-role-tag {
   display: inline-block;
-  padding: 5px 12px;
+  padding: 0.4rem 0.8rem;
   border-radius: 20px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 500;
   text-transform: capitalize;
+  font-family: 'Inter', sans-serif;
 }
 
 .luxury-role-tag.senior {
@@ -150,8 +162,9 @@
 .luxury-status {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
   font-size: 0.95rem;
+  font-family: 'Inter', sans-serif;
 }
 
 .luxury-status-indicator {
@@ -170,40 +183,41 @@
 
 .luxury-actions {
   display: flex;
-  gap: 10px;
+  gap: 0.5rem;
 }
 
 .luxury-action-btn {
-  padding: 8px 16px;
+  padding: 0.5rem 1rem;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   transition: all 0.3s ease;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 500;
   letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
 .luxury-action-btn.make-available {
-  background-color: #4caf50;
-  color: white;
+  background-color: #a5d6a7;
+  color: #1b5e20;
 }
 
 .luxury-action-btn.make-unavailable {
-  background-color: #f44336;
-  color: white;
+  background-color: #ef9a9a;
+  color: #b71c1c;
 }
 
 .luxury-edit-btn {
-  background-color: #2196f3;
-  color: white;
+  background-color: #90caf9;
+  color: #0d47a1;
   text-decoration: none;
 }
 
 .luxury-delete-btn {
-  background-color: #f44336;
-  color: white;
+  background-color: #ef9a9a;
+  color: #b71c1c;
 }
 
 .luxury-action-btn:hover {
@@ -217,7 +231,7 @@
   align-items: center;
   justify-content: center;
   height: 300px;
-  color: #666;
+  color: #6d4c41;
   font-size: 1.2rem;
 }
 
@@ -227,48 +241,71 @@
   border: 5px solid #f3f3f3;
   border-top: 5px solid #c8a97e;
   border-radius: 50%;
-  animation: luxury-spin 1s linear infinite;
-  margin-bottom: 20px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1.5rem;
 }
 
-@keyframes luxury-spin {
+@keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
 .luxury-error-message {
   text-align: center;
-  padding: 30px;
+  padding: 2rem;
   background: #fde8e8;
   border-radius: 8px;
   color: #b71c1c;
   border-left: 4px solid #b71c1c;
   max-width: 800px;
-  margin: 40px auto;
+  margin: 2rem auto;
   font-size: 1.1rem;
 }
 
 .luxury-error-icon {
   display: block;
   font-size: 2rem;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
 }
 
-@media (max-width: 768px) {
+/* Responsive Design */
+@media (max-width: 1024px) {
   .luxury-officers-container {
-    padding: 20px;
+    padding: 2rem;
   }
   
   .luxury-title {
     font-size: 2rem;
   }
+}
+
+@media (max-width: 768px) {
+  .luxury-officers-container {
+    padding: 1.5rem;
+  }
+  
+  .luxury-controls {
+    justify-content: center;
+  }
   
   .luxury-actions {
     flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .luxury-action-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .luxury-title {
+    font-size: 1.8rem;
   }
   
   .luxury-add-btn {
-    padding: 10px 15px;
-    font-size: 0.9rem;
+    width: 100%;
+    justify-content: center;
   }
 }

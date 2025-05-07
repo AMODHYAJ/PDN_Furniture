@@ -553,3 +553,27 @@ exports.assignToDelivery = async (req, res) => {
     });
   }
 };
+
+// Could be added as a separate function and run daily
+exports.checkOfficerAvailability = async () => {
+  try {
+    const officers = await DeliveryOfficer.find({ isAvailable: false });
+    
+    for (const officer of officers) {
+      const assignedOrders = await Order.countDocuments({
+        deliveryOfficer: officer._id,
+        deliveryStatus: { $in: ['assigned', 'in_transit'] }
+      });
+      
+      if (assignedOrders === 0) {
+        await DeliveryOfficer.findByIdAndUpdate(
+          officer._id,
+          { isAvailable: true }
+        );
+        console.log(`Set officer ${officer.name} to available (no orders)`);
+      }
+    }
+  } catch (error) {
+    console.error('Error in checkOfficerAvailability:', error);
+  }
+};

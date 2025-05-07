@@ -22,6 +22,8 @@ const analyticsRoutes = require('./Route/AnalyticsRoutes');
 const inventoryReportRoute = require('./Route/inventoryReportRoute');
 const deliveryRoutes = require('./Route/deliveryRoutes');
 const deliveryOfficerRoutes = require('./Route/deliveryOfficerRoutes');
+const inventoryAIRoutes = require('./Route/inventoryAIRoutes');
+const notificationRoutes = require('./Route/notificationRoutes');
 
 // Load environment variables
 dotenv.config();
@@ -66,6 +68,8 @@ app.use('/analytics', analyticsRoutes);
 app.use('/api/reports',inventoryReportRoute);
 app.use("/delivery",deliveryRoutes);
 app.use("/delivery-officers",deliveryOfficerRoutes);
+app.use("/api/inventory-ai",inventoryAIRoutes);
+app.use("/api/notifications",notificationRoutes)
 
 // Health check endpoint
 app.get("/health", (req, res) => {

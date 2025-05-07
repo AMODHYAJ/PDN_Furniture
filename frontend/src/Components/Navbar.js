@@ -32,7 +32,7 @@ const Navbar = () => {
             <>
               {isAdmin ? (
                 <>
-                  <Link to="/admin-dashboard" className="nav-link">Dashboard</Link>
+                  {/*<Link to="/admin-dashboard" className="nav-link">Dashboard</Link>*/}
                   <Link to="/admin/orders" className="nav-link">Orders</Link>
                   <Link to="/admin/products" className="nav-link">Products</Link>
                   <Link to="/admin/users" className="nav-link">Users</Link>
@@ -45,7 +45,7 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
-                  <Link to="/dashboard" className="nav-link">Dashboard</Link>
+                  {/*<Link to="/dashboard" className="nav-link">Dashboard</Link>*/}
                   <Link to="/profile" className="nav-link">Profile</Link>
                   <Link to="/wishlist" className="nav-link">Wishlist</Link>
                   <Link to="/cart" className="nav-link">Cart</Link>
