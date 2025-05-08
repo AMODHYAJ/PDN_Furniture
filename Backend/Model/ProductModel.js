@@ -9,6 +9,11 @@ const productSchema = new Schema({
   availability: { type: Boolean, default: true }, // In Stock or Out of Stock
   image: { type: String }, // Product Image URL
   createdAt: { type: Date, default: Date.now }, // Timestamp
+  weeklyUsageEstimate: {
+    type: Number,
+    default: 2,
+    min: 0
+  },
 });
 
 module.exports = mongoose.model("ProductModel", productSchema);

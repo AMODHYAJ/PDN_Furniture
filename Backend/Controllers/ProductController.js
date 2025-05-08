@@ -23,7 +23,7 @@ const getAllProducts = async (req, res) => {
 // Add new product
 const addProduct = async (req, res) => {
   try {
-    const { name, category, price, material, availability } = req.body;
+    const { name, category, price, material, availability, weeklyUsageEstimate } = req.body;
     const image = req.file ? req.file.filename : undefined;
 
     // Step 1: Check if material exists in inventory
@@ -53,6 +53,7 @@ const addProduct = async (req, res) => {
       category,
       price,
       material,
+      weeklyUsageEstimate: weeklyUsageEstimate || 2, // Default to 2 if not provided
       availability: inventoryItem.availability ? availability : false, // force false if material out of stock
       image
     });
@@ -97,8 +98,8 @@ const getById = async (req, res) => {
 // Update product
 const updateProduct = async (req, res) => {
   try {
-    const { name, category, price, material, availability } = req.body;
-    const updateData = { name, category, price, material, availability };
+    const { name, category, price, material, availability, weeklyUsageEstimate  } = req.body;
+    const updateData = { name, category, price, material, availability, weeklyUsageEstimate: weeklyUsageEstimate || 2 };
 
     if (req.file) {
       const product = await Product.findById(req.params.id);

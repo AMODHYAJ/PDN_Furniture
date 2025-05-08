@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import './AddProduct.css';
+import "./AddProduct.css";
 
 const AddProduct = () => {
   const [productData, setProductData] = useState({
@@ -9,6 +9,7 @@ const AddProduct = () => {
     price: "",
     material: "",
     availability: true,
+    weeklyUsageEstimate: 2, // Default value
   });
   const [imageFile, setImageFile] = useState(null);
   const [errors, setErrors] = useState({});
@@ -43,6 +44,9 @@ const AddProduct = () => {
     if (!productData.material.trim()) {
       newErrors.material = "Material is required.";
     }
+    if (productData.weeklyUsageEstimate < 0) {
+      newErrors.weeklyUsageEstimate = "Weekly usage cannot be negative";
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -50,25 +54,29 @@ const AddProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    
+
     setIsSubmitting(true);
-    
+
     try {
       const formData = new FormData();
-      formData.append('name', productData.name);
-      formData.append('category', productData.category);
-      formData.append('price', productData.price);
-      formData.append('material', productData.material);
-      formData.append('availability', productData.availability);
+      formData.append("name", productData.name);
+      formData.append("category", productData.category);
+      formData.append("price", productData.price);
+      formData.append("material", productData.material);
+      formData.append("availability", productData.availability);
       if (imageFile) {
-        formData.append('image', imageFile);
+        formData.append("image", imageFile);
       }
 
-      const response = await axios.post("http://localhost:5000/products", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      const response = await axios.post(
+        "http://localhost:5000/products",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      });
+      );
 
       alert("Product added successfully!");
       // Reset form
@@ -95,29 +103,49 @@ const AddProduct = () => {
       <form className="add-product-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Name:</label>
-          <input type="text" name="name" value={productData.name} onChange={handleInputChange} />
+          <input
+            type="text"
+            name="name"
+            value={productData.name}
+            onChange={handleInputChange}
+          />
           {errors.name && <p className="error">{errors.name}</p>}
         </div>
         <div className="form-group">
           <label>Category:</label>
-          <input type="text" name="category" value={productData.category} onChange={handleInputChange} />
+          <input
+            type="text"
+            name="category"
+            value={productData.category}
+            onChange={handleInputChange}
+          />
           {errors.category && <p className="error">{errors.category}</p>}
         </div>
         <div className="form-group">
           <label>Price:</label>
-          <input type="number" name="price" value={productData.price} onChange={handleInputChange} />
+          <input
+            type="number"
+            name="price"
+            value={productData.price}
+            onChange={handleInputChange}
+          />
           {errors.price && <p className="error">{errors.price}</p>}
         </div>
         <div className="form-group">
           <label>Material:</label>
-          <input type="text" name="material" value={productData.material} onChange={handleInputChange} />
+          <input
+            type="text"
+            name="material"
+            value={productData.material}
+            onChange={handleInputChange}
+          />
           {errors.material && <p className="error">{errors.material}</p>}
         </div>
         <div className="form-group">
           <label>Product Image:</label>
-          <input 
-            type="file" 
-            name="image" 
+          <input
+            type="file"
+            name="image"
             onChange={handleImageChange}
             accept="image/*"
           />
@@ -125,13 +153,31 @@ const AddProduct = () => {
         </div>
         <div className="form-group">
           <label>Availability:</label>
-          <select name="availability" value={productData.availability} onChange={handleInputChange}>
+          <select
+            name="availability"
+            value={productData.availability}
+            onChange={handleInputChange}
+          >
             <option value={true}>In Stock</option>
             <option value={false}>Out of Stock</option>
           </select>
         </div>
+        <div className="form-group">
+          <label>Weekly Usage Estimate (units):</label>
+          <input
+            type="number"
+            name="weeklyUsageEstimate"
+            value={productData.weeklyUsageEstimate}
+            onChange={handleInputChange}
+            min="0"
+            step="0.1"
+          />
+          {errors.weeklyUsageEstimate && (
+            <p className="error">{errors.weeklyUsageEstimate}</p>
+          )}
+        </div>
         <button type="submit" className="submit-button" disabled={isSubmitting}>
-          {isSubmitting ? 'Adding...' : 'Add Product'}
+          {isSubmitting ? "Adding..." : "Add Product"}
         </button>
       </form>
     </div>

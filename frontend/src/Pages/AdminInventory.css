@@ -1,83 +1,133 @@
-/* Luxury Furniture Style Admin Inventory */
+/* Luxury Furniture Admin Inventory CSS */
 .dashboard-container {
-  padding: 2rem;
-  background-color: #f9f5f0;
+  padding: 2.5rem;
+  background-color: #f8f5f1;
   min-height: 100vh;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Cormorant Garamond', serif;
+  color: #3e3e3e;
 }
 
 .dashboard-container h2 {
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   text-align: center;
-  margin-bottom: 2rem;
-  color: #3a2e26;
-  font-weight: 600;
-  border-bottom: 2px solid #d4c9b8;
-  padding-bottom: 1rem;
-}
-
-.add-item-btn {
-  background-color: #a38b6a;
-  color: #fff;
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 1.5rem auto;
-  display: block;
-  transition: all 0.3s ease;
-  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 2.5rem;
+  color: #2a2118;
   font-weight: 500;
   letter-spacing: 0.5px;
-  text-transform: uppercase;
+  position: relative;
+  padding-bottom: 1.2rem;
 }
 
-.add-item-btn:hover {
-  background-color: #8a7557;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.dashboard-container h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #c0a062, transparent);
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.add-item-btn, .refresh-btn {
+  background-color: transparent;
+  color: #2a2118;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  border: 1px solid #c0a062;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.add-item-btn::before, .refresh-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #c0a062;
+  transition: width 0.4s ease;
+  z-index: -1;
+}
+
+.add-item-btn:hover::before, .refresh-btn:hover::before {
+  width: 100%;
+}
+
+.add-item-btn:hover, .refresh-btn:hover {
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(192, 160, 98, 0.3);
 }
 
 .search-input {
   width: 100%;
-  padding: 0.8rem 1rem;
+  max-width: 400px;
+  padding: 0.9rem 1.2rem;
   font-size: 1rem;
-  border-radius: 4px;
-  border: 1px solid #d4c9b8;
-  margin-bottom: 1.5rem;
+  border-radius: 30px;
+  border: 1px solid #d8d2c5;
+  margin: 0 auto 2rem;
+  display: block;
   background-color: #fff;
   transition: all 0.3s ease;
   font-family: 'Montserrat', sans-serif;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23c0a062' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  background-size: 20px;
 }
 
 .search-input:focus {
   outline: none;
-  border-color: #a38b6a;
-  box-shadow: 0 0 0 3px rgba(163, 139, 106, 0.2);
+  border-color: #c0a062;
+  box-shadow: 0 0 0 2px rgba(192, 160, 98, 0.2);
 }
 
 .stock-status-filter {
   width: 100%;
-  padding: 0.8rem 1rem;
+  max-width: 250px;
+  padding: 0.9rem 1.2rem;
   font-size: 1rem;
-  border-radius: 4px;
-  border: 1px solid #d4c9b8;
-  margin-bottom: 1.5rem;
+  border-radius: 30px;
+  border: 1px solid #d8d2c5;
+  margin: 0 auto 2rem;
+  display: block;
   background-color: #fff;
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: 'Montserrat', sans-serif;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23c0a062' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  background-size: 12px;
 }
 
 .stock-status-filter:hover {
-  border-color: #a38b6a;
+  border-color: #c0a062;
 }
 
 .stock-status-filter:focus {
   outline: none;
-  border-color: #a38b6a;
-  box-shadow: 0 0 0 3px rgba(163, 139, 106, 0.2);
+  border-color: #c0a062;
+  box-shadow: 0 0 0 2px rgba(192, 160, 98, 0.2);
 }
 
 .export-buttons {
@@ -85,188 +135,248 @@
   gap: 1rem;
   margin-bottom: 2rem;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .export-buttons button {
-  background-color: #5a4a42;
+  background-color: #2a2118;
   color: #fff;
   border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 4px;
+  padding: 0.8rem 1.8rem;
+  border-radius: 30px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .export-buttons button:hover {
-  background-color: #3a2e26;
-  transform: translateY(-2px);
+  background-color: #3e3327;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(42, 33, 24, 0.2);
+}
+
+.loading-container {
+  text-align: center;
+  padding: 3rem;
+  font-style: italic;
+  color: #7a6f5e;
+  font-size: 1.1rem;
 }
 
 .materials-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
 }
 
 .material-card {
   background-color: #fff;
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-  border: 1px solid #e8e0d5;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s ease;
+  border: 1px solid #e5dfd4;
+  position: relative;
+}
+
+.material-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #c0a062, #e8d9b5);
 }
 
 .material-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  border-color: #d4c9b8;
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 .material-card h3 {
-  font-size: 1.3rem;
-  color: #3a2e26;
-  margin-bottom: 1rem;
-  padding: 1.5rem 1.5rem 0;
-  font-weight: 600;
+  font-size: 1.4rem;
+  color: #2a2118;
+  margin-bottom: 1.2rem;
+  padding: 1.8rem 1.8rem 0;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  border-bottom: 1px solid #f0ebe1;
+  padding-bottom: 1rem;
 }
 
 .material-card p {
-  font-size: 0.95rem;
-  color: #5a4a42;
-  margin: 0.5rem 1.5rem;
+  font-size: 1rem;
+  color: #5a5247;
+  margin: 0.8rem 1.8rem;
   font-family: 'Montserrat', sans-serif;
+  line-height: 1.5;
 }
 
 .material-card p strong {
-  color: #3a2e26;
+  color: #2a2118;
   font-weight: 500;
 }
 
 .button-container {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  padding: 1.5rem;
+  gap: 1.2rem;
+  padding: 1.8rem;
   margin-top: 1rem;
-  border-top: 1px solid #f0e9e0;
+  border-top: 1px solid #f0ebe1;
 }
 
-.update-btn,
-.delete-btn {
-  padding: 0.6rem 1.2rem;
+.update-btn, .delete-btn {
+  padding: 0.7rem 1.5rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 30px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .update-btn {
-  background-color: #a38b6a;
-  color: white;
+  background-color: #c0a062;
+  color: #fff;
 }
 
 .update-btn:hover {
-  background-color: #8a7557;
-  transform: translateY(-2px);
+  background-color: #a78b4e;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(192, 160, 98, 0.3);
 }
 
 .delete-btn {
-  background-color: #c17c74;
-  color: white;
+  background-color: #d4c9b8;
+  color: #2a2118;
 }
 
 .delete-btn:hover {
-  background-color: #a86962;
-  transform: translateY(-2px);
+  background-color: #b8ab96;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(180, 167, 141, 0.3);
 }
 
 .stock-status {
-  font-size: 0.9rem;
-  padding: 0.3rem 0.8rem;
-  border-radius: 12px;
+  font-size: 0.85rem;
+  padding: 0.4rem 1rem;
+  border-radius: 30px;
   display: inline-block;
   margin-left: 0.5rem;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .stock-status.in-stock {
-  background-color: rgba(122, 159, 110, 0.1);
-  color: #7a9f6e;
+  background-color: #f0f7ed;
+  color: #5a8f4e;
+  border: 1px solid #d8e9d3;
 }
 
 .stock-status.out-of-stock {
-  background-color: rgba(193, 124, 116, 0.1);
-  color: #c17c74;
+  background-color: #fceded;
+  color: #b85a50;
+  border: 1px solid #f5d8d6;
 }
 
 .stock-status.low-stock {
-  background-color: rgba(210, 168, 99, 0.1);
-  color: #d2a863;
+  background-color: #f9f4e8;
+  color: #b89a50;
+  border: 1px solid #f2e6d0;
 }
 
 .chart-container {
-  margin: 3rem 0;
-  padding: 2rem;
+  margin: 4rem 0;
+  padding: 2.5rem;
   background-color: #fff;
   border-radius: 8px;
-  border: 1px solid #e8e0d5;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5dfd4;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #c0a062, #e8d9b5);
 }
 
 .chart-container h2 {
-  text-align: center;
-  border-bottom: none;
-  padding-bottom: 0;
-  margin-bottom: 1.5rem;
   font-size: 1.8rem;
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
 .pagination-controls {
-  margin-top: 3rem;
+  margin-top: 4rem;
   text-align: center;
 }
 
 .page-btn {
   margin: 0 0.3rem;
-  padding: 0.5rem 0.9rem;
-  border: 1px solid #d4c9b8;
+  padding: 0.7rem 1.2rem;
+  border: 1px solid #d8d2c5;
   background-color: #fff;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 30px;
   transition: all 0.3s ease;
   font-family: 'Montserrat', sans-serif;
-  color: #5a4a42;
+  color: #5a5247;
+  min-width: 40px;
 }
 
 .page-btn:hover {
-  background-color: #f0e9e0;
+  background-color: #f5f1e9;
+  border-color: #c0a062;
 }
 
 .page-btn.active {
-  background-color: #a38b6a;
+  background-color: #c0a062;
   color: white;
-  border-color: #a38b6a;
+  border-color: #c0a062;
 }
 
 @media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1.5rem;
+  }
+  
   .materials-container {
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: 1fr;
   }
   
-  .export-buttons {
-      flex-direction: column;
-      align-items: center;
+  .action-buttons, .export-buttons {
+    flex-direction: column;
+    align-items: center;
   }
   
-  .export-buttons button {
-      width: 100%;
-      max-width: 250px;
+  .search-input, .stock-status-filter {
+    max-width: 100%;
+  }
+  
+  .chart-container {
+    padding: 1.5rem;
   }
 }
+
+/* Add these to your HTML head for the fonts */
+/* <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@400;500&display=swap" rel="stylesheet"> */

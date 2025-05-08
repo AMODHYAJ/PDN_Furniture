@@ -11,7 +11,5 @@ router.get("/search", InventoryController.searchInventory);
 router.get("/alert-low-stock", InventoryController.alertLowStockLevels);
 router.get("/report", InventoryController.generateInventoryReports);
 
-
-
 // Export the router
 module.exports = router;

@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const path = require("path");
+const WebSocket = require('ws');
+const jwt = require('jsonwebtoken');
 
 // Import routes
 const authRoutes = require("./Route/AuthRoutes");
@@ -46,8 +48,6 @@ app.use(express.json());
 
 // Serve static files from the 'public' directory
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
-
-// Serve static files from public directory
 app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
 
 // Routes
@@ -55,7 +55,7 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/orders", orderRoutes);
 app.use("/wishlists", wishlistRoutes);
-app.use("/products", productRoutes); // Product routes with upload middleware
+app.use("/products", productRoutes);
 app.use("/cart", cartRoutes);
 app.use("/api", ProductViewRoutes);
 app.use("/api/discount", discountRoutes);
@@ -69,7 +69,7 @@ app.use('/api/reports',inventoryReportRoute);
 app.use("/delivery",deliveryRoutes);
 app.use("/delivery-officers",deliveryOfficerRoutes);
 app.use("/api/inventory-ai",inventoryAIRoutes);
-app.use("/api/notifications",notificationRoutes)
+app.use("/api/notifications",notificationRoutes);
 
 // Health check endpoint
 app.get("/health", (req, res) => {
@@ -80,7 +80,6 @@ app.get("/health", (req, res) => {
 app.use((err, req, res, next) => {
   console.error(err.stack);
   
-  // Handle multer file type errors
   if (err.message === 'Only image files are allowed!') {
     return res.status(400).json({ 
       success: false,
@@ -88,7 +87,6 @@ app.use((err, req, res, next) => {
     });
   }
   
-  // Handle multer file size errors
   if (err.code === 'LIMIT_FILE_SIZE') {
     return res.status(400).json({ 
       success: false,
@@ -96,7 +94,6 @@ app.use((err, req, res, next) => {
     });
   }
 
-  // Generic error handler
   res.status(500).json({ 
     success: false,
     message: "Internal Server Error",
@@ -104,22 +101,21 @@ app.use((err, req, res, next) => {
   });
 });
 
-// MongoDB connection with improved configuration
+// MongoDB connection
 const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://admin:LSU3X5WXNVLEimhz@cluster0.ze9pt.mongodb.net/your-database-name";
 
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
-  socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
-  maxPoolSize: 10, // Maintain up to 10 socket connections
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
+  maxPoolSize: 10,
   retryWrites: true,
   w: "majority"
 })
 .then(() => {
   console.log("✅ Connected to MongoDB");
   
-  // Initialize cron jobs after successful DB connection
   const cron = require('./cronJobs');
   if (!cron) {
     console.warn('⚠️ Continuing without cron jobs');
@@ -127,7 +123,7 @@ mongoose.connect(MONGO_URI, {
 })
 .catch((err) => {
   console.error("❌ MongoDB connection error:", err);
-  process.exit(1); // Exit process on connection failure
+  process.exit(1);
 });
 
 // Start the server
@@ -136,9 +132,63 @@ const server = app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
 
+// WebSocket Server Setup
+const wss = new WebSocket.Server({ noServer: true });
+
+// Upgrade HTTP server to handle WebSocket connections
+server.on('upgrade', (request, socket, head) => {
+  wss.handleUpgrade(request, socket, head, (ws) => {
+    wss.emit('connection', ws, request);
+  });
+});
+
+wss.on('connection', (ws, req) => {
+  // Authenticate the connection
+  ws.on('message', (message) => {
+    try {
+      const data = JSON.parse(message);
+      if (data.type === 'auth') {
+        jwt.verify(data.token, process.env.JWT_SECRET, (err, decoded) => {
+          if (!err && decoded) {
+            ws.userId = decoded.userId;
+            console.log(`WebSocket authenticated for user ${decoded.userId}`);
+          }
+        });
+      }
+    } catch (err) {
+      console.error('WebSocket message error:', err);
+    }
+  });
+
+  // Handle connection close
+  ws.on('close', () => {
+    console.log('WebSocket client disconnected');
+  });
+});
+
+// Create a function to send notifications to specific users
+const sendNotification = (userId, notification) => {
+  wss.clients.forEach(client => {
+    if (client.readyState === WebSocket.OPEN && client.userId === userId) {
+      client.send(JSON.stringify({
+        type: 'notification',
+        notification
+      }));
+    }
+  });
+};
+
+// Make the sendNotification function available throughout the app
+app.locals.sendNotification = sendNotification;
+
 // Graceful shutdown
 process.on("SIGINT", () => {
   console.log("🛑 Received SIGINT. Closing server gracefully...");
+  // Close all WebSocket connections
+  wss.clients.forEach(client => {
+    client.close();
+  });
+  
   server.close(() => {
     mongoose.connection.close(false, () => {
       console.log("🔴 MongoDB connection closed");
@@ -149,6 +199,11 @@ process.on("SIGINT", () => {
 
 process.on("SIGTERM", () => {
   console.log("🛑 Received SIGTERM. Closing server gracefully...");
+  // Close all WebSocket connections
+  wss.clients.forEach(client => {
+    client.close();
+  });
+  
   server.close(() => {
     mongoose.connection.close(false, () => {
       console.log("🔴 MongoDB connection closed");

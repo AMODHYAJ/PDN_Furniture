@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from "../utils/api"; 
 import { useNavigate } from 'react-router-dom'; 
 import './AddInventory.css';
 
@@ -25,7 +25,7 @@ const AddInventory = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const navigate = useNavigate(); 
-  const API_URL = 'http://localhost:5000/inventory';
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -85,7 +85,7 @@ const AddInventory = () => {
     }
 
     try {
-      await axios.post(API_URL, newInventory);
+      await api.post('/inventory', newInventory);
       setSuccess('Item added successfully!');
       setError('');
       setNewInventory({

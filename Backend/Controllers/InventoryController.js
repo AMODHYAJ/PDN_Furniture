@@ -1,6 +1,7 @@
-const InventoryModel = require("../Model/InventoryModel");
 const Inventory = require("../Model/InventoryModel");
+const Notification = require("../Model/NotificationModel");
 const Product = require("../Model/ProductModel");
+const User = require("../Model/UserModel");
 
 // Get all inventory items (raw materials)
 const getAllInventory = async (req, res, next) => {
@@ -68,29 +69,63 @@ const getInventoryById = async (req, res, next) => {
 
 // Update inventory item
 const updateInventory = async (req, res, next) => {
-    const id = req.params.id;
-    const { materialName, quantity, unit, wastageQuantity, availability } = req.body;
-
-    let inventoryItem;
-
     try {
-        inventoryItem = await Inventory.findByIdAndUpdate(
-            id,
-            { materialName, quantity, unit, wastageQuantity, availability },
-            { new: true } // Returns the updated document
-        );
+      const updatedItem = await Inventory.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true }
+      );
+  
+      if (!updatedItem) {
+        return res.status(404).json({ message: "Inventory item not found" });
+      }
+  
+      // Check if stock is low and reorder threshold is set
+      if (updatedItem.reorderThreshold && updatedItem.quantity <= updatedItem.reorderThreshold) {
+        try {
+          // Get all admin/inventory manager users
+          const recipients = await User.find({
+            role: { $in: ['Admin', 'inventory_manager'] }
+          }).select('_id');
+  
+          // Create notifications for each recipient
+          const notificationPromises = recipients.map(user => 
+            Notification.create({
+              recipient: user._id,
+              title: 'Low Stock Alert',
+              message: `${updatedItem.materialName} is below reorder threshold (${updatedItem.quantity} ${updatedItem.unit} remaining)`,
+              type: 'low_stock',
+              relatedEntity: updatedItem._id,
+              entityType: 'Inventory',
+              priority: updatedItem.quantity <= 0 ? 'critical' : 'high'
+            })
+          );
+  
+          const notifications = await Promise.all(notificationPromises);
+  
+          // Send real-time notifications
+          if (req.app.locals.sendNotification) {
+            notifications.forEach(notification => {
+              req.app.locals.sendNotification(notification.recipient, {
+                _id: notification._id,
+                title: notification.title,
+                message: notification.message,
+                isRead: false,
+                createdAt: new Date()
+              });
+            });
+          }
+        } catch (notificationError) {
+          console.error('Error creating notifications:', notificationError);
+        }
+      }
+  
+      res.status(200).json({ inventoryItem: updatedItem });
     } catch (err) {
-        console.log(err);
-        return res.status(500).json({ message: "Server error, unable to update inventory item" });
+      console.error("Error updating inventory:", err);
+      res.status(500).json({ message: "Server error, unable to update inventory item" });
     }
-
-    // Inventory item not found
-    if (!inventoryItem) {
-        return res.status(404).json({ message: "Inventory item not found or update failed" });
-    }
-
-    return res.status(200).json({ inventoryItem });
-};
+  };
 
 // Delete inventory item
 const deleteInventory = async (req, res, next) => {
@@ -165,6 +200,7 @@ const alertLowStockLevels = async (req, res, next) => {
         return res.status(500).json({ message: "Error checking low stock levels" });
     }
 };
+
 // Generate a report on inventory levels
 const generateInventoryReports = async (req, res, next) => {
     try {
@@ -191,9 +227,6 @@ const generateInventoryReports = async (req, res, next) => {
         return res.status(500).json({ message: "Error generating inventory report" });
     }
 };
-
-
-
 
 exports.getAllInventory = getAllInventory;
 exports.addInventory = addInventory;

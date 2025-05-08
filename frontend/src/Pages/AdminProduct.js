@@ -243,6 +243,9 @@ const AdminProduct = () => {
                   <div className="product-details">
                     <h3>{product.name}</h3>
                     <p>Category: {product.category}</p>
+                    <p>
+                      Weekly Usage: {product.weeklyUsageEstimate || 2} units
+                    </p>
                     <p
                       className={
                         product.availability

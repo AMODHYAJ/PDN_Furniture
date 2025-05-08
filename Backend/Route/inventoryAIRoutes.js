@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const InventoryAI = require("../Controllers/InventoryAIController");
+const InventoryAIController = require("../Controllers/InventoryAIController");
 const { authenticate, authorize } = require("../middleware/auth");
 
 // Get AI recommendations
@@ -9,20 +9,10 @@ router.get("/recommendations",
   authorize(['inventory_manager', 'Admin']),
   async (req, res) => {
     try {
-      const recommendations = await InventoryAI.generateRecommendations();
+      const recommendations = await InventoryAIController.generateRecommendations();
       res.json({
         success: true,
-        recommendations: recommendations.map(item => ({
-          _id: item._id,
-          materialName: item.materialName,
-          currentStock: item.currentStock,
-          unit: item.unit,
-          recommendedOrder: item.recommendedOrder,
-          leadTime: item.leadTime,
-          priority: item.priority,
-          status: item.status,
-          notes: `Reorder when stock falls below ${item.reorderThreshold} ${item.unit}`
-        }))
+        recommendations
       });
     } catch (error) {
       res.status(500).json({
@@ -33,17 +23,23 @@ router.get("/recommendations",
   }
 );
 
-// Auto-replenishment endpoint
+// Auto-replenishment endpoint (matches frontend)
 router.post("/auto-replenish", 
   authenticate, 
   authorize(['inventory_manager', 'Admin']), 
   async (req, res) => {
     try {
-      const { materialId, quantity } = req.body;
-      // In a real implementation, you would process the order here
+      const { materialId, quantity, materialName, unit } = req.body;
+      const result = await InventoryAIController.createReplenishmentOrder(
+        req,
+        materialId,
+        quantity,
+        materialName,
+        unit
+      );
       res.json({
         success: true,
-        message: `Order for ${quantity} units created successfully`
+        ...result
       });
     } catch (error) {
       res.status(500).json({

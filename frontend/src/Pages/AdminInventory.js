@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { jsPDF } from 'jspdf'; 
+import api from "../utils/api"; 
 import 'jspdf-autotable';
 import './AdminInventory.css';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
@@ -10,23 +9,27 @@ const AdminInventory = () => {
   const [inventoryItems, setInventoryItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); // search input
   const [stockStatus, setStockStatus] = useState(""); // stock filter
-  const API_URL = 'http://localhost:5000/inventory';
-
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6; // You can change this number
+  const [refreshTrigger, setRefreshTrigger] = useState(false); // Refresh state
+  const [loading, setLoading] = useState(false); // Loading state
+  const itemsPerPage = 6;
 
   // Fetch the inventory data 
+  const fetchInventory = async () => {
+    setLoading(true);
+    try {
+      const { data } = await api.get('/inventory');
+      setInventoryItems(data.inventoryItems || []); 
+    } catch (error) {
+      console.error('Error fetching inventory:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchInventory = async () => {
-      try {
-        const { data } = await axios.get(API_URL);
-        setInventoryItems(data.inventoryItems || []); 
-      } catch (error) {
-        console.error('Error fetching inventory:', error);
-      }
-    };
     fetchInventory();
-  }, []);
+  }, [refreshTrigger]);
 
   // Delete action 
   const handleDelete = async (id) => {
@@ -34,7 +37,7 @@ const AdminInventory = () => {
 
     if (isConfirmed) {
       try {
-        const response = await axios.delete(`${API_URL}/${id}`);
+        const response = await api.delete(`/inventory/${id}`);
         if (response.status === 200) {
           setInventoryItems(prevItems => prevItems.filter(item => item._id !== id));
           alert('Item deleted successfully!');
@@ -46,6 +49,12 @@ const AdminInventory = () => {
         alert('Error deleting item. Please try again later.');
       }
     }
+  };
+
+  // Refresh function
+  const handleRefresh = () => {
+    setRefreshTrigger(prev => !prev);
+    setCurrentPage(1); // Reset to first page on refresh
   };
 
   // Filter inventory items 
@@ -82,7 +91,7 @@ const AdminInventory = () => {
   
   const generatePDF = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/api/reports/generate-inventory-report', {
+        const response = await api.get('api/reports/generate-inventory-report', {
             responseType: 'blob', // Expecting a blob for the PDF file
         });
 
@@ -98,8 +107,7 @@ const AdminInventory = () => {
         console.error('Error generating the Inventory PDF report:', error.response || error.message);
         alert('Failed to generate inventory report');
     }
-};
-
+  };
 
   // Pie chart data
   const pieChartData = [
@@ -112,9 +120,18 @@ const AdminInventory = () => {
   return (
     <div className="dashboard-container">
       <h2>Inventory List</h2>
-      <Link to="/add-inventory">
-        <button className="add-item-btn">Add Inventory Item</button>
-      </Link>
+      <div className="action-buttons">
+        <Link to="/add-inventory">
+          <button className="add-item-btn">Add Inventory Item</button>
+        </Link>
+        <button 
+          className="refresh-btn"
+          onClick={handleRefresh}
+          disabled={loading}
+        >
+          {loading ? 'Refreshing...' : 'Refresh Data'}
+        </button>
+      </div>
 
       {/* Search Input */}
       <input
@@ -140,10 +157,13 @@ const AdminInventory = () => {
       <div className="export-buttons">
         <button onClick={() => downloadCSV(filteredItems)}>Download CSV</button>
         <button onClick={generatePDF}>Download PDF</button>
-      
       </div>
 
-      {currentItems.length === 0 ? (
+      {loading ? (
+        <div className="loading-container">
+          <p>Loading inventory data...</p>
+        </div>
+      ) : currentItems.length === 0 ? (
         <p>No inventory items available.</p>
       ) : (
         <div className="materials-container">

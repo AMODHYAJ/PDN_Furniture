@@ -14,10 +14,11 @@ exports.createNotification = async (data) => {
 
 exports.getUserNotifications = async (req, res) => {
   try {
-    const { recipient, limit = 5, unreadOnly } = req.query;
+    const userId = req.userId;
+    const { limit = 5, unreadOnly } = req.query;
     
     const query = { 
-      recipient,
+      recipient: userId,
       ...(unreadOnly === 'true' && { isRead: false })
     };
 
@@ -31,7 +32,7 @@ exports.getUserNotifications = async (req, res) => {
       notifications: notifications.map(notif => ({
         ...notif,
         id: notif._id,
-        createdAt: new Date(notif.createdAt).toISOString()
+        formattedDate: new Date(notif.createdAt).toLocaleString()
       }))
     });
   } catch (error) {
@@ -92,11 +93,11 @@ exports.deleteNotification = async (req, res) => {
   }
 };
 
-// Notification utilities
-exports.notificationUtils = {
-  createLowStockAlert: async (inventoryItem) => {
-    return exports.createNotification({
-      recipient: inventoryItem.lastUpdatedBy, // or admin ID
+// Add this to handle low stock notifications
+exports.createLowStockNotification = async (inventoryItem, userId) => {
+  try {
+    return await this.createNotification({
+      recipient: userId,
       title: "Low Stock Alert",
       message: `${inventoryItem.materialName} is below reorder threshold (${inventoryItem.quantity} ${inventoryItem.unit} remaining)`,
       type: "low_stock",
@@ -104,18 +105,8 @@ exports.notificationUtils = {
       entityType: "Inventory",
       priority: inventoryItem.quantity <= 0 ? "critical" : "high"
     });
-  },
-
-  createReplenishmentNotification: async (materialId, quantity, recipientId) => {
-    return exports.createNotification({
-      recipient: recipientId,
-      title: "Inventory Replenishment Needed",
-      message: `Suggested order: ${quantity} units`,
-      type: "replenishment",
-      relatedEntity: materialId,
-      entityType: "Inventory",
-      priority: "high",
-      actionUrl: `/inventory/replenish/${materialId}`
-    });
+  } catch (error) {
+    console.error("Error creating low stock notification:", error);
+    throw error;
   }
 };

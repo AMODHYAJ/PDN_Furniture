@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import './EditProduct.css';
+import "./EditProduct.css";
 
 const EditProduct = () => {
   const { id } = useParams();
@@ -11,6 +11,7 @@ const EditProduct = () => {
     price: "",
     material: "",
     availability: true,
+    weeklyUsageEstimate: 2,
   });
   const [imageFile, setImageFile] = useState(null);
   const [previewImage, setPreviewImage] = useState("");
@@ -20,11 +21,15 @@ const EditProduct = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/products/${id}`);
+        const response = await axios.get(
+          `http://localhost:5000/products/${id}`
+        );
         if (response.data.product) {
           setProductData(response.data.product);
           if (response.data.product.image) {
-            setPreviewImage(`http://localhost:5000/images/products/${response.data.product.image}`);
+            setPreviewImage(
+              `http://localhost:5000/images/products/${response.data.product.image}`
+            );
           }
         }
       } catch (error) {
@@ -57,13 +62,13 @@ const EditProduct = () => {
 
     try {
       const formData = new FormData();
-      formData.append('name', productData.name);
-      formData.append('category', productData.category);
-      formData.append('price', productData.price);
-      formData.append('material', productData.material);
-      formData.append('availability', productData.availability);
+      formData.append("name", productData.name);
+      formData.append("category", productData.category);
+      formData.append("price", productData.price);
+      formData.append("material", productData.material);
+      formData.append("availability", productData.availability);
       if (imageFile) {
-        formData.append('image', imageFile);
+        formData.append("image", imageFile);
       }
 
       const response = await axios.put(
@@ -71,8 +76,8 @@ const EditProduct = () => {
         formData,
         {
           headers: {
-            'Content-Type': 'multipart/form-data'
-          }
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
 
@@ -80,7 +85,9 @@ const EditProduct = () => {
       navigate("/admin/products");
     } catch (error) {
       console.error("Error updating product:", error);
-      alert("Failed to update product. " + (error.response?.data?.message || ""));
+      alert(
+        "Failed to update product. " + (error.response?.data?.message || "")
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -100,7 +107,7 @@ const EditProduct = () => {
           <input
             type="text"
             name="name"
-            value={productData.name || ''}
+            value={productData.name || ""}
             onChange={handleInputChange}
             required
           />
@@ -110,7 +117,7 @@ const EditProduct = () => {
           <input
             type="text"
             name="category"
-            value={productData.category || ''}
+            value={productData.category || ""}
             onChange={handleInputChange}
             required
           />
@@ -120,7 +127,7 @@ const EditProduct = () => {
           <input
             type="number"
             name="price"
-            value={productData.price || ''}
+            value={productData.price || ""}
             onChange={handleInputChange}
             required
             min="0"
@@ -131,7 +138,7 @@ const EditProduct = () => {
           <input
             type="text"
             name="material"
-            value={productData.material || ''}
+            value={productData.material || ""}
             onChange={handleInputChange}
             required
           />
@@ -157,8 +164,19 @@ const EditProduct = () => {
             <option value={false}>Out of Stock</option>
           </select>
         </div>
+        <div className="form-group">
+          <label>Weekly Usage Estimate (units):</label>
+          <input
+            type="number"
+            name="weeklyUsageEstimate"
+            value={productData.weeklyUsageEstimate || 2}
+            onChange={handleInputChange}
+            min="0"
+            step="0.1"
+          />
+        </div>
         <button type="submit" className="submit-button" disabled={isSubmitting}>
-          {isSubmitting ? 'Updating...' : 'Update Product'}
+          {isSubmitting ? "Updating..." : "Update Product"}
         </button>
       </form>
     </div>

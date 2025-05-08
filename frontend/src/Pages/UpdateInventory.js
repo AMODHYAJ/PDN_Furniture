@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from "../utils/api";
 import { useParams, useNavigate } from 'react-router-dom';
 import "./UpdateInventory.css";
 
@@ -25,13 +25,15 @@ const UpdateInventory = () => {
   const [error, setError] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
-  const API_URL = `http://localhost:5000/inventory/${id}`;
+  const API_URL = `/inventory/${id}`;
 
   useEffect(() => {
+    const API_URL = `/inventory/${id}`; 
+
     const fetchInventoryItem = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get(API_URL);
+        const { data } = await api.get(API_URL);
         setInventoryItem(data.inventoryItem || {
           materialName: '',
           quantity: '',
@@ -85,7 +87,7 @@ const UpdateInventory = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      await axios.put(API_URL, inventoryItem);
+      await api.put(API_URL, inventoryItem);
       navigate('/admin/inventory');
     } catch (error) {
       console.error('Error updating inventory item:', error);
