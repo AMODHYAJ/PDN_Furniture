@@ -10,14 +10,23 @@ const UpdateInventory = () => {
     unit: '',
     wastageQuantity: '',
     availability: true,
+    reorderThreshold: '',
+    optimalStockLevel: '',
+    leadTime: '',
+    autoReorder: false,
+    supplier: {
+      name: '',
+      contact: '',
+      email: '',
+      address: ''
+    }
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { id } = useParams(); 
-  const navigate = useNavigate(); 
-  const API_URL = `http://localhost:5000/inventory/${id}`; // Fixed: using backticks
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const API_URL = `http://localhost:5000/inventory/${id}`;
 
-  // Fetch the current inventory item data
   useEffect(() => {
     const fetchInventoryItem = async () => {
       try {
@@ -28,8 +37,18 @@ const UpdateInventory = () => {
           quantity: '',
           unit: '',
           wastageQuantity: '',
-          availability: true
-        }); 
+          availability: true,
+          reorderThreshold: '',
+          optimalStockLevel: '',
+          leadTime: '',
+          autoReorder: false,
+          supplier: {
+            name: '',
+            contact: '',
+            email: '',
+            address: ''
+          }
+        });
       } catch (err) {
         console.error('Error fetching inventory item:', err);
         setError('Failed to load inventory item');
@@ -40,22 +59,34 @@ const UpdateInventory = () => {
     fetchInventoryItem();
   }, [id]);
 
-  // Handle form input changes
   const handleChange = (e) => {
-    const { name, value, type } = e.target;
-    setInventoryItem(prev => ({
-      ...prev,
-      [name]: type === 'select-one' ? value === 'true' : value
-    }));
+    const { name, value } = e.target;
+    
+    if (name.startsWith('supplier.')) {
+      const supplierField = name.split('.')[1];
+      setInventoryItem(prev => ({
+        ...prev,
+        supplier: {
+          ...prev.supplier,
+          [supplierField]: value
+        }
+      }));
+    } else {
+      setInventoryItem(prev => ({
+        ...prev,
+        [name]: name === 'autoReorder' || name === 'availability' 
+          ? value === 'true' 
+          : value
+      }));
+    }
   };
 
-  // Handle form submission to update the inventory item
   const handleUpdateInventory = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      await axios.put(API_URL, inventoryItem); 
-      navigate('/admin/inventory'); // Redirect to inventory list
+      await axios.put(API_URL, inventoryItem);
+      navigate('/admin/inventory');
     } catch (error) {
       console.error('Error updating inventory item:', error);
       setError('Failed to update inventory item');
@@ -125,6 +156,95 @@ const UpdateInventory = () => {
             <option value={false}>Out of Stock</option>
           </select>
         </div>
+
+        <div className="form-section">
+          <h3>Stock Management</h3>
+          <div className="form-group">
+            <label>Reorder Threshold:</label>
+            <input
+              type="number"
+              name="reorderThreshold"
+              value={inventoryItem.reorderThreshold}
+              onChange={handleChange}
+              min="0"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Optimal Stock Level:</label>
+            <input
+              type="number"
+              name="optimalStockLevel"
+              value={inventoryItem.optimalStockLevel}
+              onChange={handleChange}
+              min="0"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Lead Time (days):</label>
+            <input
+              type="number"
+              name="leadTime"
+              value={inventoryItem.leadTime}
+              onChange={handleChange}
+              min="1"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Auto Reorder:</label>
+            <select
+              name="autoReorder"
+              value={inventoryItem.autoReorder}
+              onChange={handleChange}
+            >
+              <option value={false}>No</option>
+              <option value={true}>Yes</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="form-section">
+          <h3>Supplier Information</h3>
+          <div className="form-group">
+            <label>Supplier Name:</label>
+            <input
+              type="text"
+              name="supplier.name"
+              value={inventoryItem.supplier?.name || ''}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Supplier Contact:</label>
+            <input
+              type="text"
+              name="supplier.contact"
+              value={inventoryItem.supplier?.contact || ''}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Supplier Email:</label>
+            <input
+              type="email"
+              name="supplier.email"
+              value={inventoryItem.supplier?.email || ''}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Supplier Address:</label>
+            <input
+              type="text"
+              name="supplier.address"
+              value={inventoryItem.supplier?.address || ''}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
         <button type="submit" className="update-button" disabled={loading}>
           {loading ? 'Updating...' : 'Update Item'}
         </button>

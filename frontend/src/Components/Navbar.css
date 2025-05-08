@@ -368,3 +368,15 @@
   margin-left: 0.5rem;
   text-transform: uppercase;
 }
+
+/* Add this to your Navbar.css */
+.nav-link-with-bell {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Adjust the space between the link and the bell */
+}
+
+/* If you want the bell to be aligned perfectly with the text */
+.nav-link-with-bell .nav-link {
+  padding-right: 0; /* Remove right padding to bring the bell closer */
+}

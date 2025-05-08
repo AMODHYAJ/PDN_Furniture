@@ -28,6 +28,10 @@ const AdminDashboard = () => {
             <h2>Manage Inventory</h2>
             <p>View and manage stock</p>
           </Link>
+          <Link to="/admin/inventory-ai" className="admin-card">
+            <h2>Inventory AI</h2>
+            <p>Smart inventory management</p>
+          </Link>
           <Link to="/admin/workforce" className="admin-card">
             <h2>Production Progress</h2>
             <p>Manage production process</p>

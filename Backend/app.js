@@ -116,7 +116,15 @@ mongoose.connect(MONGO_URI, {
   retryWrites: true,
   w: "majority"
 })
-.then(() => console.log("✅ Connected to MongoDB"))
+.then(() => {
+  console.log("✅ Connected to MongoDB");
+  
+  // Initialize cron jobs after successful DB connection
+  const cron = require('./cronJobs');
+  if (!cron) {
+    console.warn('⚠️ Continuing without cron jobs');
+  }
+})
 .catch((err) => {
   console.error("❌ MongoDB connection error:", err);
   process.exit(1); // Exit process on connection failure

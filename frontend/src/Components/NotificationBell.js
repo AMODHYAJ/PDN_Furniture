@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../Context/AuthContext';
-import axios from 'axios';
+import api from '../utils/api';
 import './NotificationBell.css';
 
 const NotificationBell = () => {
@@ -10,55 +10,68 @@ const NotificationBell = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (user) {
-      fetchNotifications();
-    }
-  }, [user]);
-
   const fetchNotifications = async () => {
+    if (!user?._id) return;
+    
     try {
       setLoading(true);
-      const response = await axios.get('/api/notifications', {
-        params: { limit: 5, unreadOnly: true }
+      const response = await api.get('/api/notifications', {
+        params: { 
+          recipient: user._id,
+          limit: 5,
+          unreadOnly: true 
+        }
       });
-      setNotifications(response.data.notifications);
-      setUnreadCount(response.data.total);
+      
+      if (response.data?.success) {
+        setNotifications(response.data.notifications || []);
+        setUnreadCount(response.data.notifications?.length || 0);
+      }
     } catch (error) {
-      console.error('Error fetching notifications:', error);
+      console.error('Notification error:', error);
     } finally {
       setLoading(false);
     }
   };
 
+  useEffect(() => {
+    fetchNotifications();
+    const interval = setInterval(fetchNotifications, 60000); // Refresh every minute
+    return () => clearInterval(interval);
+  }, [user]);
+
   const handleMarkAsRead = async (id) => {
     try {
-      await axios.patch(`/api/notifications/${id}/read`);
-      setNotifications(notifications.filter(n => n._id !== id));
+      await api.patch(`/api/notifications/${id}/read`);
+      setNotifications(prev => prev.filter(n => n._id !== id));
       setUnreadCount(prev => prev - 1);
     } catch (error) {
-      console.error('Error marking notification as read:', error);
+      console.error('Mark as read error:', error);
     }
   };
 
   const handleMarkAllAsRead = async () => {
     try {
-      await axios.patch('/api/notifications/read-all');
+      await api.patch('/api/notifications/read-all', {
+        recipient: user._id
+      });
+      setNotifications([]);
       setUnreadCount(0);
-      setIsOpen(false);
     } catch (error) {
-      console.error('Error marking all as read:', error);
+      console.error('Mark all as read error:', error);
     }
   };
 
   return (
     <div className="notification-bell">
       <button 
-        className="bell-icon" 
+        className={`bell-icon ${unreadCount > 0 ? 'has-notifications' : ''}`}
         onClick={() => setIsOpen(!isOpen)}
-        data-count={unreadCount > 0 ? unreadCount : null}
       >
         🔔
+        {unreadCount > 0 && (
+          <span className="notification-count">{unreadCount}</span>
+        )}
       </button>
 
       {isOpen && (
@@ -84,7 +97,7 @@ const NotificationBell = () => {
               {notifications.map(notification => (
                 <li 
                   key={notification._id} 
-                  className={`notification-item ${notification.isRead ? '' : 'unread'}`}
+                  className="notification-item"
                 >
                   <div className="notification-content">
                     <h5>{notification.title}</h5>
@@ -93,14 +106,12 @@ const NotificationBell = () => {
                       {new Date(notification.createdAt).toLocaleString()}
                     </small>
                   </div>
-                  {!notification.isRead && (
-                    <button 
-                      className="mark-read"
-                      onClick={() => handleMarkAsRead(notification._id)}
-                    >
-                      ✓
-                    </button>
-                  )}
+                  <button 
+                    className="mark-read"
+                    onClick={() => handleMarkAsRead(notification._id)}
+                  >
+                    ✓
+                  </button>
                 </li>
               ))}
             </ul>

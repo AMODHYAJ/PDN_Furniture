@@ -48,6 +48,7 @@ import DeliveryOfficersList from "./Pages/DeliveryOfficersList";
 import DeliveryOfficerForm from "./Pages/DeliveryOfficerForm";
 import "./App.css";
 import AboutUs from "./Pages/AboutUs";
+import InventoryAIDashboard from "./Pages/InventoryAIDashboard";
 
 const App = () => {
   return (
@@ -244,6 +245,14 @@ const App = () => {
             element={
               <AdminRoute>
                 <UpdateInventory />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/inventory-ai"
+            element={
+              <AdminRoute>
+                <InventoryAIDashboard />
               </AdminRoute>
             }
           />

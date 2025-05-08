@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
+import NotificationBell from './NotificationBell';
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -32,20 +33,21 @@ const Navbar = () => {
             <>
               {isAdmin ? (
                 <>
-                  {/*<Link to="/admin-dashboard" className="nav-link">Dashboard</Link>*/}
                   <Link to="/admin/orders" className="nav-link">Orders</Link>
                   <Link to="/admin/products" className="nav-link">Products</Link>
                   <Link to="/admin/users" className="nav-link">Users</Link>
                   <Link to="/admin/inventory" className="nav-link">Inventory</Link>
+                  <Link to="/admin/inventory-ai" className="nav-link">Inventory AI</Link>
                   <Link to="/admin/workforce" className="nav-link">Production Progress</Link>
                   <Link to="/admin/delivery" className="nav-link">Delivery</Link>
                   <Link to="/admin/delivery-officers" className="nav-link">Delivery Officers</Link>
-                  <Link to="/admin/stats" className="nav-link">Statistics</Link>
-
+                  <div className="nav-link-with-bell">
+                    <Link to="/admin/stats" className="nav-link">Statistics</Link>
+                    <NotificationBell />
+                  </div>
                 </>
               ) : (
                 <>
-                  {/*<Link to="/dashboard" className="nav-link">Dashboard</Link>*/}
                   <Link to="/profile" className="nav-link">Profile</Link>
                   <Link to="/wishlist" className="nav-link">Wishlist</Link>
                   <Link to="/cart" className="nav-link">Cart</Link>

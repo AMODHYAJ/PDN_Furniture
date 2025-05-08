@@ -1,4 +1,3 @@
-//AddInventory.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; 
@@ -11,22 +10,46 @@ const AddInventory = () => {
     unit: '',
     wastageQuantity: '',
     availability: true,
+    reorderThreshold: '',
+    optimalStockLevel: '',
+    leadTime: '',
+    autoReorder: false,
+    supplier: {
+      name: '',
+      contact: '',
+      email: '',
+      address: ''
+    }
   });
 
-  const [error, setError] = useState(''); // error messages
-  const [success, setSuccess] = useState(''); // success messages
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const navigate = useNavigate(); 
   const API_URL = 'http://localhost:5000/inventory';
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewInventory((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    
+    // Handle nested supplier fields
+    if (name.startsWith('supplier.')) {
+      const supplierField = name.split('.')[1];
+      setNewInventory(prev => ({
+        ...prev,
+        supplier: {
+          ...prev.supplier,
+          [supplierField]: value
+        }
+      }));
+    } else {
+      setNewInventory(prev => ({
+        ...prev,
+        [name]: name === 'autoReorder' || name === 'availability' 
+          ? value === 'true' 
+          : value,
+      }));
+    }
   };
 
-  // Validate the form data before submitting
   const validateForm = () => {
     if (!newInventory.materialName) {
       return 'Material name is required.';
@@ -40,37 +63,56 @@ const AddInventory = () => {
     if (!newInventory.unit) {
       return 'Unit is required.';
     }
+    if (isNaN(newInventory.reorderThreshold) || newInventory.reorderThreshold < 0) {
+      return 'Reorder threshold must be a non-negative number.';
+    }
+    if (isNaN(newInventory.optimalStockLevel) || newInventory.optimalStockLevel <= 0) {
+      return 'Optimal stock level must be a positive number.';
+    }
+    if (isNaN(newInventory.leadTime) || newInventory.leadTime < 1) {
+      return 'Lead time must be at least 1 day.';
+    }
     return ''; 
   };
 
   const handleAddInventory = async (e) => {
     e.preventDefault();
-    const validationError = validateForm(); // Perform validation
+    const validationError = validateForm();
     if (validationError) {
-      setError(validationError); // Show error if validation fails
-      setSuccess(''); // Clear success message if validation fails
+      setError(validationError);
+      setSuccess('');
       return;
     }
 
     try {
       await axios.post(API_URL, newInventory);
-      setSuccess('Item added successfully!'); // Set success message
-      setError(''); // Clear any previous error message
-      setNewInventory({ // Reset form fields
+      setSuccess('Item added successfully!');
+      setError('');
+      setNewInventory({
         materialName: '',
         quantity: '',
         unit: '',
         wastageQuantity: '',
         availability: true,
+        reorderThreshold: '',
+        optimalStockLevel: '',
+        leadTime: '',
+        autoReorder: false,
+        supplier: {
+          name: '',
+          contact: '',
+          email: '',
+          address: ''
+        }
       });
       setTimeout(() => {
-        setSuccess(''); // Clear success message after a few seconds
+        setSuccess('');
       }, 3000);
-      navigate('/'); // Redirect back to the Dashboard after adding the item
+      navigate('/admin/inventory');
     } catch (error) {
       console.error('Error adding inventory:', error);
       setError('Error adding inventory. Please try again later.');
-      setSuccess(''); // Clear success message on error
+      setSuccess('');
     }
   };
 
@@ -78,10 +120,7 @@ const AddInventory = () => {
     <div className="add-inventory-container">
       <h2>Add New Inventory Item</h2>
 
-      {/* Display error message */}
       {error && <div className="error-message">{error}</div>}
-
-      {/* Display success message */}
       {success && <div className="success-message">{success}</div>}
 
       <form onSubmit={handleAddInventory}>
@@ -136,6 +175,95 @@ const AddInventory = () => {
             <option value={false}>Out of Stock</option>
           </select>
         </div>
+        
+        <div className="form-section">
+          <h3>Stock Management</h3>
+          <div>
+            <label>Reorder Threshold:</label>
+            <input
+              type="number"
+              name="reorderThreshold"
+              value={newInventory.reorderThreshold}
+              onChange={handleChange}
+              min="0"
+              required
+            />
+          </div>
+          <div>
+            <label>Optimal Stock Level:</label>
+            <input
+              type="number"
+              name="optimalStockLevel"
+              value={newInventory.optimalStockLevel}
+              onChange={handleChange}
+              min="0"
+              required
+            />
+          </div>
+          <div>
+            <label>Lead Time (days):</label>
+            <input
+              type="number"
+              name="leadTime"
+              value={newInventory.leadTime}
+              onChange={handleChange}
+              min="1"
+              required
+            />
+          </div>
+          <div>
+            <label>Auto Reorder:</label>
+            <select
+              name="autoReorder"
+              value={newInventory.autoReorder}
+              onChange={handleChange}
+            >
+              <option value={false}>No</option>
+              <option value={true}>Yes</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="form-section">
+          <h3>Supplier Information</h3>
+          <div>
+            <label>Supplier Name:</label>
+            <input
+              type="text"
+              name="supplier.name"
+              value={newInventory.supplier.name}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label>Supplier Contact:</label>
+            <input
+              type="text"
+              name="supplier.contact"
+              value={newInventory.supplier.contact}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label>Supplier Email:</label>
+            <input
+              type="email"
+              name="supplier.email"
+              value={newInventory.supplier.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label>Supplier Address:</label>
+            <input
+              type="text"
+              name="supplier.address"
+              value={newInventory.supplier.address}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
         <button type="submit">Add Item</button>
       </form>
     </div>

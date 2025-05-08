@@ -12,32 +12,27 @@ exports.createNotification = async (data) => {
   }
 };
 
-// Get user notifications
 exports.getUserNotifications = async (req, res) => {
   try {
-    const { limit = 20, page = 1, unreadOnly } = req.query;
-    const skip = (page - 1) * limit;
-
+    const { recipient, limit = 5, unreadOnly } = req.query;
+    
     const query = { 
-      recipient: req.userId,
+      recipient,
       ...(unreadOnly === 'true' && { isRead: false })
     };
 
     const notifications = await Notification.find(query)
       .sort('-createdAt')
-      .skip(skip)
       .limit(parseInt(limit))
-      .populate('sender', 'name email role')
       .lean();
-
-    const total = await Notification.countDocuments(query);
 
     res.json({
       success: true,
-      notifications,
-      total,
-      totalPages: Math.ceil(total / limit),
-      currentPage: parseInt(page)
+      notifications: notifications.map(notif => ({
+        ...notif,
+        id: notif._id,
+        createdAt: new Date(notif.createdAt).toISOString()
+      }))
     });
   } catch (error) {
     console.error("Error fetching notifications:", error);
@@ -48,56 +43,24 @@ exports.getUserNotifications = async (req, res) => {
   }
 };
 
-// Mark as read
 exports.markAsRead = async (req, res) => {
   try {
-    const notification = await Notification.findOneAndUpdate(
-      { 
-        _id: req.params.id, 
-        recipient: req.userId 
-      },
-      { isRead: true },
-      { new: true }
-    );
-
-    if (!notification) {
-      return res.status(404).json({ 
-        success: false,
-        message: "Notification not found" 
-      });
-    }
-
-    res.json({ 
-      success: true,
-      notification 
-    });
+    await Notification.findByIdAndUpdate(req.params.id, { isRead: true });
+    res.json({ success: true });
   } catch (error) {
-    console.error("Error marking notification as read:", error);
-    res.status(500).json({ 
-      success: false,
-      message: "Failed to update notification" 
-    });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
-// Mark all as read
 exports.markAllAsRead = async (req, res) => {
   try {
     await Notification.updateMany(
-      { recipient: req.userId, isRead: false },
+      { recipient: req.body.recipient, isRead: false },
       { $set: { isRead: true } }
     );
-
-    res.json({ 
-      success: true,
-      message: "All notifications marked as read" 
-    });
+    res.json({ success: true });
   } catch (error) {
-    console.error("Error marking notifications as read:", error);
-    res.status(500).json({ 
-      success: false,
-      message: "Failed to update notifications" 
-    });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
