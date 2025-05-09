@@ -116,14 +116,14 @@ class InventoryAIController {
     }
   }
 
-  // In InventoryAIController.js
+// In InventoryAIController.js
 static async createReplenishmentOrder(req, materialId, quantity, materialName, unit) {
   try {
     // 1. First update the inventory quantity
     const updatedItem = await Inventory.findByIdAndUpdate(
       materialId,
       { 
-        $inc: { quantity: quantity }, // This adds the ordered quantity
+        $inc: { quantity: quantity },
         lastOrderedDate: new Date() 
       },
       { new: true }
@@ -133,46 +133,45 @@ static async createReplenishmentOrder(req, materialId, quantity, materialName, u
       throw new Error('Inventory item not found');
     }
 
-    // 2. Create notifications
+    // 2. Create and send notifications immediately
     const recipients = await User.find({
       role: { $in: ['Admin', 'inventory_manager'] }
     }).select('_id');
 
-    const notificationPromises = recipients.map(user => 
-      Notification.create({
+    const notifications = await Promise.all(recipients.map(async user => {
+      const notification = await Notification.create({
         recipient: user._id,
-        title: `Replenishment Order Received - ${materialName}`,
+        title: `Replenishment Order - ${materialName}`,
         message: `Added ${quantity} ${unit} to inventory. New stock: ${updatedItem.quantity} ${unit}`,
         type: 'replenishment',
         relatedEntity: materialId,
         entityType: 'Inventory',
         priority: 'high'
-      })
-    );
+      });
 
-    const notifications = await Promise.all(notificationPromises);
-
-    // 3. Send real-time notifications
-    if (req?.app?.locals?.sendNotification) {
-      notifications.forEach(notification => {
-        req.app.locals.sendNotification(notification.recipient, {
+      // Send real-time notification immediately
+      if (req.app.locals.sendNotification) {
+        req.app.locals.sendNotification(user._id, {
           _id: notification._id,
           title: notification.title,
           message: notification.message,
           isRead: false,
           createdAt: new Date()
         });
-      });
-    }
+      }
+
+      return notification;
+    }));
 
     return {
       materialId,
       materialName,
       quantity,
       unit,
-      newQuantity: updatedItem.quantity + quantity,
+      newQuantity: updatedItem.quantity,
       status: 'completed',
-      orderedAt: new Date()
+      orderedAt: new Date(),
+      notifications
     };
   } catch (error) {
     console.error('Create replenishment error:', error);

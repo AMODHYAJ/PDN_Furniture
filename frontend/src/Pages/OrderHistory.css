@@ -1,279 +1,324 @@
-/* Luxury Furniture Order History - Premium Style */
+/* Luxury Furniture Order History */
 .order-history-container {
   max-width: 1400px;
-  margin: 4rem auto;
-  padding: 3rem;
+  margin: 5rem auto;
+  padding: 4rem;
   font-family: 'Cormorant Garamond', serif;
-  color: #3a3226;
-  background-color: #f9f5f0;
-  border: 1px solid #e0d6c9;
+  color: #3E2723; /* Walnut */
+  background-color: #F8F4EF; /* Linen */
+  border: 1px solid #D7C4B5; /* Cashmere */
+  box-shadow: 0 15px 50px rgba(62, 39, 35, 0.08);
 }
 
 .order-history-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 3rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid #e0d6c9;
-  flex-wrap: wrap;
-  gap: 2rem;
+  margin-bottom: 4rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 2px solid #D7C4B5;
 }
 
 .order-history-header h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 2.4rem;
+  font-size: 2.2rem;
   font-weight: 600;
-  color: #3a3226;
+  color: #3E2723;
   margin: 0;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+  position: relative;
 }
 
-.order-history-controls {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
+.order-history-header h2::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  width: 80px;
+  height: 3px;
+  background: #B38B59; /* Brass */
 }
 
 .order-history-filter-control {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .order-history-filter-control label {
-  font-size: 1rem;
-  color: #7a6e5d;
+  font-size: 1.1rem;
+  color: #6D5C54; /* Taupe */
   font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.5px;
 }
 
 .order-history-filter-control select {
-  padding: 0.8rem 1.2rem;
-  border: 1px solid #d4c9b8;
+  padding: 0.8rem 1.5rem;
+  border: 1px solid #D7C4B5;
   border-radius: 0;
-  background-color: #fffdfa;
+  background-color: #FFFDFA;
   font-size: 1rem;
-  color: #5a4e3d;
-  min-width: 180px;
+  color: #3E2723;
+  min-width: 200px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: 'Montserrat', sans-serif;
-}
-
-.order-history-filter-control select:hover {
-  border-color: #a38b6d;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23B38B59'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
 }
 
 .order-history-filter-control select:focus {
   outline: none;
-  border-color: #a38b6d;
-  box-shadow: 0 0 0 2px rgba(163, 139, 109, 0.2);
+  border-color: #B38B59;
+  box-shadow: 0 0 0 2px rgba(179, 139, 89, 0.2);
 }
 
-/* Order Cards - Luxury Design */
+/* Order Cards - Luxury Showcase */
 .order-history-orders-list {
   display: grid;
-  gap: 2rem;
-  margin-bottom: 3rem;
+  gap: 2.5rem;
+  margin-bottom: 4rem;
 }
 
 .order-history-order-card {
-  background-color: #fffdfa;
-  border: 1px solid #e0d6c9;
-  padding: 2rem;
-  transition: all 0.3s ease;
+  background-color: #FFFDFA;
+  border: 1px solid #D7C4B5;
+  padding: 3rem;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.order-history-order-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: #B38B59;
 }
 
 .order-history-order-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  border-color: #c0a062;
+  box-shadow: 0 15px 40px rgba(62, 39, 35, 0.1);
+  border-color: #B38B59;
 }
 
 .order-history-order-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   flex-wrap: wrap;
-  gap: 1.5rem;
-}
-
-.order-history-order-meta {
-  flex: 1;
+  gap: 2rem;
 }
 
 .order-history-order-number-user h3 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
-  color: #3a3226;
-  margin: 0 0 0.5rem 0;
+  font-size: 1.6rem;
+  color: #3E2723;
+  margin: 0 0 0.8rem 0;
+  letter-spacing: 0.5px;
 }
 
 .order-history-order-date {
-  font-size: 0.95rem;
-  color: #7a6e5d;
+  font-size: 1rem;
+  color: #6D5C54;
   font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.3px;
 }
 
-.order-history-order-status {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-/* Status Badges - Luxury Style */
+/* Status Badges - Luxury Tags */
 .status-badge {
-  padding: 0.5rem 1.2rem;
+  padding: 0.6rem 1.5rem;
   border-radius: 0;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-family: 'Montserrat', sans-serif;
+  border: 1px solid;
+  position: relative;
+  overflow: hidden;
+}
+
+.status-badge::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.15);
+  mix-blend-mode: overlay;
 }
 
 .badge-processing {
-  background-color: rgba(212, 160, 23, 0.1);
-  color: #d4a017;
-  border: 1px solid #d4a017;
+  background-color: rgba(212, 160, 23, 0.08);
+  color: #D4A017;
+  border-color: #D4A017;
 }
 
 .badge-shipped {
-  background-color: rgba(122, 107, 95, 0.1);
-  color: #7a6b5f;
-  border: 1px solid #7a6b5f;
+  background-color: rgba(122, 107, 95, 0.08);
+  color: #7A6B5F;
+  border-color: #7A6B5F;
 }
 
 .badge-delivered {
-  background-color: rgba(90, 143, 61, 0.1);
-  color: #5a8f3d;
-  border: 1px solid #5a8f3d;
+  background-color: rgba(90, 143, 61, 0.08);
+  color: #5A8F3D;
+  border-color: #5A8F3D;
 }
 
 .badge-cancelled {
-  background-color: rgba(166, 68, 68, 0.1);
-  color: #a64444;
-  border: 1px solid #a64444;
+  background-color: rgba(166, 68, 68, 0.08);
+  color: #A64444;
+  border-color: #A64444;
 }
 
 .order-history-order-total {
   font-weight: 600;
-  color: #3a3226;
-  font-size: 1.2rem;
+  color: #3E2723;
+  font-size: 1.4rem;
   font-family: 'Cormorant Garamond', serif;
+  letter-spacing: 0.5px;
 }
 
-/* Order Items Preview */
+/* Product Previews - Gallery Style */
 .order-history-order-items-preview {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 .order-history-preview-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  background-color: #f9f5f0;
-  padding: 1rem;
-  border: 1px solid #e0d6c9;
+  gap: 1.5rem;
+  background-color: #F8F4EF;
+  padding: 1.5rem;
+  border: 1px solid #D7C4B5;
+  transition: all 0.3s ease;
+  flex: 1 1 300px;
+  max-width: 350px;
+}
+
+.order-history-preview-item:hover {
+  background-color: #F0E8DF;
 }
 
 .order-history-product-thumbnail {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
-  background-color: #fff;
-  padding: 0.5rem;
-  border: 1px solid #e0d6c9;
+  background-color: #FFF;
+  padding: 1rem;
+  border: 1px solid #D7C4B5;
 }
 
 .order-history-item-name {
-  font-size: 1rem;
-  color: #3a3226;
+  font-size: 1.1rem;
+  color: #3E2723;
   font-weight: 500;
-  max-width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   font-family: 'Cormorant Garamond', serif;
+  letter-spacing: 0.3px;
 }
 
 .order-history-item-quantity {
-  font-size: 0.95rem;
-  color: #7a6e5d;
+  font-size: 1rem;
+  color: #6D5C54;
   font-family: 'Montserrat', sans-serif;
+  margin-left: auto;
 }
 
 .order-history-additional-items {
-  font-size: 0.95rem;
-  color: #7a6e5d;
+  font-size: 1rem;
+  color: #6D5C54;
   font-style: italic;
-  padding: 0.5rem 1rem;
-  background-color: #f9f5f0;
-  border: 1px dashed #d4c9b8;
+  padding: 1rem;
+  background-color: #F8F4EF;
+  border: 1px dashed #D7C4B5;
   font-family: 'Montserrat', sans-serif;
-}
-
-/* Order Card Footer */
-.order-history-order-card-footer {
   display: flex;
-  justify-content: flex-end;
-  padding-top: 1.5rem;
-  border-top: 1px solid #f0ebe4;
+  align-items: center;
+  justify-content: center;
 }
 
+/* View Details Button - Brass Accent */
 .order-history-view-details-btn {
-  padding: 0.8rem 2rem;
+  padding: 1rem 2.5rem;
   background-color: transparent;
-  color: #3a3226;
-  border: 1px solid #d4c9b8;
+  color: #3E2723;
+  border: 1px solid #B38B59;
   border-radius: 0;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1rem;
+  transition: all 0.4s ease;
+  font-size: 1.1rem;
   letter-spacing: 0.5px;
   font-family: 'Montserrat', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.order-history-view-details-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(179, 139, 89, 0.1), transparent);
+  transition: all 0.6s ease;
 }
 
 .order-history-view-details-btn:hover {
-  background-color: #f1ebe3;
-  color: #5a4e3d;
-  border-color: #a38b6d;
+  background-color: rgba(179, 139, 89, 0.05);
+  color: #3E2723;
 }
 
-/* Pagination - Luxury Style */
+.order-history-view-details-btn:hover::before {
+  left: 100%;
+}
+
+/* Pagination - Refined Style */
 .pagination-controls {
   display: flex;
   justify-content: center;
-  gap: 0.8rem;
-  margin: 3rem 0;
+  gap: 1rem;
+  margin: 4rem 0 3rem;
 }
 
 .pagination-btn {
-  padding: 0.8rem 1.2rem;
-  border: 1px solid #d4c9b8;
-  background-color: #fffdfa;
+  padding: 0.8rem 1.5rem;
+  border: 1px solid #D7C4B5;
+  background-color: #FFFDFA;
   cursor: pointer;
   border-radius: 0;
   font-size: 1rem;
   transition: all 0.3s ease;
   font-family: 'Montserrat', sans-serif;
-  color: #5a4e3d;
+  color: #3E2723;
+  min-width: 50px;
+  text-align: center;
 }
 
 .pagination-btn:hover:not(:disabled) {
-  background-color: #f1ebe3;
-  border-color: #a38b6d;
+  background-color: #F0E8DF;
+  border-color: #B38B59;
+  color: #3E2723;
 }
 
 .pagination-btn.active {
-  background-color: #a38b6d;
-  color: #fff;
-  border-color: #a38b6d;
+  background-color: #B38B59;
+  color: #FFF;
+  border-color: #B38B59;
 }
 
 .pagination-btn:disabled {
@@ -281,84 +326,89 @@
   cursor: not-allowed;
 }
 
-/* Order Summary */
-.order-history-summary {
-  text-align: center;
-  color: #7a6e5d;
-  font-size: 1rem;
-  margin-bottom: 2rem;
-  font-family: 'Montserrat', sans-serif;
-}
-
 /* Empty State - Luxury Design */
 .order-history-no-orders-found {
   text-align: center;
-  padding: 4rem;
-  background-color: #fffdfa;
-  border: 1px solid #e0d6c9;
-  margin: 3rem 0;
+  padding: 5rem;
+  background-color: #FFFDFA;
+  border: 1px solid #D7C4B5;
+  margin: 4rem 0;
 }
 
 .order-history-no-orders-found p {
-  font-size: 1.2rem;
-  color: #7a6e5d;
-  margin-bottom: 2rem;
+  font-size: 1.4rem;
+  color: #6D5C54;
+  margin-bottom: 3rem;
   font-family: 'Cormorant Garamond', serif;
 }
 
 .continue-shopping-btn {
-  padding: 0.8rem 2rem;
-  background-color: #a38b6d;
-  color: #fff;
+  padding: 1.2rem 3rem;
+  background-color: #B38B59;
+  color: #FFF;
   border: none;
   border-radius: 0;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-  letter-spacing: 0.5px;
+  transition: all 0.4s ease;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
   font-family: 'Montserrat', sans-serif;
+  position: relative;
+  overflow: hidden;
 }
 
 .continue-shopping-btn:hover {
-  background-color: #8c7b64;
+  background-color: #9C7548;
+}
+
+.continue-shopping-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: all 0.6s ease;
+}
+
+.continue-shopping-btn:hover::after {
+  left: 100%;
 }
 
 /* Loading and Error States */
 .loading-spinner {
   text-align: center;
-  padding: 4rem;
-  color: #7a6e5d;
-  font-size: 1.2rem;
+  padding: 5rem;
+  color: #6D5C54;
+  font-size: 1.4rem;
   font-family: 'Cormorant Garamond', serif;
+  letter-spacing: 0.5px;
 }
 
 .error-message {
   text-align: center;
-  padding: 2rem;
-  color: #a64444;
-  background-color: #f9f1ef;
-  border-left: 4px solid #a64444;
-  margin: 2rem 0;
+  padding: 2.5rem;
+  color: #A64444;
+  background-color: #F9F1EF;
+  border-left: 4px solid #A64444;
+  margin: 3rem 0;
   font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
 }
 
 /* Responsive Design */
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
   .order-history-container {
-    padding: 2rem;
+    padding: 3rem;
   }
-  
+}
+
+@media (max-width: 992px) {
   .order-history-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 1.5rem;
-  }
-  
-  .order-history-controls {
-    width: 100%;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
+    gap: 2rem;
   }
   
   .order-history-filter-control {
@@ -368,18 +418,23 @@
   .order-history-filter-control select {
     width: 100%;
   }
+  
+  .order-history-preview-item {
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
-  .order-history-order-card-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
+  .order-history-container {
+    padding: 2rem;
   }
   
-  .order-history-order-status {
-    width: 100%;
-    justify-content: space-between;
+  .order-history-header h2 {
+    font-size: 2.2rem;
+  }
+  
+  .order-history-order-card {
+    padding: 2rem;
   }
   
   .pagination-controls {
@@ -390,24 +445,24 @@
 @media (max-width: 576px) {
   .order-history-container {
     padding: 1.5rem;
+    margin: 3rem auto;
   }
   
   .order-history-header h2 {
     font-size: 2rem;
   }
   
-  .order-history-preview-item {
+  .order-history-order-card-header {
     flex-direction: column;
-    text-align: center;
+    align-items: flex-start;
   }
   
-  .order-history-item-name {
-    max-width: none;
-    white-space: normal;
-  }
-  
-  .order-history-view-details-btn,
-  .continue-shopping-btn {
+  .order-history-order-status {
     width: 100%;
+    justify-content: space-between;
+  }
+  
+  .order-history-no-orders-found {
+    padding: 3rem 1.5rem;
   }
 }

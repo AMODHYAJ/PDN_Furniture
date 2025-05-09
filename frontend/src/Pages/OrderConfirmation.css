@@ -1,449 +1,251 @@
-/* Order Confirmation - Luxury Furniture Style */
+/* Luxury Furniture Order Confirmation */
 :root {
-  --wood-dark: #4e342e;       /* Dark walnut */
-  --wood-medium: #795548;     /* Rich brown */
-  --wood-light: #d7ccc8;      /* Light beech */
-  --neutral-light: #efebe9;   /* Cream background */
-  --neutral-lighter: #fff8f5; /* Off-white */
-  --text-dark: #3e2723;       /* Dark text */
-  --text-medium: #5d4037;     /* Medium text */
-  --accent-gold: #c8a97e;     /* Gold accents */
-  --success: #689f38;         /* Natural green */
+  --walnut: #3E2723;          /* Deep walnut wood */
+  --oak: #8B6B4A;             /* Warm oak */
+  --cashmere: #E5D5C6;        /* Cashmere upholstery */
+  --linen: #F7F3EE;           /* Linen background */
+  --brass: #C4A86F;           /* Antique brass */
+  --velvet: #6E4C4B;          /* Burgundy velvet */
+  --text-dark: #2A211C;       /* Dark wood stain */
+  --text-light: #7A6B5F;      /* Subtle grain */
 }
 
 .order-confirmation {
   max-width: 1200px;
-  margin: 3rem auto;
+  margin: 4rem auto;
   padding: 0 2rem;
-  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+  font-family: 'Cormorant Garamond', serif;
+  background-color: var(--linen);
+  color: var(--text-dark);
+  background-image: url('https://www.transparenttextures.com/patterns/soft-wallpaper.png');
 }
 
-/* Header Section - Celebration Style */
+/* Header - Handcrafted Wood Panel */
 .confirmation-header {
   text-align: center;
-  padding: 3rem;
-  margin-bottom: 3rem;
-  background: linear-gradient(135deg, var(--neutral-lighter) 0%, white 100%);
-  border-radius: 12px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+  padding: 4rem 3rem;
+  margin-bottom: 4rem;
+  background: linear-gradient(135deg, var(--cashmere) 0%, var(--linen) 100%);
+  border: 15px solid;
+  border-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png') 30 round;
+  box-shadow: 0 15px 40px rgba(62, 39, 35, 0.1);
   position: relative;
-  overflow: hidden;
-  border: 1px solid var(--wood-light);
 }
 
 .confirmation-header::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--wood-dark), var(--accent-gold));
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border: 1px solid var(--brass);
+  pointer-events: none;
 }
 
 .confirmation-header h1 {
-  color: var(--wood-dark);
-  font-size: 2.5rem;
+  color: var(--walnut);
+  font-size: 3rem;
   margin-bottom: 1rem;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-}
-
-.confirmation-header p {
-  color: var(--text-medium);
-  font-size: 1.2rem;
-  max-width: 700px;
-  margin: 0 auto 1.5rem;
-  line-height: 1.6;
-}
-
-.confirmation-header .order-number {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  position: relative;
   display: inline-block;
-  padding: 0.5rem 1.5rem;
-  background-color: var(--wood-dark);
-  color: white;
-  border-radius: 30px;
-  font-weight: 500;
-  margin-top: 1rem;
-  font-size: 1.1rem;
 }
 
-/* Confirmation Details - Elegant Two-Column Layout */
-.confirmation-details {
+.confirmation-header h1::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: var(--brass);
+}
+
+/* Order Details - Furniture Showroom */
+.order-details {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr;
   gap: 3rem;
-  margin-bottom: 4rem;
+  margin-bottom: 5rem;
 }
 
 .order-summary, .shipping-details {
-  background: white;
-  padding: 2.5rem;
-  border-radius: 10px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-  border: 1px solid var(--wood-light);
+  background: var(--linen);
+  padding: 3rem;
+  border: 1px solid var(--cashmere);
+  box-shadow: 0 10px 30px rgba(62, 39, 35, 0.05);
+  position: relative;
 }
 
-.confirmation-details h2 {
-  color: var(--wood-dark);
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--wood-light);
-  font-weight: 500;
-  font-size: 1.5rem;
-  letter-spacing: 0.3px;
+.order-summary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: var(--brass);
 }
 
-/* Order Items - Elegant List */
+/* Product Display - Gallery Style */
 .order-items {
   margin: 2rem 0;
 }
 
 .order-item {
   display: flex;
-  gap: 1.5rem;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid var(--wood-light);
+  gap: 2rem;
+  padding: 2rem 0;
+  border-bottom: 1px dashed var(--oak);
+  align-items: center;
 }
 
-.order-item:last-child {
-  border-bottom: none;
-}
-
-.order-item-image {
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-  border-radius: 6px;
-  background-color: var(--neutral-lighter);
-  padding: 0.8rem;
-  border: 1px solid var(--wood-light);
-}
-
-.order-item-details {
-  flex: 1;
-}
-
-.order-item-details h4 {
-  margin: 0 0 0.5rem 0;
-  color: var(--text-dark);
-  font-weight: 500;
-}
-
-.order-item-details p {
-  margin: 0.3rem 0;
-  color: var(--text-medium);
-  font-size: 0.95rem;
-}
-
-.order-total {
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--wood-light);
-  text-align: right;
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: var(--wood-dark);
-}
-
-/* Shipping Information - Clean Layout */
-/* Enhanced Shipping Details - Luxury Style */
-.shipping-details {
-  background: var(--neutral-lighter);
-  padding: 3rem;
-  border-radius: 0;
-  border: 1px solid var(--wood-light);
+.item-image {
   position: relative;
-  box-shadow: 0 5px 25px rgba(0,0,0,0.05);
 }
 
-.shipping-details::before {
+.item-image img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  background: var(--linen);
+  padding: 1.5rem;
+  border: 1px solid var(--cashmere);
+  box-shadow: 5px 5px 15px rgba(62, 39, 35, 0.05);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.item-image::after {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid var(--brass);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.order-item:hover .item-image img {
+  transform: translateY(-5px);
+  box-shadow: 8px 8px 25px rgba(62, 39, 35, 0.1);
+}
+
+.order-item:hover .item-image::after {
+  opacity: 0.5;
+}
+
+.item-details h4 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: var(--walnut);
+  font-weight: 600;
+  position: relative;
+  display: inline-block;
+}
+
+.item-details h4::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
   width: 100%;
-  height: 100%;
-  background: url('https://www.transparenttextures.com/patterns/cream-paper.png');
-  opacity: 0.15;
-  pointer-events: none;
+  height: 1px;
+  background: var(--brass);
+}
+
+/* Shipping Details - Velvet Upholstered Panel */
+.shipping-details {
+  background: linear-gradient(135deg, var(--linen) 0%, #F0E8E0 100%);
+  border-top: 10px solid var(--velvet);
 }
 
 .shipping-details h2 {
-  color: var(--wood-dark);
-  font-size: 1.8rem;
-  margin-bottom: 2.5rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 2px solid var(--wood-light);
-  font-family: 'Playfair Display', serif;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  color: var(--velvet);
 }
 
-.shipping-info {
-  margin-top: 2rem;
-}
-
-.info-row {
-  display: flex;
-  align-items: center;
-  padding: 1.5rem 0;
-  border-bottom: 1px dashed var(--wood-light);
-  position: relative;
-}
-
-.info-row:last-child {
-  border-bottom: none;
-}
-
-.info-label {
-  min-width: 180px;
-  color: var(--text-medium);
-  font-weight: 600;
-  font-size: 1.1rem;
-  letter-spacing: 0.3px;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-}
-
-.info-label::before {
-  content: "";
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  background-color: var(--accent-gold);
-  transform: rotate(45deg);
-}
-
-.info-value {
-  color: var(--text-dark);
-  flex: 1;
+.shipping-details p {
+  margin: 1.5rem 0;
   padding-left: 2rem;
-  font-size: 1.2rem;
-  line-height: 1.6;
   position: relative;
+  color: var(--text-dark);
 }
 
-.info-value::before {
-  content: "";
+.shipping-details p::before {
+  content: "◆";
   position: absolute;
   left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 60%;
-  width: 1px;
-  background-color: var(--wood-light);
+  color: var(--brass);
 }
 
-/* Payment Method - Special Styling */
-.payment-method {
-  margin-top: 3rem;
-  padding: 1.5rem;
-  background: rgba(200, 178, 115, 0.08);
-  border-left: 3px solid var(--accent-gold);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.payment-method-icon {
-  font-size: 1.8rem;
-  color: var(--accent-gold);
-}
-
-.payment-method-text {
-  font-size: 1.1rem;
-  color: var(--text-dark);
-}
-
-.payment-method-text strong {
-  color: var(--wood-dark);
-  font-weight: 600;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .info-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-    padding: 1.2rem 0;
-  }
-
-  .info-label {
-    min-width: auto;
-    padding-bottom: 0.3rem;
-  }
-
-  .info-label::before {
-    display: none;
-  }
-
-  .info-value {
-    padding-left: 0;
-  }
-
-  .info-value::before {
-    display: none;
-  }
-}
-
-/* Next Steps - Clear CTA */
-.next-steps {
-  text-align: center;
-  padding: 3rem;
-  background: linear-gradient(135deg, var(--neutral-lighter) 0%, white 100%);
-  border-radius: 12px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
-  border: 1px solid var(--wood-light);
-}
-
-.next-steps h2 {
-  color: var(--wood-dark);
-  margin-bottom: 1.5rem;
-  font-weight: 500;
-}
-
-.next-steps p {
-  color: var(--text-medium);
-  max-width: 600px;
-  margin: 0 auto 2rem;
-  line-height: 1.6;
-  font-size: 1.1rem;
-}
-
+/* Brass Button - Furniture Hardware Inspired */
 .continue-shopping {
-  display: inline-block;
-  padding: 1rem 2.5rem;
-  background-color: var(--wood-dark);
+  background: var(--brass);
   color: white;
-  text-decoration: none;
-  border-radius: 4px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  font-size: 1.1rem;
-  border: 1px solid var(--wood-dark);
+  padding: 1.3rem 3.5rem;
+  border: none;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  box-shadow: 0 5px 15px rgba(196, 168, 111, 0.3);
 }
 
 .continue-shopping:hover {
-  background-color: var(--wood-medium);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(78, 52, 46, 0.2);
+  background: var(--walnut);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(62, 39, 35, 0.3);
 }
 
-/* Delivery Estimate - Prominent but subtle */
-.delivery-estimate {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background-color: rgba(200, 169, 126, 0.1);
-  border-radius: 8px;
-  border-left: 4px solid var(--accent-gold);
+.continue-shopping::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255,255,255,0.3) 0%,
+    rgba(255,255,255,0) 60%
+  );
+  transform: rotate(30deg);
+  transition: all 0.5s ease;
 }
 
-.delivery-estimate p {
-  margin: 0;
-  color: var(--text-dark);
-}
-
-.delivery-estimate strong {
-  color: var(--wood-dark);
+.continue-shopping:hover::before {
+  left: 100%;
+  top: 100%;
 }
 
 /* Responsive Design */
 @media (max-width: 992px) {
-  .confirmation-details {
+  .order-details {
     grid-template-columns: 1fr;
-    gap: 2rem;
   }
   
-  .order-item {
-    gap: 1rem;
-  }
-  
-  .order-item-image {
-    width: 80px;
-    height: 80px;
+  .item-image img {
+    width: 120px;
+    height: 120px;
   }
 }
 
 @media (max-width: 768px) {
   .confirmation-header {
-    padding: 2rem 1.5rem;
-  }
-  
-  .confirmation-header h1 {
-    font-size: 2rem;
-  }
-  
-  .order-summary, 
-  .shipping-details {
-    padding: 2rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .order-confirmation {
-    padding: 0 1rem;
-  }
-  
-  .confirmation-header {
-    padding: 1.5rem 1rem;
-  }
-  
-  .confirmation-header h1 {
-    font-size: 1.8rem;
+    padding: 3rem 2rem;
   }
   
   .order-item {
     flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .order-item-image {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1/1;
-  }
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.confirmation-header,
-.confirmation-details,
-.next-steps {
-  animation: fadeIn 0.6s ease-out forwards;
-}
-
-.confirmation-details {
-  animation-delay: 0.2s;
-}
-
-.next-steps {
-  animation-delay: 0.4s;
-}
-
-/* Confetti Effect (Optional) */
-.confetti {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: var(--accent-gold);
-  opacity: 0;
-}
-
-/* Status Badge */
-.status-badge {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background-color: var(--success);
-  color: white;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  margin-top: 1rem;
 }

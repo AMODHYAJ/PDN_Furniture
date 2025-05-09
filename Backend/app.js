@@ -142,8 +142,19 @@ server.on('upgrade', (request, socket, head) => {
   });
 });
 
+// In your server file (app.js or server.js)
 wss.on('connection', (ws, req) => {
-  // Authenticate the connection
+  // Authenticate immediately if token is in URL
+  const token = req.url.split('token=')[1];
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (!err && decoded) {
+        ws.userId = decoded.userId;
+        console.log(`WebSocket authenticated for user ${decoded.userId}`);
+      }
+    });
+  }
+
   ws.on('message', (message) => {
     try {
       const data = JSON.parse(message);
@@ -160,19 +171,21 @@ wss.on('connection', (ws, req) => {
     }
   });
 
-  // Handle connection close
   ws.on('close', () => {
     console.log('WebSocket client disconnected');
   });
 });
 
-// Create a function to send notifications to specific users
+// Make sure to send the notification immediately after creation
 const sendNotification = (userId, notification) => {
   wss.clients.forEach(client => {
     if (client.readyState === WebSocket.OPEN && client.userId === userId) {
       client.send(JSON.stringify({
         type: 'notification',
-        notification
+        notification: {
+          ...notification,
+          formattedDate: new Date(notification.createdAt).toLocaleString()
+        }
       }));
     }
   });

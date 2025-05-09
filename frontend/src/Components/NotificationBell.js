@@ -10,8 +10,8 @@ const NotificationBell = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [ws, setWs] = useState(null);
 
-  // Wrap fetchNotifications in useCallback to prevent unnecessary recreations
   const fetchNotifications = useCallback(async () => {
     if (!user?._id) return;
 
@@ -41,13 +41,14 @@ const NotificationBell = () => {
   // WebSocket connection management
   useEffect(() => {
     if (!user?._id) return;
-  
+
     const websocketUrl = process.env.NODE_ENV === 'production' 
       ? `wss://${window.location.host}`
       : 'ws://localhost:5000';
-  
+
     const websocket = new WebSocket(websocketUrl);
-  
+    setWs(websocket);
+
     websocket.onopen = () => {
       console.log('WebSocket connected');
       const token = localStorage.getItem('token');
@@ -60,10 +61,14 @@ const NotificationBell = () => {
     };
 
     websocket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data.type === 'notification') {
-        setNotifications(prev => [data.notification, ...prev]);
-        setUnreadCount(prev => prev + 1);
+      try {
+        const data = JSON.parse(event.data);
+        if (data.type === 'notification') {
+          setNotifications(prev => [data.notification, ...prev]);
+          setUnreadCount(prev => prev + 1);
+        }
+      } catch (err) {
+        console.error('Error parsing WebSocket message:', err);
       }
     };
 
@@ -73,6 +78,13 @@ const NotificationBell = () => {
 
     websocket.onclose = () => {
       console.log('WebSocket disconnected');
+      // Attempt to reconnect after a delay
+      setTimeout(() => {
+        if (user?._id) {
+          const newWs = new WebSocket(websocketUrl);
+          setWs(newWs);
+        }
+      }, 5000);
     };
 
     return () => {
@@ -82,18 +94,22 @@ const NotificationBell = () => {
     };
   }, [user?._id]);
 
-  // Fetch notifications and set up polling
+  // Initial fetch and polling
   useEffect(() => {
     fetchNotifications();
-    const interval = setInterval(fetchNotifications, 60000);
+    
+    const interval = setInterval(() => {
+      fetchNotifications();
+    }, 60000);
+
     return () => clearInterval(interval);
-  }, [fetchNotifications]); // Now includes fetchNotifications in dependencies
+  }, [fetchNotifications]);
 
   const handleMarkAsRead = async (id) => {
     try {
       await api.patch(`/api/notifications/${id}/read`);
-      setNotifications((prev) => prev.filter((n) => n._id !== id));
-      setUnreadCount((prev) => prev - 1);
+      setNotifications(prev => prev.filter(n => n._id !== id));
+      setUnreadCount(prev => prev - 1);
     } catch (error) {
       console.error("Mark as read error:", error);
     }

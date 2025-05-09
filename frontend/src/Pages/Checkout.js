@@ -46,20 +46,19 @@ const Checkout = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Transform cart items to match backend expectations
       const orderItems = cart.items.map((item) => ({
-        product: item.productId._id, // Send just the product ID
+        product: item.productId._id,
         quantity: item.quantity,
       }));
 
       const orderData = {
-        items: orderItems, // Use transformed items
+        items: orderItems,
         shippingAddress: {
           address: formData.address,
           city: formData.city,
           postalCode: formData.postalCode,
         },
-        // paymentMethod is automatically set to 'cashOnDelivery' by backend
+        paymentMethod: formData.paymentMethod,
       };
 
       const response = await api.post("/orders", orderData);
@@ -70,8 +69,14 @@ const Checkout = () => {
     }
   };
 
-  if (loading) return <div className="loading">Loading checkout...</div>;
-  if (error) return <div className="error">{error}</div>;
+  if (loading) return (
+    <div className="loading-overlay">
+      <div className="loading-spinner"></div>
+    </div>
+  );
+  
+  if (error) return <div className="error-message">{error}</div>;
+  
   if (!cart || cart.items.length === 0) {
     return (
       <div className="empty-cart">
@@ -148,16 +153,20 @@ const Checkout = () => {
 
           <div className="checkout-form-group">
             <h3>Payment Method</h3>
-            <label>
+            <div className="checkout-payment-method">
               <input
                 type="radio"
+                id="cashOnDelivery"
                 name="paymentMethod"
                 value="cashOnDelivery"
                 checked={formData.paymentMethod === "cashOnDelivery"}
                 onChange={handleInputChange}
               />
-              Cash on Delivery
-            </label>
+              <label htmlFor="cashOnDelivery" className="checkout-payment-method-label">
+                <span className="checkout-payment-icon">💵</span>
+                Cash on Delivery
+              </label>
+            </div>
           </div>
 
           <button type="submit" className="place-order-btn">
@@ -175,9 +184,15 @@ const Checkout = () => {
                 src={getProductImageUrl(item.productId?.image)}
                 alt={item.productId?.name || "Product"}
                 onError={handleImageError}
-                className="checkout-cart-item-image"
+                className="checkout-order-item-image"
+                style={{
+                  maxWidth: '100px',
+                  maxHeight: '100px',
+                  width: 'auto',
+                  height: 'auto'
+                }}
               />
-              <div>
+              <div className="checkout-order-item-details">
                 <h4>{item.productId.name}</h4>
                 <p>
                   Rs. {item.productId.price} × {item.quantity}
@@ -186,8 +201,11 @@ const Checkout = () => {
             </div>
           ))}
         </div>
-        <div className="checkout-order-total">
-          <h3>Total: Rs. {totalPrice.toFixed(2)}</h3>
+        <div className="checkout-order-totals">
+          <div className="checkout-total-row final">
+            <span>Total</span>
+            <span>Rs. {totalPrice.toFixed(2)}</span>
+          </div>
         </div>
       </div>
     </div>
