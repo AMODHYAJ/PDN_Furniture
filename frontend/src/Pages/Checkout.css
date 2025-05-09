@@ -43,12 +43,12 @@
   letter-spacing: 0.5px;
 }
 
-.form-group {
+.checkout-form-group {
   margin-bottom: 2rem;
   position: relative;
 }
 
-.form-group label {
+.checkout-form-group label {
   display: block;
   margin-bottom: 0.8rem;
   color: var(--text-medium);
@@ -57,7 +57,7 @@
   letter-spacing: 0.3px;
 }
 
-.form-group input {
+.checkout-form-group input {
   width: 100%;
   padding: 1rem;
   border: 1px solid var(--wood-light);
@@ -67,18 +67,18 @@
   background-color: var(--neutral-lighter);
 }
 
-.form-group input:focus {
+.checkout-form-group input:focus {
   outline: none;
   border-color: var(--wood-medium);
   box-shadow: 0 0 0 2px rgba(121, 85, 72, 0.1);
 }
 
 /* Payment Method Styling */
-.payment-methods {
+.checkout-payment-methods {
   margin-top: 2.5rem;
 }
 
-.payment-method {
+.checkout-payment-method {
   display: flex;
   align-items: center;
   padding: 1.2rem;
@@ -90,29 +90,29 @@
   border: 1px solid transparent;
 }
 
-.payment-method:hover {
+.checkout-payment-method:hover {
   border-color: var(--accent-gold);
 }
 
-.payment-method input {
+.checkout-payment-method input {
   margin-right: 1rem;
   accent-color: var(--wood-medium);
 }
 
-.payment-method-label {
+.checkout-payment-method-label {
   display: flex;
   align-items: center;
   width: 100%;
 }
 
-.payment-icon {
+.checkout-payment-icon {
   margin-right: 1rem;
   color: var(--wood-medium);
   font-size: 1.5rem;
 }
 
 /* Order Summary */
-.order-summary {
+.checkout-order-summary {
   background: white;
   padding: 2.5rem;
   border-radius: 8px;
@@ -122,7 +122,7 @@
   top: 2rem;
 }
 
-.order-summary h2 {
+.checkout-order-summary h2 {
   color: var(--wood-dark);
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
@@ -131,25 +131,25 @@
   font-size: 1.5rem;
 }
 
-.order-items {
+.checkout-order-items {
   max-height: 400px;
   overflow-y: auto;
   padding-right: 0.5rem;
   margin-bottom: 1.5rem;
 }
 
-.order-item {
+.checkout-order-item {
   display: flex;
   gap: 1.5rem;
   padding: 1.2rem 0;
   border-bottom: 1px solid var(--wood-light);
 }
 
-.order-item:last-child {
+.checkout-order-item:last-child {
   border-bottom: none;
 }
 
-.order-item-image {
+.checkout-order-item-image {
   width: 80px;
   height: 80px;
   object-fit: contain;
@@ -159,32 +159,32 @@
   border: 1px solid var(--wood-light);
 }
 
-.order-item-details h4 {
+.checkout-order-item-details h4 {
   margin: 0 0 0.5rem 0;
   color: var(--text-dark);
   font-weight: 500;
 }
 
-.order-item-details p {
+.checkout-order-item-details p {
   margin: 0;
   color: var(--text-medium);
   font-size: 0.9rem;
 }
 
-.order-totals {
+.checkout-order-totals {
   margin-top: 2rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--wood-light);
 }
 
-.total-row {
+.checkout-total-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
   color: var(--text-medium);
 }
 
-.total-row.final {
+.checkout-total-row.final {
   font-weight: 600;
   font-size: 1.2rem;
   color: var(--wood-dark);

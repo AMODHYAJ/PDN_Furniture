@@ -125,7 +125,7 @@ const Wishlist = () => {
             <div className="wishlist-container unauthorized">
                 <h2>My Wishlist</h2>
                 <p>Please sign in to view your wishlist</p>
-                <Link to="/login" className="auth-link">Sign In</Link>
+                <Link to="/login" className="wishlist-auth-link">Sign In</Link>
             </div>
         );
     }
@@ -134,7 +134,7 @@ const Wishlist = () => {
         return (
             <div className="wishlist-container loading">
                 <h2>My Wishlist</h2>
-                <div className="spinner"></div>
+                <div className="wishlist-spinner"></div>
             </div>
         );
     }
@@ -149,14 +149,14 @@ const Wishlist = () => {
                             <button 
                                 onClick={handleClearWishlist}
                                 disabled={actionLoading.clear}
-                                className="clear-btn"
+                                className="wishlist-clear-btn"
                             >
                                 {actionLoading.clear ? 'Clearing...' : 'Clear All'}
                             </button>
                             <button 
                                 onClick={handleRefreshWishlist}
                                 disabled={loading}
-                                className="refresh-btn"
+                                className="wishlist-refresh-btn"
                             >
                                 {loading ? 'Refreshing...' : 'Refresh'}
                             </button>
@@ -165,12 +165,12 @@ const Wishlist = () => {
                 </div>
             </div>
 
-            {error && <div className="error-message">{error}</div>}
+            {error && <div className="wishlist-error-message">{error}</div>}
 
             {wishlistItems.length === 0 ? (
                 <div className="empty-wishlist">
                     <p>Your wishlist is empty</p>
-                    <Link to="/products" className="browse-btn">
+                    <Link to="/products" className="wishlist-browse-btn">
                         Browse Products
                     </Link>
                 </div>
@@ -184,31 +184,31 @@ const Wishlist = () => {
                             <div key={item.productId._id} className="wishlist-item">
                                 <Link 
                                     to={`/products/${item.productId._id}`}
-                                    className="product-link"
+                                    className="wishlist-product-link"
                                 >
-                                    <div className="product-image">
+                                    <div className="wishlist-product-image">
                                         <img 
                                             src={getProductImageUrl(item.productId.image)} 
                                             alt={item.productId.name}
                                             onError={handleImageError}
                                         />
                                     </div>
-                                    <div className="product-info">
+                                    <div className="wishlist-product-info">
                                         <h3>{item.productId.name}</h3>
-                                        <p className="price">Rs. {item.productId.price.toFixed(2)}</p>
-                                        <p className="category">{item.productId.category}</p>
+                                        <p className="wishlist-price">Rs. {item.productId.price.toFixed(2)}</p>
+                                        <p className="wishlist-category">{item.productId.category}</p>
                                         {isOutOfStock && (
-                                            <p className="out-of-stock">Out of Stock</p>
+                                            <p className="wishlist-out-of-stock">Out of Stock</p>
                                         )}
                                     </div>
                                 </Link>
-                                <div className="item-actions">
+                                <div className="wishlist-item-actions">
                                     <button
                                         onClick={() => isOutOfStock ? 
                                             handleSetReminder(item.productId._id) : 
                                             handleMoveToCart(item.productId._id)}
                                         disabled={actionLoading.move === item.productId._id}
-                                        className={`move-btn ${isOutOfStock ? 'set-reminder' : ''}`}
+                                        className={`wishlist-move-btn ${isOutOfStock ? 'set-reminder' : ''}`}
                                     >
                                         {actionLoading.move === item.productId._id ? (
                                             'Processing...'
@@ -221,7 +221,7 @@ const Wishlist = () => {
                                     <button
                                         onClick={() => handleRemoveItem(item.productId._id)}
                                         disabled={actionLoading.remove === item.productId._id}
-                                        className="remove-btn"
+                                        className="wishlist-remove-btn"
                                     >
                                         {actionLoading.remove === item.productId._id ? (
                                             'Removing...'

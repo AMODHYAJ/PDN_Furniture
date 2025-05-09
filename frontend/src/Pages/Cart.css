@@ -51,7 +51,7 @@
   line-height: 1.6;
 }
 
-.continue-shopping {
+.cart-continue-shopping {
   display: inline-block;
   padding: 1rem 2.5rem;
   background-color: var(--primary);
@@ -67,7 +67,7 @@
   font-size: 0.9rem;
 }
 
-.continue-shopping:hover {
+.cart-continue-shopping:hover {
   background-color: var(--primary-dark);
   transform: translateY(-3px);
   box-shadow: 0 6px 16px rgba(93, 64, 55, 0.4);
@@ -115,7 +115,7 @@
 }
 
 /* Item Image - Showcase product beautifully */
-.item-image-container {
+.cart-item-image-container {
   width: 220px;
   height: 220px;
   display: flex;
@@ -144,31 +144,31 @@
 }
 
 /* Item Details - Refined typography */
-.item-details {
+.cart-item-details {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
 
-.item-details h3 {
+.cart-item-details h3 {
   margin: 0 0 0.75rem 0;
   font-size: 1.3rem;
   color: var(--primary-dark);
   font-weight: 500;
 }
 
-.item-details h3 a {
+.cart-item-details h3 a {
   color: inherit;
   text-decoration: none;
   transition: color 0.2s ease;
   position: relative;
 }
 
-.item-details h3 a:hover {
+.cart-item-details h3 a:hover {
   color: var(--primary);
 }
 
-.item-details h3 a::after {
+.cart-item-details h3 a::after {
   content: '';
   position: absolute;
   bottom: -2px;
@@ -179,24 +179,24 @@
   transition: width 0.3s ease;
 }
 
-.item-details h3 a:hover::after {
+.cart-item-details h3 a:hover::after {
   width: 100%;
 }
 
-.item-details p {
+.cart-item-details p {
   margin: 0.5rem 0;
   color: var(--primary-light);
   font-size: 0.95rem;
 }
 
 /* Quantity Controls - Premium interaction */
-.quantity-control {
+.cart-quantity-control {
   display: flex;
   align-items: center;
   margin: 1.5rem 0;
 }
 
-.quantity-control button {
+.cart-quantity-control button {
   width: 36px;
   height: 36px;
   background-color: white;
@@ -211,18 +211,18 @@
   color: var(--primary);
 }
 
-.quantity-control button:hover {
+.cart-quantity-control button:hover {
   background-color: var(--light);
   border-color: var(--primary-light);
 }
 
-.quantity-control button:disabled {
+.cart-quantity-control button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   background-color: var(--light);
 }
 
-.quantity-control span {
+.cart-quantity-control span {
   margin: 0 1.25rem;
   min-width: 30px;
   text-align: center;
@@ -232,7 +232,7 @@
 }
 
 /* Item Total - Emphasized price */
-.item-total {
+.cart-item-total {
   font-weight: 600;
   margin: 1rem 0;
   color: var(--primary-dark);
@@ -240,7 +240,7 @@
 }
 
 /* Remove Button - Clear but not distracting */
-.remove-item {
+.cart-remove-item {
   align-self: flex-start;
   background-color: transparent;
   color: var(--danger);
@@ -254,7 +254,7 @@
   width: auto;
 }
 
-.remove-item:hover {
+.cart-remove-item:hover {
   background-color: var(--danger);
   color: white;
 }
@@ -281,7 +281,7 @@
   letter-spacing: 0.5px;
 }
 
-.summary-row {
+.cart-summary-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
@@ -289,7 +289,7 @@
   color: var(--primary-light);
 }
 
-.summary-row.total {
+.cart-summary-row.total {
   font-weight: 600;
   font-size: 1.4rem;
   margin-top: 1.5rem;
@@ -350,7 +350,7 @@
 }
 
 /* Loading and Error States - Refined feedback */
-.loading, .error {
+.cart-loading, .cart-error {
   text-align: center;
   padding: 4rem;
   font-size: 1.2rem;
@@ -361,14 +361,14 @@
   margin: 2rem auto;
 }
 
-.loading {
+.cart-loading {
   color: var(--primary);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.error {
+.cart-error {
   color: var(--danger);
   background-color: rgba(211, 47, 47, 0.05);
   border-left: 4px solid var(--danger);
@@ -386,7 +386,7 @@
     flex-direction: column;
   }
 
-  .item-image-container {
+  .cart-item-image-container {
     width: 100%;
     height: 300px;
     margin-right: 0;
@@ -408,7 +408,7 @@
     width: 100%;
   }
   
-  .quantity-control {
+  .cart-quantity-control {
     margin: 1rem 0;
   }
 }
@@ -446,7 +446,7 @@
   to { transform: rotate(360deg); }
 }
 
-.loading::after {
+.cart-loading::after {
   content: "";
   display: block;
   width: 40px;

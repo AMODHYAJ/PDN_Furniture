@@ -175,7 +175,7 @@ const AdminOrderDetails = () => {
 
       <div className="order-header">
         <h1>Order #{order?._id?.substring(0, 8).toUpperCase()}</h1>
-        <div className="order-meta">
+        <div className="details-order-meta">
           <div className="order-status">
             {getStatusBadge(order?.status)}
             <span>Placed on {formatDate(order?.createdAt)}</span>
@@ -183,21 +183,21 @@ const AdminOrderDetails = () => {
         </div>
       </div>
 
-      <div className="order-sections">
-        <div className="order-items-section">
+      <div className="details-order-sections">
+        <div className="details-order-items-section">
           <h2>Order Items</h2>
-          <div className="order-items-list">
+          <div className="details-order-items-list">
             {order?.items?.map((item, index) => (
-              <div key={index} className="order-item">
+              <div key={index} className="details-order-item">
                 <img
                   src={getProductImageUrl(item.productId?.image)}
                   alt={item.productId?.name}
-                  className="product-image"
+                  className="details-product-image"
                   onError={handleImageError}
                 />
-                <div className="item-details">
+                <div className="details-item-details">
                   <h4>{item.productId?.name}</h4>
-                  <div className="item-meta">
+                  <div className="details-item-meta">
                     <span>Quantity: {item.quantity}</span>
                     <span>Price: Rs. {item.price?.toFixed(2)}</span>
                     <span>
@@ -209,59 +209,59 @@ const AdminOrderDetails = () => {
             ))}
           </div>
 
-          <div className="order-summary">
-            <div className="summary-row">
+          <div className="details-order-summary">
+            <div className="details-summary-row">
               <span>Subtotal:</span>
               <span>Rs. {order?.totalPrice?.toFixed(2)}</span>
             </div>
-            <div className="summary-row">
+            <div className="details-summary-row">
               <span>Shipping:</span>
               <span>Rs. 0.00</span>
             </div>
-            <div className="summary-row total">
+            <div className="details-summary-row total">
               <span>Total:</span>
               <span>Rs. {order?.totalPrice?.toFixed(2)}</span>
             </div>
           </div>
         </div>
 
-        <div className="order-info-section">
-          <div className="customer-info">
+        <div className="details-order-info-section">
+          <div className="details-customer-info">
             <h2>Customer Information</h2>
-            <div className="info-grid">
-              <div className="info-row">
-                <span className="info-label">Name:</span>
-                <span className="info-value">
+            <div className="details-info-grid">
+              <div className="details-info-row">
+                <span className="details-info-label">Name:</span>
+                <span className="details-info-value">
                   {order?.userId?.name || "Guest"}
                 </span>
               </div>
-              <div className="info-row">
-                <span className="info-label">Email:</span>
-                <span className="info-value">
+              <div className="details-info-row">
+                <span className="details-info-label">Email:</span>
+                <span className="details-info-value">
                   {order?.userId?.email || "N/A"}
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="shipping-info">
+          <div className="details-shipping-info">
             <h2>Shipping Information</h2>
-            <div className="info-grid">
-              <div className="info-row">
-                <span className="info-label">Address:</span>
-                <span className="info-value">
+            <div className="details-info-grid">
+              <div className="details-info-row">
+                <span className="details-info-label">Address:</span>
+                <span className="details-info-value">
                   {order?.shippingAddress?.address}
                 </span>
               </div>
-              <div className="info-row">
-                <span className="info-label">City:</span>
-                <span className="info-value">
+              <div className="details-info-row">
+                <span className="details-info-label">City:</span>
+                <span className="details-info-value">
                   {order?.shippingAddress?.city}
                 </span>
               </div>
-              <div className="info-row">
-                <span className="info-label">Postal Code:</span>
-                <span className="info-value">
+              <div className="details-info-row">
+                <span className="details-info-label">Postal Code:</span>
+                <span className="details-info-value">
                   {order?.shippingAddress?.postalCode}
                 </span>
               </div>

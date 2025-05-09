@@ -142,7 +142,7 @@ static async createReplenishmentOrder(req, materialId, quantity, materialName, u
       Notification.create({
         recipient: user._id,
         title: `Replenishment Order Received - ${materialName}`,
-        message: `Added ${quantity} ${unit} to inventory. New stock: ${updatedItem.quantity + quantity} ${unit}`,
+        message: `Added ${quantity} ${unit} to inventory. New stock: ${updatedItem.quantity} ${unit}`,
         type: 'replenishment',
         relatedEntity: materialId,
         entityType: 'Inventory',

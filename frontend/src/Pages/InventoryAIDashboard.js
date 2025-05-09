@@ -42,10 +42,13 @@ const InventoryAIDashboard = () => {
         materialName,
         unit,
       });
-
+  
       if (response.data.success) {
         setSuccess(`Added ${quantity} ${unit} of ${materialName} to inventory!`);
+        
+        // Refresh the recommendations after successful update
         await fetchRecommendations();
+        
         setTimeout(() => {
           setSuccess(null);
           setLoading(false);
@@ -60,12 +63,12 @@ const InventoryAIDashboard = () => {
 
   const getPriorityColor = (priority) => {
     const colors = {
-      critical: "#c17c74",
-      high: "#d2a863",
-      medium: "#7a9f6e",
-      low: "#a38b6a",
+      critical: "#ff4444",
+      high: "#ffbb33",
+      medium: "#33b5e5",
+      low: "#00C851",
     };
-    return colors[priority.toLowerCase()] || "#a38b6a";
+    return colors[priority.toLowerCase()] || "#33b5e5";
   };
 
   const handleRefresh = () => {
@@ -128,29 +131,31 @@ const InventoryAIDashboard = () => {
               <div className="card-header">
                 <h3>{rec.materialName}</h3>
                 <span
-                  className={`status-badge ${rec.priority.toLowerCase()}`}
+                  className={`status-badge ${rec.status
+                    .toLowerCase()
+                    .replace(" ", "-")}`}
                 >
-                  {rec.priority}
+                  {rec.status}
                 </span>
               </div>
 
               <div className="card-body">
                 <div className="metric">
-                  <span className="label">Current Stock:</span>
-                  <span className="value">
+                  <span>Current Stock:</span>
+                  <span>
                     {rec.currentStock} {rec.unit}
                   </span>
                 </div>
 
                 <div className="metric">
-                  <span className="label">Weekly Usage:</span>
-                  <span className="value">
+                  <span>Weekly Usage:</span>
+                  <span>
                     {rec.weeklyUsage} {rec.unit}/week
                   </span>
                 </div>
 
                 <div className="metric">
-                  <span className="label">Recommended Order:</span>
+                  <span>Recommended Order:</span>
                   <span className="highlight">
                     {rec.recommendedOrder} {rec.unit}
                     {rec.recommendedOrder > 0 && (
@@ -162,22 +167,22 @@ const InventoryAIDashboard = () => {
                 </div>
 
                 <div className="metric">
-                  <span className="label">Reorder Threshold:</span>
-                  <span className="value">
+                  <span>Reorder Threshold:</span>
+                  <span>
                     {rec.reorderThreshold} {rec.unit}
                   </span>
                 </div>
 
                 <div className="metric">
-                  <span className="label">Optimal Level:</span>
-                  <span className="value">
+                  <span>Optimal Level:</span>
+                  <span>
                     {rec.optimalStockLevel} {rec.unit}
                   </span>
                 </div>
 
                 <div className="metric">
-                  <span className="label">Lead Time:</span>
-                  <span className="value">{rec.leadTime} days</span>
+                  <span>Lead Time:</span>
+                  <span>{rec.leadTime} days</span>
                 </div>
               </div>
 

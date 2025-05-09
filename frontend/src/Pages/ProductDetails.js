@@ -86,6 +86,21 @@ const ProductDetails = () => {
     }
   };
 
+  // Helper function to convert usage to stars
+  const getPopularityStars = (usage) => {
+    const stars = Math.min(5, Math.ceil(usage / 2)); // Assuming max 10 units/week = 5 stars
+    return (
+      <span className="popularity-stars">
+        {[...Array(5)].map((_, i) => (
+          <span key={i} className={i < stars ? "filled" : ""}>
+            ★
+          </span>
+        ))}
+        <span className="popularity-text">({stars}/5)</span>
+      </span>
+    );
+  };
+
   const checkWishlistStatus = async (userId, productId) => {
     try {
       const response = await api.get(`/wishlists/user/${userId}`);
@@ -101,44 +116,44 @@ const ProductDetails = () => {
 
   const handleWishlistAction = async () => {
     if (!user) {
-        navigate("/login");
-        return;
+      navigate("/login");
+      return;
     }
 
     try {
-        setWishlistLoading(true);
-        if (isInWishlist) {
-            await api.delete(`/wishlists/remove/${user._id}/${id}`);
-            setIsInWishlist(false);
-        } else {
-            if (!product.availability) {
-                const confirmAdd = window.confirm(
-                    "This product is currently out of stock. Are you sure you want to add it to your wishlist?"
-                );
-                if (!confirmAdd) return;
-            }
-            
-            await api.post("/wishlists/add", {
-                userId: user._id,
-                productId: id,
-            });
-            setIsInWishlist(true);
+      setWishlistLoading(true);
+      if (isInWishlist) {
+        await api.delete(`/wishlists/remove/${user._id}/${id}`);
+        setIsInWishlist(false);
+      } else {
+        if (!product.availability) {
+          const confirmAdd = window.confirm(
+            "This product is currently out of stock. Are you sure you want to add it to your wishlist?"
+          );
+          if (!confirmAdd) return;
         }
+
+        await api.post("/wishlists/add", {
+          userId: user._id,
+          productId: id,
+        });
+        setIsInWishlist(true);
+      }
     } catch (error) {
-        console.error("Error updating wishlist:", error);
-        alert(
-            error.response?.data?.error ||
-            "Failed to update wishlist. Please try again."
-        );
+      console.error("Error updating wishlist:", error);
+      alert(
+        error.response?.data?.error ||
+          "Failed to update wishlist. Please try again."
+      );
     } finally {
-        setWishlistLoading(false);
+      setWishlistLoading(false);
     }
-};
+  };
 
   if (loading) {
     return (
-      <div className="loading-container">
-        <div className="loading-spinner"></div>
+      <div className="catalog-loading-container">
+        <div className="catalog-loading-spinner"></div>
         <p>Loading product details...</p>
       </div>
     );
@@ -146,12 +161,12 @@ const ProductDetails = () => {
 
   if (error) {
     return (
-      <div className="error-container">
-        <div className="error-icon">!</div>
+      <div className="catalog-error-container">
+        <div className="catalog-error-icon">!</div>
         <p>{error}</p>
         <button
           onClick={() => window.location.reload()}
-          className="retry-button"
+          className="catalog-retry-button"
         >
           Retry
         </button>
@@ -161,7 +176,7 @@ const ProductDetails = () => {
 
   if (!product) {
     return (
-      <div className="not-found-container">
+      <div className="catalog-not-found-container">
         <h2>Product Not Found</h2>
         <p>
           The product you're looking for doesn't exist or may have been removed.
@@ -174,21 +189,21 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className="product-details-container">
-      <div className="product-details">
-        <div className="product-image-container">
+    <div className="catalog-product-details-container">
+      <div className="catalog-product-details">
+        <div className="catalog-product-image-container">
           <img
             src={getProductImageUrl(product.image)}
             alt={product.name}
-            className="product-main-image"
+            className="catalog-product-main-image"
             onError={handleImageError}
           />
         </div>
-        <div className="product-info">
-          <h1 className="product-title">{product.name}</h1>
-          {product.brand && <p className="product-brand">By {product.brand}</p>}
+        <div className="catalog-product-info">
+          <h1 className="catalog-product-title">{product.name}</h1>
+          {product.brand && <p className="catalog-product-brand">By {product.brand}</p>}
 
-          <div className="product-meta">
+          <div className="catalog-product-meta">
             <p>
               <strong>Category:</strong> {product.category}
             </p>
@@ -197,43 +212,50 @@ const ProductDetails = () => {
                 <strong>Material:</strong> {product.material}
               </p>
             )}
+            {/* Add this new popularity display */}
+            {product.weeklyUsageEstimate && (
+              <p>
+                <strong>Popularity:</strong>{" "}
+                {getPopularityStars(product.weeklyUsageEstimate)}
+              </p>
+            )}
             <p
-              className={`availability ${
+              className={`catalog-availability ${
                 product.availability ? "in-stock" : "out-of-stock"
               }`}
             >
               {product.availability ? "In Stock" : "Out of Stock"}
             </p>
             {product.ratings && (
-              <div className="product-ratings">
+              <div className="catalog-product-ratings">
                 {[...Array(5)].map((_, i) => (
                   <span
                     key={i}
-                    className={`star ${
-                      i < Math.floor(product.ratings) ? "filled" : ""
+                    className={`catalog-star ${
+                      i < Math.floor(product.ratings) ? "catalog-filled" : ""
                     }`}
                   >
                     ★
                   </span>
                 ))}
-                <span className="rating-count">
+                <span className="catalog-rating-count">
                   ({product.ratingCount || 0})
                 </span>
               </div>
             )}
           </div>
 
-          <div className="product-price-container">
+          <div className="catalog-product-price-container">
             {product.originalPrice && (
-              <span className="original-price">
+              <span className="catalog-original-price">
                 Rs. {product.originalPrice.toFixed(2)}
               </span>
             )}
-            <span className="product-price">
+            <span className="catalog-product-price">
               Rs. {product.price.toFixed(2)}
             </span>
             {product.originalPrice && (
-              <span className="discount-percentage">
+              <span className="catalog-discount-percentage">
                 ({Math.round((1 - product.price / product.originalPrice) * 100)}
                 % OFF)
               </span>
@@ -241,16 +263,16 @@ const ProductDetails = () => {
           </div>
 
           {product.description && (
-            <div className="product-description">
+            <div className="catalog-product-description">
               <h3>Description</h3>
               <p>{product.description}</p>
             </div>
           )}
 
           {product.availability && (
-            <div className="quantity-selector">
+            <div className="catalog-quantity-selector">
               <label htmlFor="quantity">Quantity:</label>
-              <div className="quantity-controls">
+              <div className="catalog-quantity-controls">
                 <button
                   onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
                   disabled={quantity <= 1}
@@ -278,31 +300,33 @@ const ProductDetails = () => {
             </div>
           )}
 
-          <div className="action-buttons">
+          <div className="catalog-action-buttons">
             {product.availability ? (
               <>
-                <button className="add-to-cart" onClick={handleAddToCart}>
+                <button className="catalog-add-to-cart" onClick={handleAddToCart}>
                   Add to Cart
                 </button>
-                <button className="buy-now" onClick={handleBuyNow}>
+                <button className="catalog-buy-now" onClick={handleBuyNow}>
                   Buy Now
                 </button>
               </>
             ) : (
-              <button 
-                className="notify-me"
-                onClick={() => alert("We'll notify you when this product is back in stock!")}
+              <button
+                className="catalog-notify-me"
+                onClick={() =>
+                  alert("We'll notify you when this product is back in stock!")
+                }
               >
                 Notify When Available
               </button>
             )}
             <button
-              className={`wishlist-button ${isInWishlist ? "in-wishlist" : ""}`}
+              className={`catalog-wishlist-button ${isInWishlist ? "in-wishlist" : ""}`}
               onClick={handleWishlistAction}
               disabled={wishlistLoading}
             >
               {wishlistLoading ? (
-                <span className="spinner"></span>
+                <span className="catalog-spinner"></span>
               ) : (
                 <>
                   {isInWishlist ? (
@@ -313,7 +337,7 @@ const ProductDetails = () => {
                 </>
               )}
             </button>
-            <button className="back-button" onClick={() => navigate(-1)}>
+            <button className="catalog-back-button" onClick={() => navigate(-1)}>
               ← Back to Products
             </button>
           </div>

@@ -80,7 +80,7 @@ const OrderHistory = () => {
       <div className="order-history-header">
         <h2>Your Order History</h2>
         <div className="order-history-controls">
-          <div className="filter-control">
+          <div className="order-history-filter-control">
             <label htmlFor="status-filter">Filter by status:</label>
             <select
               id="status-filter"
@@ -101,7 +101,7 @@ const OrderHistory = () => {
       </div>
 
       {orders.length === 0 ? (
-        <div className="no-orders-found">
+        <div className="order-history-no-orders-found">
           <p>No orders found</p>
           <button 
             className="continue-shopping-btn"
@@ -112,15 +112,15 @@ const OrderHistory = () => {
         </div>
       ) : (
         <>
-          <div className="orders-list">
+          <div className="order-history-orders-list">
             {orders.map(order => (
-              <div key={order._id} className="order-card">
-                <div className="order-card-header">
-                  <div className="order-meta">
-                  <div className="order-number-user">
+              <div key={order._id} className="order-history-order-card">
+                <div className="order-history-order-card-header">
+                  <div className="order-history-order-meta">
+                  <div className="order-history-order-number-user">
                     <h3>Order #{order._id.substring(0, 8).toUpperCase()}</h3>
                     </div>
-                    <p className="order-date">
+                    <p className="order-history-order-date">
                       {new Date(order.createdAt).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'short',
@@ -128,37 +128,37 @@ const OrderHistory = () => {
                       })}
                     </p>
                   </div>
-                  <div className="order-status">
+                  <div className="order-history-order-status">
                     {getStatusBadge(order.status)}
-                    <span className="order-total">Rs. {order.totalPrice.toFixed(2)}</span>
+                    <span className="order-history-order-total">Rs. {order.totalPrice.toFixed(2)}</span>
                   </div>
                 </div>
 
-                <div className="order-items-preview">
+                <div className="order-history-order-items-preview">
                   {order.items.slice(0, 3).map((item, index) => (
-                    <div key={index} className="preview-item">
+                    <div key={index} className="order-history-preview-item">
                       {item.productId?.image && (
                         <img 
                         src={getProductImageUrl(item.productId?.image)} 
                         alt={item.productId?.name} 
-                        className="product-thumbnail"
+                        className="order-history-product-thumbnail"
                         onError={handleImageError}
                       />
                       )}
-                      <span className="item-name">{item.productId?.name}</span>
-                      <span className="item-quantity">× {item.quantity}</span>
+                      <span className="order-history-item-name">{item.productId?.name}</span>
+                      <span className="order-history-item-quantity">× {item.quantity}</span>
                     </div>
                   ))}
                   {order.items.length > 3 && (
-                    <div className="additional-items">
+                    <div className="order-history-additional-items">
                       +{order.items.length - 3} more items
                     </div>
                   )}
                 </div>
 
-                <div className="order-card-footer">
+                <div className="order-history-order-card-footer">
                   <button 
-                    className="view-details-btn"
+                    className="order-history-view-details-btn"
                     onClick={() => navigate(`/orders/${order._id}`)}
                   >
                     View Details

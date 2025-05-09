@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import './ProductCatalog.css';
+import "./ProductCatalog.css";
 
 const ProductCatalog = () => {
   const [products, setProducts] = useState([]);
@@ -29,9 +29,12 @@ const ProductCatalog = () => {
   // Filter products based on search query and category filter
   useEffect(() => {
     const filtered = products.filter((product) => {
-      const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory = categoryFilter ? 
-        product.category.toLowerCase() === categoryFilter.toLowerCase() : true;
+      const matchesSearch = product.name
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
+      const matchesCategory = categoryFilter
+        ? product.category.toLowerCase() === categoryFilter.toLowerCase()
+        : true;
       return matchesSearch && matchesCategory;
     });
     setFilteredProducts(filtered);
@@ -55,19 +58,19 @@ const ProductCatalog = () => {
       <h1>Product Catalog</h1>
 
       {/* Search and Filter Controls */}
-      <div className="controls">
+      <div className="product-catalog-controls">
         <input
           type="text"
           placeholder="Search Products"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="search-input"
+          className="product-catalog-search-input"
         />
 
         <select
           value={categoryFilter}
           onChange={(e) => setCategoryFilter(e.target.value)}
-          className="filter-dropdown"
+          className="product-catalog-filter-dropdown"
         >
           <option value="">All Categories</option>
           <option value="living room">Living Room</option>
@@ -77,40 +80,45 @@ const ProductCatalog = () => {
       </div>
 
       {/* Display Filtered Products */}
-      <div className="product-list">
+      <div className="product-catalog-product-list">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
-            <div key={product._id} className="product-card">
-              <div className="product-image-container">
-                <img 
+            <div key={product._id} className="product-catalog-product-card">
+              <div className="product-catalog-product-image-container">
+                <img
                   src={
-                    product.image 
-                      ? `http://localhost:5000${product.image}` 
-                      : '/images/placeholder-product.jpg'
-                  } 
-                  alt={product.name} 
-                  className="product-image"
+                    product.image
+                      ? `http://localhost:5000${product.image}`
+                      : "/images/placeholder-product.jpg"
+                  }
+                  alt={product.name}
+                  className="product-catalog-product-image"
                   onError={(e) => {
-                    e.target.src = '/images/placeholder-product.jpg';
+                    e.target.src = "/images/placeholder-product.jpg";
                   }}
                 />
               </div>
-              <div className="product-info">
-                <h3 className="product-name">{product.name}</h3>
-                <p className="product-category">{product.category}</p>
-                <p className="product-price">Rs. {product.price.toFixed(2)}</p>
-                <p className={`availability ${product.availability ? 'in-stock' : 'out-of-stock'}`}>
-                  {product.availability ? 'In Stock' : 'Out of Stock'}
+              <div className="product-catalog-product-info">
+                <h3 className="product-catalog-product-name">{product.name}</h3>
+                <p className="product-catalog-product-category">{product.category}</p>
+                <p className="product-catalog-product-price">Rs. {product.price.toFixed(2)}</p>
+                <p
+                  className={`product-catalog-availability ${
+                    product.availability ? "in-stock" : "out-of-stock"
+                  }`}
+                >
+                  {product.availability ? "In Stock" : "Out of Stock"}
                 </p>
-                <p className="product-material">Material: {product.material}</p>
-                <Link to={`/products/${product._id}`} className="view-details">
+                <p className="product-catalog-product-material">Material: {product.material}</p>
+
+                <Link to={`/products/${product._id}`} className="product-catalog-view-details">
                   View Details
                 </Link>
               </div>
             </div>
           ))
         ) : (
-          <div className="no-products">
+          <div className="product-catalog-no-products">
             No products found matching your criteria.
           </div>
         )}

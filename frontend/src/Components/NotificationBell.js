@@ -133,9 +133,9 @@ const NotificationBell = () => {
           </div>
 
           {loading ? (
-            <div className="loading">Loading notifications...</div>
+            <div className="notification-loading">Loading notifications...</div>
           ) : error ? (
-            <div className="error-message">
+            <div className="notification-error-message">
               {error}
               <button onClick={fetchNotifications}>Retry</button>
             </div>

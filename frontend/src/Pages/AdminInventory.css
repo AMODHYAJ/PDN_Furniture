@@ -1,4 +1,4 @@
-/* Luxury Furniture Admin Inventory CSS */
+/* Luxury Furniture Admin Inventory - Table Style */
 .dashboard-container {
   padding: 2.5rem;
   background-color: #f8f5f1;
@@ -45,7 +45,7 @@
   border: 1px solid #c0a062;
   border-radius: 30px;
   cursor: pointer;
-  transition: all 0.4s ease;
+  transition: all 0.3s ease;
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   letter-spacing: 0.5px;
@@ -76,15 +76,23 @@
   box-shadow: 0 5px 15px rgba(192, 160, 98, 0.3);
 }
 
+.search-filter-container {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .search-input {
   width: 100%;
-  max-width: 400px;
+  max-width: 300px;
   padding: 0.9rem 1.2rem;
   font-size: 1rem;
   border-radius: 30px;
   border: 1px solid #d8d2c5;
-  margin: 0 auto 2rem;
-  display: block;
+  margin: 0;
   background-color: #fff;
   transition: all 0.3s ease;
   font-family: 'Montserrat', sans-serif;
@@ -102,13 +110,12 @@
 
 .stock-status-filter {
   width: 100%;
-  max-width: 250px;
+  max-width: 200px;
   padding: 0.9rem 1.2rem;
   font-size: 1rem;
   border-radius: 30px;
   border: 1px solid #d8d2c5;
-  margin: 0 auto 2rem;
-  display: block;
+  margin: 0;
   background-color: #fff;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -160,113 +167,45 @@
   box-shadow: 0 5px 15px rgba(42, 33, 24, 0.2);
 }
 
-.loading-container {
-  text-align: center;
-  padding: 3rem;
-  font-style: italic;
-  color: #7a6f5e;
-  font-size: 1.1rem;
-}
-
-.materials-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2rem;
-  margin: 3rem 0;
-}
-
-.material-card {
+/* Table Styles */
+.inventory-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 2rem 0;
   background-color: #fff;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-  transition: all 0.4s ease;
   border: 1px solid #e5dfd4;
-  position: relative;
 }
 
-.material-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
+.inventory-table thead {
   background: linear-gradient(90deg, #c0a062, #e8d9b5);
 }
 
-.material-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-}
-
-.material-card h3 {
-  font-size: 1.4rem;
+.inventory-table th {
+  padding: 1.2rem 1.5rem;
+  text-align: left;
   color: #2a2118;
-  margin-bottom: 1.2rem;
-  padding: 1.8rem 1.8rem 0;
   font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
   letter-spacing: 0.3px;
+}
+
+.inventory-table td {
+  padding: 1rem 1.5rem;
   border-bottom: 1px solid #f0ebe1;
-  padding-bottom: 1rem;
-}
-
-.material-card p {
-  font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
   color: #5a5247;
-  margin: 0.8rem 1.8rem;
-  font-family: 'Montserrat', sans-serif;
-  line-height: 1.5;
 }
 
-.material-card p strong {
-  color: #2a2118;
-  font-weight: 500;
+.inventory-table tr:last-child td {
+  border-bottom: none;
 }
 
-.button-container {
-  display: flex;
-  justify-content: center;
-  gap: 1.2rem;
-  padding: 1.8rem;
-  margin-top: 1rem;
-  border-top: 1px solid #f0ebe1;
-}
-
-.update-btn, .delete-btn {
-  padding: 0.7rem 1.5rem;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.4s ease;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.update-btn {
-  background-color: #c0a062;
-  color: #fff;
-}
-
-.update-btn:hover {
-  background-color: #a78b4e;
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(192, 160, 98, 0.3);
-}
-
-.delete-btn {
-  background-color: #d4c9b8;
-  color: #2a2118;
-}
-
-.delete-btn:hover {
-  background-color: #b8ab96;
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(180, 167, 141, 0.3);
+.inventory-table tr:hover td {
+  background-color: #f9f7f3;
 }
 
 .stock-status {
@@ -274,7 +213,6 @@
   padding: 0.4rem 1rem;
   border-radius: 30px;
   display: inline-block;
-  margin-left: 0.5rem;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   text-transform: uppercase;
@@ -299,18 +237,60 @@
   border: 1px solid #f2e6d0;
 }
 
-.chart-container {
-  margin: 4rem 0;
-  padding: 2.5rem;
+.action-buttons-cell {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.update-btn, .delete-btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+}
+
+.update-btn {
+  background-color: #c0a062;
+  color: #fff;
+}
+
+.update-btn:hover {
+  background-color: #a78b4e;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(192, 160, 98, 0.3);
+}
+
+.delete-btn {
+  background-color: #b85a50;
+  color: #fff;
+}
+
+.delete-btn:hover {
+  background-color: #9c4a42;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(184, 90, 80, 0.3);
+}
+
+/* Chart Container */
+.inventory-chart-container {
+  margin: 4rem auto;
+  padding: 2rem;
   background-color: #fff;
   border-radius: 8px;
   border: 1px solid #e5dfd4;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  max-width: 600px;
+  width: 90%;
 }
 
-.chart-container::before {
+.inventory-chart-container::before {
   content: '';
   position: absolute;
   top: 0;
@@ -320,14 +300,15 @@
   background: linear-gradient(90deg, #c0a062, #e8d9b5);
 }
 
-.chart-container h2 {
+.inventory-chart-container h2 {
   font-size: 1.8rem;
   margin-bottom: 2rem;
   text-align: center;
 }
 
+/* Pagination */
 .pagination-controls {
-  margin-top: 4rem;
+  margin-top: 3rem;
   text-align: center;
 }
 
@@ -355,28 +336,42 @@
   border-color: #c0a062;
 }
 
+/* Loading and Empty States */
+.loading-container, .no-items-message {
+  text-align: center;
+  padding: 3rem;
+  font-style: italic;
+  color: #7a6f5e;
+  font-size: 1.1rem;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .dashboard-container {
     padding: 1.5rem;
   }
   
-  .materials-container {
-    grid-template-columns: 1fr;
-  }
-  
-  .action-buttons, .export-buttons {
+  .search-filter-container {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
   }
   
   .search-input, .stock-status-filter {
     max-width: 100%;
   }
   
-  .chart-container {
-    padding: 1.5rem;
+  .inventory-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .action-buttons-cell {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .update-btn, .delete-btn {
+    width: 100%;
+    text-align: center;
   }
 }
-
-/* Add these to your HTML head for the fonts */
-/* <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@400;500&display=swap" rel="stylesheet"> */

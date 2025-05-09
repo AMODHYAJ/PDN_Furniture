@@ -101,21 +101,21 @@ const OrderDetails = () => {
         </div>
       </div>
 
-      <div className="order-sections">
-        <div className="order-items-section">
+      <div className="details-user-order-sections">
+        <div className="details-user-order-items-section">
           <h2>Order Items</h2>
-          <div className="order-items">
+          <div className="details-user-order-items">
             {order.items.map((item) => (
-              <div key={item._id || item.productId._id} className="order-item">
+              <div key={item._id || item.productId._id} className="details-user-order-item">
                 <img
                   src={getProductImageUrl(item.productId.image)}
                   alt={item.productId.name}
-                  className="product-image"
+                  className="details-user-product-image"
                   onError={handleImageError}
                 />
-                <div className="item-details">
+                <div className="details-user-item-details">
                   <h4>{item.productId.name}</h4>
-                  <div className="item-meta">
+                  <div className="details-user-item-meta">
                     <span>Quantity: {item.quantity}</span>
                     <span>Price: Rs. {item.price.toFixed(2)}</span>
                     <span>
@@ -127,67 +127,67 @@ const OrderDetails = () => {
             ))}
           </div>
 
-          <div className="order-summary">
-            <div className="summary-row">
+          <div className="details-user-order-summary">
+            <div className="details-user-summary-row">
               <span>Subtotal:</span>
               <span>Rs. {order.totalPrice.toFixed(2)}</span>
             </div>
-            <div className="summary-row">
+            <div className="details-user-summary-row">
               <span>Shipping:</span>
               <span>Rs. 0.00</span>
             </div>
-            <div className="summary-row total">
+            <div className="details-user-summary-row total">
               <span>Total:</span>
               <span>Rs. {order.totalPrice.toFixed(2)}</span>
             </div>
           </div>
         </div>
 
-        <div className="order-info-section">
-          <div className="shipping-info">
+        <div className="details-user-order-info-section">
+          <div className="details-user-shipping-info">
             <h2>Shipping Information</h2>
-            <div className="info-grid">
-              <div className="info-row">
-                <span className="info-label">Name:</span>
-                <span className="info-value">{user.name}</span>
+            <div className="details-user-info-grid">
+              <div className="details-user-info-row">
+                <span className="details-user-info-label">Name:</span>
+                <span className="details-user-info-value">{user.name}</span>
               </div>
-              <div className="info-row">
-                <span className="info-label">Email:</span>
-                <span className="info-value">{user.email}</span>
+              <div className="details-user-info-row">
+                <span className="details-user-info-label">Email:</span>
+                <span className="details-user-info-value">{user.email}</span>
               </div>
-              <div className="info-row">
-                <span className="info-label">Address:</span>
-                <span className="info-value">
+              <div className="details-user-info-row">
+                <span className="details-user-info-label">Address:</span>
+                <span className="details-user-info-value">
                   {order.shippingAddress.address}
                 </span>
               </div>
-              <div className="info-row">
-                <span className="info-label">City:</span>
-                <span className="info-value">{order.shippingAddress.city}</span>
+              <div className="details-user-info-row">
+                <span className="details-user-info-label">City:</span>
+                <span className="details-user-info-value">{order.shippingAddress.city}</span>
               </div>
-              <div className="info-row">
-                <span className="info-label">Postal Code:</span>
-                <span className="info-value">
+              <div className="details-user-info-row">
+                <span className="details-user-info-label">Postal Code:</span>
+                <span className="details-user-info-value">
                   {order.shippingAddress.postalCode}
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="payment-info">
+          <div className="details-user-payment-info">
             <h2>Payment Information</h2>
-            <div className="info-grid">
-              <div className="info-row">
-                <span className="info-label">Method:</span>
-                <span className="info-value">
+            <div className="details-user-info-grid">
+              <div className="details-user-info-row">
+                <span className="details-user-info-label">Method:</span>
+                <span className="details-user-info-value">
                   {order.paymentMethod === "cashOnDelivery"
                     ? "Cash on Delivery"
                     : "Credit/Debit Card"}
                 </span>
               </div>
-              <div className="info-row">
-                <span className="info-label">Status:</span>
-                <span className="info-value">
+              <div className="details-user-info-row">
+                <span className="details-user-info-label">Status:</span>
+                <span className="details-user-info-value">
                   {order.status === "delivered" &&
                   order.paymentMethod === "cashOnDelivery"
                     ? "Paid"
@@ -202,11 +202,11 @@ const OrderDetails = () => {
       {order.status === "processing" &&
         timeLeft &&
         timeLeft !== "Cancellation window expired" && (
-          <div className="action-section">
-            <div className="cancellation-notice">
+          <div className="details-user-action-section">
+            <div className="details-user-cancellation-notice">
               <h3>You can cancel this order within 24 hours of placement</h3>
               <p>Time remaining: {timeLeft}</p>
-              <button className="cancel-button" onClick={handleCancelOrder}>
+              <button className="details-user-cancel-button" onClick={handleCancelOrder}>
                 Cancel Order
               </button>
             </div>
@@ -214,15 +214,15 @@ const OrderDetails = () => {
         )}
 
       {order.status === "shipped" && (
-        <div className="action-section">
-          <div className="tracking-info">
+        <div className="details-user-action-section">
+          <div className="details-user-tracking-info">
             <h3>Your order is on the way</h3>
             <p>
               Expected delivery date:{" "}
               {new Date(order.createdAt).toLocaleDateString()}
             </p>
             <button
-              className="track-button"
+              className="details-user-track-button"
               onClick={() => navigate(`/orders/${order._id}/tracking`)}
             >
               Track Order

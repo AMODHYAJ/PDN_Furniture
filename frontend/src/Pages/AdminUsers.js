@@ -110,17 +110,16 @@ const AdminUsers = () => {
 
   return (
     <div className="admin-users-container">
-      <div className="admin-header">
-        <h1 className="admin-title">User Management</h1>
-        <div className="admin-search-container">
+      <div className="user-admin-header">
+        <h1 className="user-admin-title">User Management</h1>
+        <div className="user-admin-search-container">
           <input
             type="text"
             placeholder="Search users..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="admin-search-input"
+            className="user-admin-search-input"
           />
-          <span className="admin-search-icon">🔍</span>
         </div>
       </div>
       
@@ -130,7 +129,7 @@ const AdminUsers = () => {
         </div>
       )}
       
-      <div className="admin-table-container">
+      <div className="user-admin-table-container">
         <table className="admin-users-table">
           <thead>
             <tr>

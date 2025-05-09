@@ -169,21 +169,21 @@
   background: #f9f7f3;
 }
 
-.loading {
+.notification-loading {
   padding: 30px 20px;
   text-align: center;
   color: #999;
   background: #f9f7f3;
 }
 
-.error-message {
+.notification-error-message {
   padding: 20px;
   text-align: center;
   color: #c33;
   background: #f9f7f3;
 }
 
-.error-message button {
+.notification-error-message button {
   margin-top: 10px;
   padding: 5px 15px;
   background: #c0a062;
@@ -194,6 +194,6 @@
   transition: background 0.3s ease;
 }
 
-.error-message button:hover {
+.notification-error-message button:hover {
   background: #a78b4e;
 }

@@ -110,8 +110,8 @@ const Cart = () => {
     }
 };
 
-  if (loading) return <div className="loading">Loading your cart...</div>;
-  if (error) return <div className="error">{error}</div>;
+  if (loading) return <div className="cart-loading">Loading your cart...</div>;
+  if (error) return <div className="cart-error">{error}</div>;
   
   const isEmpty = !cart?.items || cart.items.length === 0;
   const calculatedTotal = isEmpty ? 0 : cart.items.reduce(
@@ -138,7 +138,7 @@ const Cart = () => {
       <div className="cart-items">
         {cart.items.map((item) => (
           <div key={item.productId._id} className="cart-item">
-            <div className="item-image-container">
+            <div className="cart-item-image-container">
               <img
                 src={getProductImageUrl(item.productId?.image)}
                 alt={item.productId?.name || "Product"}
@@ -148,7 +148,7 @@ const Cart = () => {
               />
             </div>
 
-            <div className="item-details">
+            <div className="cart-item-details">
               <h3>
                 <Link to={`/products/${item.productId._id}`}>
                   {item.productId?.name || "Unknown Product"}
@@ -156,7 +156,7 @@ const Cart = () => {
               </h3>
               <p>Price: Rs. {(item.productId?.price || 0).toFixed(2)}</p>
 
-              <div className="quantity-control">
+              <div className="cart-quantity-control">
                 <button
                   onClick={() => updateQuantity(item.productId._id, item.quantity - 1)}
                   disabled={item.quantity <= 1}
@@ -171,13 +171,13 @@ const Cart = () => {
                 </button>
               </div>
 
-              <p className="item-total">
+              <p className="cart-item-total">
                 Total: Rs. {((item.productId?.price || 0) * item.quantity).toFixed(2)}
               </p>
 
               <button
                 onClick={() => removeItem(item.productId._id)}
-                className="remove-item"
+                className="cart-remove-item"
               >
                 Remove
               </button>
@@ -188,15 +188,15 @@ const Cart = () => {
 
       <div className="cart-summary">
         <h3>Order Summary</h3>
-        <div className="summary-row">
+        <div className="cart-summary-row">
           <span>Subtotal ({cart.totalQuantity} items):</span>
           <span>Rs. {calculatedTotal.toFixed(2)}</span>
         </div>
-        <div className="summary-row">
+        <div className="cart-summary-row">
           <span>Shipping:</span>
           <span>Free</span>
         </div>
-        <div className="summary-row total">
+        <div className="cart-summary-row total">
           <span>Total:</span>
           <span>Rs. {calculatedTotal.toFixed(2)}</span>
         </div>

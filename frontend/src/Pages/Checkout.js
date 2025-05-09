@@ -91,7 +91,7 @@ const Checkout = () => {
       <div className="checkout-form">
         <h2>Shipping Information</h2>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
+          <div className="checkout-form-group">
             <label>Full Name</label>
             <input
               type="text"
@@ -102,7 +102,7 @@ const Checkout = () => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="checkout-form-group">
             <label>Email</label>
             <input
               type="email"
@@ -113,7 +113,7 @@ const Checkout = () => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="checkout-form-group">
             <label>Address</label>
             <input
               type="text"
@@ -124,7 +124,7 @@ const Checkout = () => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="checkout-form-group">
             <label>City</label>
             <input
               type="text"
@@ -135,7 +135,7 @@ const Checkout = () => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="checkout-form-group">
             <label>Postal Code</label>
             <input
               type="text"
@@ -146,7 +146,7 @@ const Checkout = () => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="checkout-form-group">
             <h3>Payment Method</h3>
             <label>
               <input
@@ -166,16 +166,16 @@ const Checkout = () => {
         </form>
       </div>
 
-      <div className="order-summary">
+      <div className="checkout-order-summary">
         <h2>Order Summary</h2>
-        <div className="order-items">
+        <div className="checkout-order-items">
           {cart.items.map((item) => (
-            <div key={item.productId._id} className="order-item">
+            <div key={item.productId._id} className="checkout-order-item">
               <img
                 src={getProductImageUrl(item.productId?.image)}
                 alt={item.productId?.name || "Product"}
                 onError={handleImageError}
-                className="cart-item-image"
+                className="checkout-cart-item-image"
               />
               <div>
                 <h4>{item.productId.name}</h4>
@@ -186,7 +186,7 @@ const Checkout = () => {
             </div>
           ))}
         </div>
-        <div className="order-total">
+        <div className="checkout-order-total">
           <h3>Total: Rs. {totalPrice.toFixed(2)}</h3>
         </div>
       </div>
